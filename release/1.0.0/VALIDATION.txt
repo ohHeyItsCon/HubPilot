@@ -1,0 +1,51 @@
+HubPilot 1.0.0 - release validation
+===================================
+Date: 2026-08-23
+
+Final artifacts
+---------------
+HubPilot-Core-1.0.0.jar
+HubPilot-Hub-1.0.0.jar
+HubPilot-Interact-1.0.0.jar
+HubPilot-Link-1.0.0.jar
+
+SHA-256
+-------
+Core     b5368cf4cc94941889225a1c6950d17dccdd8309589ef997de56d7ef1af11220
+Hub      525b7294f8513adf52f5f83bac77854b5e3d024a4f1d2e8b0bd1a0e30ddbf96d
+Interact 83f3260ba9e202dee0ec935b0624ca1a79d71f338f26fe0a93191a21ba42f961
+Link     91a878246c939eabcb9a422caa36a42f2ea982cd2c8e6b18f62581e2b3525b23
+Bundle   2676bbd9e7bd451aee9d4ce5720e966f39bf3190a19f8e1f7ddb1e621376e015
+
+Release checks
+--------------
+PASS - All four archives pass ZIP integrity testing.
+PASS - velocity-plugin.json / plugin.yml report version 1.0.0.
+PASS - No 3.5.18 version strings remain in the final JARs.
+PASS - JAR metadata credits ohHeyItsCon as author.
+PASS - HubPilot and AutoServer MIT license notices are packaged in every JAR.
+PASS - Link metadata matches the documented hub-side Link placement.
+PASS - Every declared plugin main class exists in its final JAR.
+PASS - Private/stale-data scan found no private domains, credentials, test-only classes, or personal deployment paths.
+
+Bytecode verification
+---------------------
+PASS - JDK-internal ASM ClassReader + BasicVerifier completed against every concrete method body.
+
+Core:     299 classes, 2024 methods, 1996 concrete bodies
+Hub:       98 classes,  636 methods,  634 concrete bodies
+Interact:  11 classes,  102 methods,  102 concrete bodies
+Link:       3 classes,   21 methods,   21 concrete bodies
+TOTAL:    411 classes, 2783 methods, 2753 concrete bodies
+
+3.5.18 carry-forward
+--------------------
+The 1.0.0 code payload comes from the validated 3.5.18 release candidate. Reverse-normalization checks confirmed that the release-code changes are limited to the approved version/metadata strings, author/Link wording, and added license entries.
+
+The 3.5.18 eight-sweep report already passed archive integrity, bytecode/control-flow verification, Stop Server target identity mapping, Crafty live-discovery harness testing, Crafty start/stop HTTP integration, discovery/provider-ID repair, blast-radius review, and decision/regression review.
+
+Testing scope note
+------------------
+Crafty Controller is the only external controller integration covered by live beta testing for this release. Pterodactyl and Generic HTTP have controlled implementation validation but do not yet have the same live beta coverage.
+
+The previous 3.5.18 report listed deployment-specific live acceptance checks that were not separately recorded as completed. The maintainer approved proceeding with the 1.0.0 public release after the final artifact rebase and validation above.

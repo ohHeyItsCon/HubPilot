@@ -21,6 +21,7 @@ minecraft-server
 crafty-controller
 pterodactyl
 viaversion
+luckperms
 java
 ```
 
@@ -37,14 +38,13 @@ Default branch: `main`
 
 ## Release files
 
-Keep normal repository history focused on source, docs, and configuration. Release JARs belong on the GitHub Release page instead of `main`.
+Normal repository history stays focused on docs, release metadata, and configuration references. Compiled JARs belong on GitHub Releases rather than being committed to `main`.
 
-For 1.0.0:
+For future releases:
 
-1. finish the remaining live tests;
-2. build all four artifacts with internal version `1.0.0`;
-3. validate those exact JARs;
-4. record SHA-256 hashes;
-5. add the project license;
-6. tag `v1.0.0`;
-7. attach the four JARs to the release.
+1. build the exact final artifacts;
+2. validate those artifacts;
+3. record SHA-256 hashes;
+4. update the changelog/release notes;
+5. tag the release;
+6. attach the final JARs and validation report to the GitHub Release.

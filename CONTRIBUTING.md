@@ -23,7 +23,7 @@ Reports from **Pterodactyl and Generic HTTP** setups are especially useful becau
 
 ## Code changes
 
-The public source/build workflow for 1.0.0 is not finalized yet. Open an issue before starting a large code contribution so the change can be discussed first.
+The public repository currently focuses on releases, documentation, and issue tracking. Open an issue before starting a large code contribution so the change can be discussed first.
 
 ## AI-assisted contributions
 

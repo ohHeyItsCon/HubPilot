@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.0 - Initial public release (draft)
+## 1.0.0 - 2026-08-23
 
 The first public HubPilot release includes Core, Hub, Interact, and Link.
 
@@ -21,6 +21,8 @@ The first public HubPilot release includes Core, Hub, Interact, and Link.
 - Entity, sign, portal, and supported mannequin bindings
 - `/hub` and `/lobby` routing
 - ViaVersion-compatible routing
+- LuckPerms compatibility for hub-side permission nodes
+- Full provider setup documentation and troubleshooting FAQ
 
 ### Testing status
 

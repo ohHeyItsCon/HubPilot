@@ -2,7 +2,7 @@
 
 HubPilot is a Minecraft server-network suite for Velocity + Paper/Bukkit. It was created based on the [AutoServer](https://github.com/artificial-720/AutoServer) plugin and expanded into a larger system for server control, navigation, management, telemetry, and hub tools.
 
-> **Release status:** HubPilot 1.0.0 is being prepared from the 3.5.18 beta release candidate. The final 1.0.0 JARs will be published after the remaining live checks pass.
+> **Current release:** HubPilot 1.0.0
 
 ## Project background
 
@@ -10,7 +10,7 @@ HubPilot was created and is maintained by `ohHeyItsCon`. The project idea, featu
 
 AI tools have been used heavily during development for coding, debugging, code review, testing, and documentation. More detail is available in [TRANSPARENCY.md](TRANSPARENCY.md).
 
-For controller testing, **Crafty Controller is the only external server-management controller covered by live beta testing so far**. Pterodactyl and Generic HTTP support are included and have controlled test coverage, but they do not yet have the same live testing history.
+For controller testing, **Crafty Controller is the only external server-management controller covered by live beta testing for 1.0.0**. Pterodactyl and Generic HTTP support are included and have controlled test coverage, but they do not yet have the same live testing history.
 
 ## Components
 
@@ -180,8 +180,8 @@ See [Commands](docs/COMMANDS.md) for the full command list.
 
 - Core runs on Velocity.
 - Hub, Interact, and Link target the Bukkit/Paper 1.21 API family.
-- Release-candidate field testing currently uses Velocity 4.1.0-SNAPSHOT build 16.
-- Crafty Controller is the only external server-management controller covered by live beta testing so far.
+- Release-candidate field testing used Velocity 4.1.0-SNAPSHOT build 16.
+- Crafty Controller is the only external server-management controller covered by live beta testing for 1.0.0.
 - HubPilot works alongside ViaVersion for backends supported by the installed ViaVersion setup.
 - HubPilot works with LuckPerms for hub-side Bukkit/Paper permission nodes.
 - Native mannequin support depends on the server exposing the required modern Bukkit/Paper capability.
@@ -203,4 +203,6 @@ Other versions and hosting setups may work, but they are not listed as tested un
 
 ## License
 
-A project license has not been selected yet. One will be added before the official 1.0.0 release.
+HubPilot is released under the [MIT License](LICENSE).
+
+HubPilot was created based on AutoServer by Artificial-720. The original AutoServer MIT notice is retained in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and inside the release JARs.
