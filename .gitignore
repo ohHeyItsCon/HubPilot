@@ -1,0 +1,21 @@
+# Build output
+build/
+target/
+out/
+.gradle/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Logs / runtime
+*.log
+logs/
+
+# Sensitive HubPilot runtime data
+secrets.yml
+**/secrets.yml
+
+# Release binaries belong on GitHub Releases, not normal repository history
+*.jar

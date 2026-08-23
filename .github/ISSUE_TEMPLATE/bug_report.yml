@@ -1,0 +1,61 @@
+name: Bug report
+description: Report a HubPilot problem that can be reproduced
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check the FAQ first for common server-name, port, provider, timeout, and Velocity-address problems: https://github.com/ohHeyItsCon/HubPilot/blob/main/docs/FAQ.md
+
+        Remove API keys, tokens, passwords, private URLs, and `secrets.yml` before posting. Crafty is currently the only controller path covered by live beta testing, so clearly note Pterodactyl or Generic HTTP issues.
+  - type: input
+    id: version
+    attributes:
+      label: HubPilot version
+      placeholder: 1.0.0
+    validations:
+      required: true
+  - type: textarea
+    id: components
+    attributes:
+      label: Installed HubPilot components
+      description: List Core, Hub, Interact, and Link and the plugins folder where each one is installed.
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: Server/proxy versions
+      description: Include Velocity, Paper/Bukkit, and Minecraft versions.
+    validations:
+      required: true
+  - type: dropdown
+    id: provider
+    attributes:
+      label: Provider setup
+      options:
+        - Always-On / no power controller
+        - Crafty Controller
+        - Pterodactyl
+        - Generic HTTP
+        - Other / not sure
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction steps
+      placeholder: Start before the problem happens and list the exact steps.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: Paste only the useful section and redact secrets first.
+      render: text
