@@ -1,50 +1,60 @@
-HubPilot 1.0.1 - release validation
-===================================
+HubPilot 1.0.1 - pre-release validation
+=======================================
 Date: 2026-08-24
 
 Release changes
 ---------------
-1.0.1 includes two post-release improvements:
-
 1. Per-server Always-On server lifecycle option.
-2. Live Navigator telemetry refresh while the GUI stays open.
+2. Live Navigator telemetry refresh while the Navigator GUI remains open.
 
-Always-On server is separate from the Always-On provider. A server can still use Crafty, Pterodactyl, Generic HTTP, or another managed provider while being marked Always-On.
+Always-On server
+----------------
+This is separate from the Always-On provider. A Crafty, Pterodactyl, Generic HTTP, or other provider-controlled server can be marked Always-On while keeping provider startup and manual Stop Server available.
 
-When Always-On server is enabled, HubPilot keeps provider startup and manual Stop Server available but disables automatic shutdown for:
-- idle time
-- failed player requests
-- an empty startup/request queue
+When enabled, HubPilot disables these automatic shutdown paths for that server:
+- idle shutdown
+- failed-request shutdown
+- queue-empty shutdown
 
-Open Navigator menus now re-render their server entries after a complete status sync. Players do not need to close and reopen the Navigator to see updated status, player counts, ping, startup progress, queue information, uptime, or any other telemetry already rendered by the server item.
+Live Navigator refresh
+----------------------
+The Hub now refreshes an already-open server Navigator when a complete STATUS_SYNC_END packet is received. The current top inventory is rebuilt from the latest StatusStore/telemetry data, its contents are replaced in place, and Player.updateInventory() is called. The GUI is not closed or reopened.
 
-Final artifacts
----------------
+Field-test correction
+---------------------
+The first 1.0.1 pre-release Hub JAR advertised live Navigator refresh, but that packaged JAR did not actually contain the refresh class or the STATUS_SYNC_END hook. A real network test caught the problem because telemetry only changed after reopening the Navigator.
+
+The corrected 1.0.1 Hub JAR was rebuilt and revalidated. Exact packaged-bytecode inspection confirms:
+- dev/hubpilot/hub/gui/NavigatorLiveRefresh.class is present.
+- HubPilotFeedbackListener.readStatus calls NavigatorLiveRefresh.refreshOpen(...) on STATUS_SYNC_END.
+- the refresh path updates only open DestinationMenuHolder inventories.
+- unrelated open inventories are ignored.
+
+Final pre-release artifacts
+---------------------------
 HubPilot-Core-1.0.1.jar
 HubPilot-Hub-1.0.1.jar
 HubPilot-Interact-1.0.1.jar
 HubPilot-Link-1.0.1.jar
-HubPilot-1.0.1.zip
 
 SHA-256
 -------
 Core     a985b29d0c2b8253e2240f5aff293172f2ad39dee0c5015655ce8532bd773b84
-Hub      93419af7086076a6b101a62e61bbba6e00bafc8651666964c4fd980b56011e72
+Hub      d58201571d0513a013c4111de640afb5cf06838e722fe49cc700874ce799e02c
 Interact c19a6a25d3d2e6c3f4803a97d9950b8a4d5ad3403bff8313717c93e4eb27ed4f
 Link     5fc5b10ada5fa7f3b6ce5bacf81c4d6ee3b80516446f768db9883d240d91fc26
 
 SWEEP 1 - archive, metadata, and version integrity: PASS
 --------------------------------------------------------
-- All four exact final JARs pass ZIP/JAR integrity testing.
+- All four exact JARs pass ZIP/JAR integrity testing.
 - Core velocity-plugin.json reports 1.0.1.
-- Hub, Interact, and Link plugin.yml files report 1.0.1.
-- Every declared plugin main class exists in its final JAR.
-- No 1.0.0 or 3.5.18 version strings remain in the final JAR content.
+- Hub, Interact, and Link plugin.yml report 1.0.1.
+- Every declared plugin main class exists.
 - Existing HubPilot and AutoServer license/author metadata remains packaged.
 
 SWEEP 2 - bytecode/control-flow verification: PASS
 --------------------------------------------------
-JDK-internal ASM ClassReader + BasicVerifier ran against every concrete method body in the exact final JARs.
+JDK-internal ASM ClassReader + BasicVerifier ran against every concrete method body in the corrected exact JARs.
 
 Core:     300 classes, 2029 methods, 2001 concrete bodies
 Hub:       99 classes,  638 methods,  636 concrete bodies
@@ -53,126 +63,81 @@ Link:       3 classes,   21 methods,   21 concrete bodies
 TOTAL:    413 classes, 2790 methods, 2760 concrete bodies
 Failures: 0
 
-SWEEP 3 - Hub setting storage and inheritance: PASS
----------------------------------------------------
-The exact 1.0.1 Hub SettingKey and HubPilotStore were executed.
-
-Verified:
-- Always-On server defaults to false.
-- A global Always-On value is inherited by servers with no override.
-- A per-server value overrides the global value.
-- The setting persists as global.always-on-server / server.<id>.always-on-server in hubpilot.properties.
+SWEEP 3 - Always-On setting storage and inheritance: PASS
+---------------------------------------------------------
+Verified with exact packaged Hub setting classes:
+- default false
+- global inheritance
+- per-server override
+- persistence through hubpilot.properties
 
 SWEEP 4 - Hub settings transport: PASS
 --------------------------------------
-The exact 1.0.1 Hub SettingsSyncSender was executed with the real HubPilotStore.
+Verified that Always-On server values are carried in the existing SETTINGS_SNAPSHOT payload.
 
-Verified that a server Always-On value is included in the SETTINGS_SNAPSHOT payload sent over hubpilot:settings.
-
-SWEEP 5 - Core settings acceptance and filtering: PASS
-------------------------------------------------------
-The exact 1.0.1 Core SettingsSyncHook was executed.
-
-Verified:
-- always-on-server is accepted for global and per-server settings.
-- an unknown test setting is filtered out.
-- the accepted snapshot is written to hubpilot.properties.
-- Core reloads after the synchronized settings file changes.
+SWEEP 5 - Core settings acceptance: PASS
+----------------------------------------
+Verified that Core accepts always-on-server, filters unknown settings, writes the synchronized file, and reloads effective server settings.
 
 SWEEP 6 - exact Hub -> Core Always-On round trip: PASS
 ------------------------------------------------------
-An integration harness used the exact packaged 1.0.1 Hub and Core classes for the changed path:
-
-HubPilotStore
--> Hub SettingsSyncSender
--> hubpilot:settings SETTINGS_SNAPSHOT bytes
--> Core SettingsSyncHook
--> sanitized hubpilot.properties
--> HubPilotConfig.reload()
--> ManagedServer used by Core lifecycle logic
-
-A Crafty-backed test server marked Always-On finished the round trip with:
-- provider still set to crafty
+A Crafty-backed test server marked Always-On finished the exact packaged settings round trip with:
+- provider = crafty
 - autoStartEnabled = true
 - stopAfterFailure = false
 - stopWhenQueueEmpty = false
 - idleShutdownMinutes = 0
 
-Turning the setting back off and reloading restored the normal configured/default shutdown values.
+Turning Always-On back off restored normal configured/default shutdown behavior.
 
-SWEEP 7 - Always-On Hub GUI wiring: PASS
-----------------------------------------
-Exact final Hub bytecode was inspected after patching.
+SWEEP 7 - Always-On GUI wiring: PASS
+------------------------------------
+Verified in exact Hub bytecode:
+- Automation Settings renders the Always-On server toggle.
+- the listener maps the slot to ALWAYS_ON_SERVER.
+- normal click uses the existing boolean-setting path.
+- help text explains that automatic shutdown is disabled while provider startup remains available.
 
-Verified:
-- SettingKey includes ALWAYS_ON_SERVER with property always-on-server and default false.
-- Automation Settings slot 25 renders the Always-On server toggle.
-- the listener maps slot 25 to ALWAYS_ON_SERVER.
-- normal click toggles the boolean using the same path as the existing boolean automation settings.
-- the GUI description states that automatic HubPilot shutdown is disabled while provider startup still works.
+SWEEP 8 - live Navigator packaged-path test: PASS (LAB)
+-------------------------------------------------------
+A Bukkit-shaped runtime harness executed the exact corrected packaged:
+- HubPilotFeedbackListener.class
+- NavigatorLiveRefresh.class
 
-SWEEP 8 - live Navigator refresh helper: PASS
----------------------------------------------
-The exact packaged NavigatorLiveRefresh class was executed under java -Xverify:all against a Bukkit-shaped runtime harness.
+The harness sent a real DataOutputStream STATUS_SYNC_END payload through HubPilotFeedbackListener.onPluginMessageReceived(...).
 
-Verified:
-- an already-open DestinationMenuHolder inventory is updated in place.
-- the same inventory object remains open instead of being replaced.
-- unrelated inventories are ignored.
-- multiple viewers of the same Navigator page share one fresh render for that page instead of rebuilding the page once per viewer.
-- inventory-size mismatches are ignored instead of forcing incompatible contents into an existing view.
+Observed:
+- an open DestinationMenuHolder inventory was rebuilt using its current page.
+- the existing top inventory contents changed from stale to fresh telemetry content.
+- Player.updateInventory() was called exactly once.
+- an unrelated inventory stayed unchanged.
 
-SWEEP 9 - status-sync refresh trigger: PASS
+Result:
+PASS exact packaged STATUS_SYNC_END -> open Navigator refresh.
+
+SWEEP 9 - refresh regression boundary: PASS
 -------------------------------------------
-The exact patched HubPilotFeedbackListener was executed under java -Xverify:all.
+Compared the failed live-refresh pre-release Hub JAR to the corrected Hub JAR.
 
-Verified:
-- STATUS_ROW handling remains unchanged.
-- STATUS_SYNC_END invokes NavigatorLiveRefresh exactly once.
-- the refresh is triggered after the complete status batch rather than once for every individual server row.
-- the existing Hub status request timer remains at 20 ticks, so open Navigator menus can receive refreshed telemetry on the existing roughly one-second status cycle without adding another repeating scheduler.
-
-Core StatusSyncHook was also inspected and still sends STATUS_SYNC_END after its status rows.
-
-SWEEP 10 - regression boundary and public scrub: PASS
------------------------------------------------------
-Compared the final 1.0.1 artifacts to the exact 1.0.0 release after normalizing only release-version metadata.
-
-Functional changes are limited to:
-Core:
-- ADDED   dev/hubpilot/core/OperatingModeRules.class
-- CHANGED dev/hubpilot/core/HubPilotConfig.class
-- CHANGED dev/hubpilot/core/SettingsSyncHook.class
-
-Hub:
-- CHANGED dev/hubpilot/hub/bridge/SettingKey.class
-- CHANGED dev/hubpilot/hub/bridge/HubPilotMenuBuilder.class
-- CHANGED dev/hubpilot/hub/bridge/HubPilotMenuListener.class
-- CHANGED dev/hubpilot/hub/bridge/HubPilotFeedbackListener.class
+Only these functional differences were introduced by the correction:
 - ADDED   dev/hubpilot/hub/gui/NavigatorLiveRefresh.class
+- CHANGED dev/hubpilot/hub/bridge/HubPilotFeedbackListener.class
 
-Interact:
-- no functional changes
+No Core, Interact, or Link changes were needed for this correction.
 
-Link:
-- no functional changes
+SWEEP 10 - public scrub: PASS
+-----------------------------
+The corrected JARs were checked for known private deployment names/paths and packaged test/harness classes. No private server names, NAS paths, or test/harness classes are packaged.
 
-Compared to the earlier 1.0.1 pre-release build, the live Navigator addition changes only HubPilotFeedbackListener and adds NavigatorLiveRefresh.
+Live field status
+-----------------
+Always-On server has already passed live testing on the maintainer network:
+- a managed server stayed online past a shortened idle-shutdown timer while Always-On was enabled.
+- manual Stop Server still worked with Always-On enabled.
 
-LifecycleManager and the existing manual stop implementation are unchanged from 1.0.0. The Always-On mode works by changing the effective per-server lifecycle values Core reads, so manual Stop Server behavior is not blocked.
+The corrected live Navigator refresh still needs one final real Velocity + Paper visual field test before 1.0.1 should be promoted from pre-release to stable.
 
-Final JARs were also scanned for known private deployment names/paths and test/harness class leakage. No private server names, NAS paths, or packaged test/harness classes were found. The public ohHeyItsCon author/license attribution remains intentionally present.
-
-Live field acceptance
----------------------
-Always-On server has live Velocity + Paper/Crafty acceptance coverage for the two most important runtime boundaries:
-- a managed backend remained online past a deliberately shortened idle-shutdown window while Always-On server was enabled.
-- manual/debug Stop Server still stopped that same Always-On server as intended.
-
-The new live Navigator refresh has exact packaged-code harness coverage but still needs its final visual field check on the live Paper hub before 1.0.1 should be promoted from pre-release to stable.
-
-Compatibility note
-------------------
-Core and Hub should be updated together to 1.0.1.
-
-Interact 1.0.0 and Link 1.0.0 remain compatible with 1.0.1 because neither component has functional changes in this release. Matching 1.0.1 JARs are still provided to keep the suite on one public version number.
+Compatibility
+-------------
+Core and Hub should be on 1.0.1 together.
+Interact 1.0.0 and Link 1.0.0 remain compatible because neither component has functional changes in 1.0.1. Matching 1.0.1 builds are still provided for a unified suite version.
