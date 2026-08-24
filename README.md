@@ -197,6 +197,7 @@ Other versions and hosting setups may work, but they are not listed as tested un
 - [Commands](docs/COMMANDS.md)
 - [FAQ and Troubleshooting](docs/FAQ.md)
 - [Architecture](docs/ARCHITECTURE.md)
+- [Future Roadmap](docs/ROADMAP.md)
 - [Release Validation](docs/VALIDATION.md)
 - [Project Transparency](TRANSPARENCY.md)
 - [Security](SECURITY.md)
