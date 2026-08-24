@@ -2,7 +2,11 @@
 
 This page lists ideas being considered for future HubPilot versions. Nothing here is promised for a specific release until it is moved into an actual release plan.
 
-## Multi-hub and Navigator profiles
+The roadmap is grouped by the HubPilot component that would handle most of the work. Some larger features touch more than one component and are listed under **Core + Hub**.
+
+## Core + Hub
+
+### Multi-hub and Navigator profiles
 
 Allow different hubs to use different Navigator layouts and server groups.
 
@@ -24,7 +28,9 @@ Minigames Hub
 
 Multiple physical hub servers could also share the same Navigator profile. This would let a larger network run several copies of one hub without rebuilding the same menu on every server.
 
-## Nested Navigator folders
+Core would own the profile, routing, server-group, and hub-target logic. Hub would display and edit the correct Navigator for the hub the player is currently using.
+
+### Nested Navigator folders
 
 Allow Navigator entries to open another Navigator page instead of always pointing directly to a server.
 
@@ -46,15 +52,15 @@ Minigames >
 
 The same Navigator-profile system could power both nested menus and physical sub-hubs so they do not need to be built as two completely separate features.
 
-## Hub groups and load balancing
+### Hub groups and load balancing
 
 Allow several hub servers to be treated as one logical hub group.
 
 For example, `hub-1`, `hub-2`, and `hub-3` could all use the same Navigator profile. HubPilot could choose the healthiest or least-populated hub when a player uses `/hub`, `/lobby`, or needs a fallback destination.
 
-This would make HubPilot more useful on networks that need more than one hub instance to handle player load.
+Core would decide which hub should receive the player. Hub would keep each hub instance on the same logical profile and administration layout.
 
-## Hub failover
+### Hub failover
 
 Allow backup hubs to take over automatically when the preferred hub is offline or unreachable.
 
@@ -62,7 +68,7 @@ If `hub-1` goes down, HubPilot could route returning players to `hub-2` instead 
 
 Failover could work alongside hub groups so large networks can have both load balancing and backup destinations.
 
-## Per-server operating modes
+### Per-server operating modes
 
 Add an operating mode for each managed server so HubPilot knows how that server is supposed to behave after it has been configured.
 
@@ -70,7 +76,7 @@ This would be separate from the provider. The provider answers **how HubPilot co
 
 Possible modes:
 
-### Always On
+#### Always On
 
 The server is expected to stay running all the time.
 
@@ -78,7 +84,7 @@ HubPilot would not use idle shutdown or failed-request shutdown against that ser
 
 An Always On server could still use Crafty, Pterodactyl, Generic HTTP, or another power provider if the owner wants HubPilot to be able to start it again after a crash or manual stop.
 
-### On Demand
+#### On Demand
 
 The server is allowed to stay offline until somebody requests it.
 
@@ -86,7 +92,7 @@ HubPilot can start it, wait for it to become reachable, transfer players, and sh
 
 This would remain the best fit for smaller networks or expensive backend servers that do not need to run all day.
 
-### Custom
+#### Custom
 
 The owner chooses the lifecycle behavior manually.
 
@@ -104,7 +110,7 @@ Modded SMP     -> On Demand
 Seasonal       -> On Demand
 ```
 
-## Guided setup and network-size presets
+### Guided setup and network-size presets
 
 Expand `/hp setup` so it asks a few questions about the network before generating the first set of defaults.
 
@@ -123,21 +129,21 @@ Possible setup questions:
 
 HubPilot could use those answers to load a starting profile.
 
-### Small network preset
+#### Small network preset
 
 A small preset could assume one hub, a simple Navigator, mostly On Demand backends, shorter idle timers, smaller queues, and more aggressive resource saving.
 
-### Medium network preset
+#### Medium network preset
 
 A medium preset could assume a mix of Always On and On Demand servers, longer startup timeouts, larger queues, server categories, and room for a second hub or more complex Navigator layout.
 
-### Large network preset
+#### Large network preset
 
 A large preset could assume several hubs, many Always On servers, larger queues, longer or server-specific timeouts, hub groups, failover options, and little or no automatic shutdown unless the owner chooses it.
 
 The selected size would only load starting defaults. It would never permanently lock settings or prevent a small network from using advanced features.
 
-## Better queue controls
+### Better queue controls
 
 Expand the current offline-server request flow into a more complete queue system.
 
@@ -151,9 +157,11 @@ Possible additions include:
 - better handling when many players request the same offline server at once
 - clearer behavior when a server fails to start
 
-This becomes more useful as HubPilot is used on larger networks where several players may request the same backend at the same time.
+Core would own the queue and request state. Hub would show that information cleanly to players and staff.
 
-## Scheduled server availability
+## Core
+
+### Scheduled server availability
 
 Allow servers to become available or unavailable automatically on a schedule.
 
@@ -161,7 +169,7 @@ This could be useful for event servers, seasonal worlds, weekend-only servers, m
 
 A scheduled server could be hidden from the Navigator, shown as unavailable, or prevented from starting outside the configured schedule.
 
-## More server-management providers
+### More server-management providers
 
 Add direct integrations for other commonly used panels when there is enough demand.
 
@@ -169,7 +177,7 @@ Possible future providers could include AMP, Multicraft, Pelican, or other hosti
 
 New providers should be added when there is a real use case instead of increasing Core size with integrations nobody is using.
 
-## Network statistics and history
+### Network statistics and history
 
 Expand HubPilot statistics into longer-term network history.
 
@@ -195,6 +203,66 @@ Average startup: 18 seconds
 Idle shutdowns: 31
 Time powered off: 126 hours
 ```
+
+## Hub
+
+### Navigator profile editor
+
+Add in-game management for creating, copying, assigning, and editing Navigator profiles once multi-hub support exists.
+
+An owner could configure different menus for the main hub, minigame hubs, modded hubs, or other server groups without editing YAML by hand.
+
+### Server-group and folder editing
+
+Allow nested Navigator folders and server groups to be created and rearranged directly from the Hub admin GUI.
+
+This would include changing slots, icons, titles, parent menus, and which servers or hubs appear inside each group.
+
+### Network preset review
+
+After guided setup creates defaults, Hub could show a review screen explaining what the selected Small, Medium, or Large preset changed before the owner accepts it.
+
+That would make the preset system faster without hiding important settings from the person running the network.
+
+## Interact
+
+### Navigator and profile targets
+
+Allow Interact bindings to open a Navigator profile or nested folder instead of only requesting a specific server.
+
+For example, clicking a Minigames NPC could open the Minigames Navigator, while a BedWars NPC inside that area could still request BedWars directly.
+
+### More flexible interaction rules
+
+Future Interact work could add more control over who can use a binding, when it is visible or active, and whether it targets a server, hub, group, or Navigator page.
+
+This would be especially useful once HubPilot supports larger multi-hub layouts.
+
+## Link
+
+### Multi-hub telemetry sync
+
+Expand Link so multiple Hub servers can report their local state to Core while still keeping telemetry inside the HubPilot network.
+
+This would support hub groups, load balancing, and failover by giving Core enough information to know which hubs are available and how busy they are.
+
+### Hub health reporting
+
+Link could provide lightweight hub-health information such as current players, response state, and profile assignment so Core can make better routing and failover decisions.
+
+HubPilot telemetry would remain between HubPilot Core on Velocity and the HubPilot plugins on the hub servers. It would not be sent to an outside analytics or tracking service.
+
+## Versioning and component compatibility
+
+HubPilot uses one unified version number across Core, Hub, Interact, and Link. This makes it clear which release each component belongs to and gives the project room to require matching versions when a protocol, shared format, or other major internal behavior changes.
+
+Core and Hub should normally run the exact same HubPilot version.
+
+Link and Interact do not need to be replaced on every release when nothing in those components changed. A release can explicitly state that the existing Link or Interact build remains compatible.
+
+As a general compatibility limit, Link and Interact should not be more than **two published HubPilot releases behind** the installed Core and Hub version.
+
+If a release note says that a new Link or Interact version is required, that requirement overrides the two-release grace period and the affected component should be updated with Core and Hub.
 
 ## How roadmap items are chosen
 
