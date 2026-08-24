@@ -1,30 +1,30 @@
 # Contributing
 
-HubPilot is still early enough that solid bug reports and real-world testing are especially useful.
+Bug reports and real-world testing are especially useful while HubPilot is still young.
 
 ## Reporting a bug
 
-Before opening an issue, check the [FAQ and troubleshooting guide](docs/FAQ.md). It covers the most common problems with server names, ports, provider mappings, startup timeouts, and Velocity addresses.
+Check the [FAQ](docs/FAQ.md) first. It covers the common stuff like server names, ports, provider mappings, startup timeouts, and bad Velocity addresses.
 
-If the problem is still happening, include:
+If the problem is still there, include:
 
 - HubPilot version
-- installed HubPilot components and where they are installed
+- which HubPilot components are installed and where
 - Velocity and Paper/Bukkit versions
 - Minecraft version
 - provider type if the issue involves power control or discovery
 - exact steps that reproduce the problem
-- the relevant part of the log
+- the useful part of the log
 - whether the problem still happens with unrelated plugins removed
 
-Remove API keys, tokens, passwords, private URLs, and `secrets.yml` before posting.
+Remove API keys, tokens, passwords, private URLs, and `secrets.yml` before posting anything.
 
-Reports from **Pterodactyl and Generic HTTP** setups are especially useful because Crafty is currently the only controller path covered by live beta testing.
+Pterodactyl and Generic HTTP reports are especially helpful because Crafty is still the only controller path with live beta coverage.
 
 ## Code changes
 
-The public repository currently focuses on releases, documentation, and issue tracking. Open an issue before starting a large code contribution so the change can be discussed first.
+Open an issue before starting a large code change. It is easier to agree on the behavior first than to review a big rewrite after the fact.
 
 ## AI-assisted contributions
 
-AI-assisted contributions are allowed. Contributors are still responsible for understanding what is being submitted, testing the changed path, checking nearby behavior, and making sure the contribution does not include secrets or code that cannot legally be submitted.
+AI-assisted contributions are allowed. The contributor is still responsible for understanding the change, testing it, checking nearby behavior, and making sure nothing private or legally questionable is being submitted.

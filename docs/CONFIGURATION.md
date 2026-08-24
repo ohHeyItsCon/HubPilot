@@ -1,6 +1,6 @@
 # Configuration
 
-HubPilot creates its configuration files on first start. Normal settings can be shared for troubleshooting after they have been checked, but **`secrets.yml` must stay private**.
+HubPilot creates its config files on first start. Most of them are fine to share after checking them, but **`secrets.yml` must stay private**.
 
 ## Core files
 
@@ -15,11 +15,11 @@ HubPilot creates its configuration files on first start. Normal settings can be 
 - `messages/` - message files
 - `backups/` - HubPilot backups
 
-A legacy `providers/crafty.yml` compatibility file can still be created for older 3.x config loading. New installs should use `providers.yml` and `secrets.yml`.
+A legacy `providers/crafty.yml` file may still be created when loading older 3.x configs. New installs should use `providers.yml` and `secrets.yml`.
 
 ## Core defaults
 
-Some packaged defaults are:
+Some packaged defaults:
 
 ```yaml
 shared-directory: shared
@@ -67,28 +67,28 @@ countdown:
 
 ### `provider: always-online`
 
-`always-online` means HubPilot does not manage that server's power.
+`always-online` means HubPilot does not control that server's power.
 
-Use it when the server is kept running by a host, Docker, systemd, another panel, or another process manager. The hub is a good example because it normally stays online while larger backend servers are allowed to shut down.
+Use it when a host, Docker, systemd, another panel, or another process manager keeps the server running. The hub is a common example because it normally stays online while larger backends are allowed to shut down.
 
-HubPilot can route players to an Always-On server while it is online, but it will not start or stop the process. A direct power action is rejected instead of returning a false success.
+HubPilot can route players to an Always-On server while it is online, but it will not start or stop the process. A direct power action is rejected instead of pretending it worked.
 
 Built-in provider ID: `always-online`  
 Provider type: `always-on`
 
-If an offline server should start when a player requests it, configure a power provider instead.
+If an offline server should start when somebody requests it, give that server a power provider instead.
 
 ## Startup and retry timing
 
-Large modded servers may take much longer to become connectable than a small Paper server. If the controller starts the process but HubPilot times out before Minecraft begins listening, increase the startup or ping timeout values for that server.
+Large modded servers can take a lot longer to become connectable than a small Paper server. If the controller starts the process but HubPilot times out before Minecraft begins listening, increase the startup or ping timeout values for that server.
 
-The [FAQ](FAQ.md) covers the most common startup and connection problems.
+The [FAQ](FAQ.md) covers the common startup and connection problems.
 
 ## Version compatibility
 
-`strict-version: false` allows normal proxy compatibility behavior, including [ViaVersion](https://github.com/ViaVersion/ViaVersion) when it is installed and supports the client/backend combination.
+`strict-version: false` leaves normal proxy compatibility in place, including [ViaVersion](https://github.com/ViaVersion/ViaVersion) when it supports that client/backend combination.
 
-Set a strict version rule for servers that should require a specific Minecraft version. This is especially useful for modded servers where the correct loader or modpack also matters.
+Use a strict version rule for servers that really need an exact Minecraft version. Modded servers are the obvious example because the loader or modpack may matter too.
 
 ## Hub config
 
@@ -113,4 +113,4 @@ particle-period-ticks: 20
 portal-cooldown-ms: 3000
 ```
 
-After changing owner-editable files, use `/hp reload` or the component-specific reload command after first-time setup is complete.
+After changing owner-editable files, use `/hp reload` or the component-specific reload command once first-time setup is complete.

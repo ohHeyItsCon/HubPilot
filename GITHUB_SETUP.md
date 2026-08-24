@@ -1,6 +1,6 @@
 # Repository Notes
 
-Maintenance notes for the public HubPilot repository.
+A few maintenance notes for the public HubPilot repo.
 
 ## Repository description
 
@@ -27,24 +27,24 @@ java
 
 ## GitHub features
 
-Recommended:
+Useful repo features:
 
 - Issues
 - Releases
 - Private vulnerability reporting, if available
-- Discussions if community use grows enough to need them
+- Discussions if the community gets large enough to need them
 
 Default branch: `main`
 
 ## Release files
 
-Normal repository history stays focused on docs, release metadata, and configuration references. Compiled JARs belong on GitHub Releases rather than being committed to `main`.
+Keep normal repo history focused on docs, release metadata, and configuration references. Compiled JARs belong on the GitHub Release page instead of `main`.
 
 For future releases:
 
 1. build the exact final artifacts;
-2. validate those artifacts;
+2. validate those exact files;
 3. record SHA-256 hashes;
-4. update the changelog/release notes;
+4. update the changelog and release notes;
 5. tag the release;
 6. attach the final JARs and validation report to the GitHub Release.

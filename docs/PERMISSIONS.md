@@ -1,16 +1,16 @@
 # Permissions and Roles
 
-HubPilot has its own role system. A Velocity permission plugin is not required for HubPilot ownership or staff roles.
+HubPilot has its own role system, so you do not need a Velocity permission plugin just to manage HubPilot staff.
 
-## LuckPerms compatibility
+## LuckPerms
 
-HubPilot is compatible with [LuckPerms](https://github.com/LuckPerms/LuckPerms) on the Paper/Bukkit hub.
+HubPilot works with [LuckPerms](https://github.com/LuckPerms/LuckPerms) on the Paper/Bukkit hub.
 
-HubPilot Hub uses normal Bukkit/Paper permission checks, so LuckPerms can grant HubPilot permission nodes to players or groups the same way it does for other plugins.
+Hub uses normal Bukkit/Paper permission checks, so LuckPerms can grant HubPilot nodes to players and groups just like it does for other plugins.
 
-LuckPerms is optional. HubPilot's built-in Owner/Admin/Moderator/Helper system still works without it.
+LuckPerms is optional. HubPilot's built-in Owner, Admin, Moderator, and Helper roles still work without it.
 
-HubPilot Owner is different from a permission group. Owner is stored by HubPilot and must be claimed or managed through HubPilot itself.
+HubPilot Owner is separate from a permission group. Owner is stored by HubPilot and has to be claimed or changed through HubPilot itself.
 
 ## Owner
 
@@ -20,7 +20,7 @@ Owner is the highest HubPilot role.
 - receives `hubpilot.*`
 - cannot be created by the OP fallback
 
-Use `/hp claimowner` on an unowned installation to set the first Owner.
+Use `/hp claimowner` on an unowned install to set the first Owner.
 
 ## Admin
 

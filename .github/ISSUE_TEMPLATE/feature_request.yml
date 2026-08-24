@@ -1,24 +1,24 @@
 name: Feature request
-description: Suggest a HubPilot improvement
+description: Suggest something HubPilot could do better
 title: "[Feature] "
 labels: [enhancement]
 body:
   - type: textarea
     id: problem
     attributes:
-      label: What problem should this solve?
-      description: Describe the actual use case first.
+      label: What problem would this solve?
+      description: Start with the real use case.
     validations:
       required: true
   - type: textarea
     id: proposal
     attributes:
-      label: Proposed behavior
-      description: Describe what HubPilot should do.
+      label: What should HubPilot do?
+      description: Describe the behavior you would want.
     validations:
       required: true
   - type: textarea
     id: alternatives
     attributes:
-      label: Other approaches tried
-      description: Optional. Include anything already used or considered.
+      label: Anything else you tried?
+      description: Optional. Include other approaches already used or considered.

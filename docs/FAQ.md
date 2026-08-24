@@ -2,66 +2,66 @@
 
 ## Why isn't my server starting with Crafty, Pterodactyl, Generic HTTP, or another controller setup?
 
-Before assuming HubPilot itself is failing, check the parts of the setup that connect Velocity, HubPilot, and the controller.
+Check the pieces that connect Velocity, HubPilot, and the controller before assuming the plugin itself is broken.
 
-Start with the **server name**. The server registered in Velocity, the HubPilot destination/server entry, and the server mapped to the controller all need to point to the same backend. Display names can be different, but the backend and provider mapping still need to be correct.
+Start with the **server name**. The Velocity server entry, the HubPilot destination/server entry, and the controller mapping all need to lead to the same backend. Display names can be different, but the real backend/provider mapping still has to match.
 
-Check the **server port** next. Every Minecraft server behind Velocity needs its own listening port. A simple sequence such as `25600`, `25601`, `25602`, and so on is easier to manage, but any unused ports will work. Make sure Velocity points to the port the Minecraft server is actually listening on.
+Check the **port** next. Every Minecraft server behind Velocity needs its own listening port. `25600`, `25601`, `25602`, and so on are easy to manage, but any unused ports work. Velocity has to point to the port Minecraft is actually listening on.
 
-Check the **address used by Velocity**. `127.0.0.1` only works when Velocity can reach that server through localhost. Docker containers, separate machines, NAS containers, and some hosting setups may need a LAN address, container hostname, or another internal address instead.
+Check the **Velocity address**. `127.0.0.1` only works when Velocity can reach that backend through localhost. Docker containers, NAS containers, separate machines, and some hosting setups need a LAN address, container hostname, or another internal address.
 
-Look at the **provider assigned to the server**. A server using `always-online` will not be started by HubPilot. Always-On means another system is responsible for that process.
+Check the **provider**. A server using `always-online` will not be started by HubPilot because another system owns that process.
 
-Check `startup.provider-server-id`. Crafty needs the Crafty server UUID, Pterodactyl needs the Pterodactyl server identifier, and Generic HTTP needs whatever server ID the remote API expects.
+Check `startup.provider-server-id`. Crafty needs the Crafty UUID, Pterodactyl needs the Pterodactyl server identifier, and Generic HTTP needs whatever ID the remote API expects.
 
-Check the **controller mapping**. Renaming, recreating, or deleting a server in the controller can leave an old mapping behind.
+Check the **controller mapping** too. Renaming, recreating, or deleting a server in the panel can leave an old mapping behind.
 
-Make sure the **controller connection** is valid. Check the controller URL, API key or token, permissions, and TLS settings. HubPilot cannot start a server if the provider cannot authenticate or cannot reach the controller.
+Then check the **controller connection**. Make sure the URL, API key/token, permissions, and TLS settings are correct.
 
-Finally, check the **startup timeout**. Large modded servers can take much longer to become ready than a small Paper server. If the controller starts the process but HubPilot gives up before Minecraft begins listening, increase the startup or ping timeout values for that server.
+Finally, check the **startup timeout**. Large modded servers can take much longer to become reachable than a small Paper server. If the controller starts the process but HubPilot gives up before Minecraft starts listening, raise the startup or ping timeout for that server.
 
-The API setup for each provider is covered in [Server Providers](PROVIDERS.md).
+Provider setup is covered in [Server Providers](PROVIDERS.md).
 
-For Crafty installations, `/hp discover` can also help confirm that HubPilot currently sees the server as a valid Velocity/Crafty candidate.
+For Crafty, `/hp discover` is also a quick way to see whether HubPilot currently sees the server as a valid Velocity/Crafty candidate.
 
 ## My server starts, but HubPilot never sends me to it. What should I check?
 
-Make sure the Minecraft server is actually accepting connections on the address and port registered in Velocity.
+Make sure Minecraft is actually accepting connections on the address and port registered in Velocity.
 
-A controller showing **Running** does not mean Minecraft is ready for players. Large modpacks may need a while after the Java process starts before the Minecraft server begins listening.
+A controller showing **Running** only means the process is running. It does not mean the Minecraft server is ready for players yet.
 
 Also check:
 
-- the Velocity backend address and port
-- the HubPilot destination target
+- Velocity backend address and port
+- HubPilot destination target
 - startup and ping timeout values
 - client/server Minecraft compatibility
-- whether the backend requires a specific mod loader or modpack
-- the Velocity forwarding setup required by that backend
+- required mod loader or modpack
+- Velocity forwarding required by that backend
 
-If HubPilot retries several times and then shuts the server down, the backend may not have become connectable before the retry period ended.
+If HubPilot retries several times and then shuts the server down, the backend probably never became connectable before the retry window ended.
 
 ## Does HubPilot support ViaVersion?
 
-Yes. HubPilot is compatible with [ViaVersion](https://github.com/ViaVersion/ViaVersion) and does not replace ViaVersion's protocol translation.
+Yes. HubPilot works with [ViaVersion](https://github.com/ViaVersion/ViaVersion).
 
-If the installed ViaVersion setup allows a client to connect to a backend behind Velocity, HubPilot can still request that server, start it when a power provider is configured, and route the player to it.
+If the installed ViaVersion setup lets a client connect to a backend through Velocity, HubPilot can request, start, and route to that server.
 
-HubPilot can also apply strict version rules to servers that should not allow cross-version connections. This is useful for modded servers where the correct Minecraft version, loader, or modpack matters.
+Strict HubPilot version rules can still require an exact version when a server should not allow cross-version connections. Modded servers may also need the correct loader or modpack even when ViaVersion supports the underlying protocol.
 
-ViaVersion decides protocol compatibility. HubPilot handles the server request, startup flow, and destination routing.
+ViaVersion handles protocol translation. HubPilot handles the request and routing.
 
 ## Does HubPilot work with LuckPerms?
 
-Yes. HubPilot is compatible with [LuckPerms](https://github.com/LuckPerms/LuckPerms) on the Paper/Bukkit hub.
+Yes. HubPilot works with [LuckPerms](https://github.com/LuckPerms/LuckPerms) on the Paper/Bukkit hub.
 
-LuckPerms can grant HubPilot permission nodes to users and groups. HubPilot also keeps its own role system, so LuckPerms is optional and does not have to be installed for HubPilot staff roles to work.
+LuckPerms can grant HubPilot permission nodes to users and groups. It is optional because HubPilot also has its own Owner, Admin, Moderator, and Helper roles.
 
 HubPilot Owner is still managed by HubPilot itself and is not automatically granted by a LuckPerms group.
 
 See [Permissions and Roles](PERMISSIONS.md) for the available nodes.
 
-## Do all of my backend servers need HubPilot plugins installed?
+## Do all backend servers need HubPilot installed?
 
 No.
 
@@ -77,7 +77,7 @@ Hub Paper/Bukkit server/plugins/
 └── HubPilot-Link-1.0.0.jar
 ```
 
-Backend game servers normally do not need HubPilot JARs for server requests, startup/shutdown, or routing through Velocity.
+Backend game servers normally do not need HubPilot JARs for requests, startup/shutdown, or routing through Velocity.
 
 ## Do I need to update every HubPilot component with every release?
 
@@ -85,19 +85,17 @@ Not always.
 
 Core and Hub should stay on the exact same HubPilot version and should normally be updated together.
 
-Link and Interact can stay on an older build when the release notes say that the existing version remains compatible. They should not be more than **two published HubPilot releases behind** Core and Hub.
+Link and Interact can stay on an older build when the release notes say that build is still compatible. They should not be more than **two published HubPilot releases behind** Core and Hub.
 
-If a release explicitly says that Link or Interact must be updated, update that component even if it is still within the normal two-release compatibility window.
+If a release says Link or Interact must be updated, update it even if it is still inside the normal two-release window.
 
-HubPilot still publishes one unified suite version so users can see which builds belong to the same release and major compatibility changes can require matching components when needed.
+HubPilot still publishes one suite version so it is clear which builds belong to the same release.
 
-## Does the hub server have to remain online?
+## Does the hub server have to stay online?
 
-It is strongly recommended.
+It is strongly recommended for the normal resource-saving layout.
 
-HubPilot works best with one small hub server that remains online while larger game servers start only when somebody requests them.
-
-A common setup is:
+A small always-online hub gives players somewhere to wait while larger game servers start only when somebody asks for them.
 
 ```text
 Hub       -> Always-On
@@ -106,50 +104,46 @@ Modded    -> Crafty / another power provider
 Minigames -> Crafty / another power provider
 ```
 
-This gives players somewhere to stay while a requested server starts and allows the larger servers to shut down when nobody is using them.
+Large networks with enough hardware can keep more servers online if they want. Future operating-mode presets are listed in the [roadmap](ROADMAP.md).
 
-The hub can normally be kept much lighter than the actual game servers.
+## What does the Always-On provider actually do?
 
-## What exactly does the Always-On provider do?
-
-Always-On tells HubPilot not to manage that server's power.
+It tells HubPilot not to control that server's power.
 
 Use it for:
 
 - the hub
-- servers that run 24/7
-- paid hosts where the host handles startup
-- servers managed manually
+- 24/7 servers
+- paid hosts that handle startup
+- manually managed servers
 - Docker or systemd setups controlled outside HubPilot
-- hosts that do not provide a usable API
+- hosts without a usable API
 
-Always-On does not require a controller URL or API key.
+Always-On does not need a controller URL or API key.
 
-If an Always-On server is offline, HubPilot cannot start it. Another system must bring the server online first.
+If an Always-On server is offline, something outside HubPilot has to start it.
 
 ## Why doesn't `/hp discover` show one of my servers?
 
-Start by making sure the server is registered in Velocity.
+First, make sure the server is registered in Velocity.
 
-When Crafty is the primary provider, HubPilot also checks the current Crafty server inventory. The server needs to exist in Crafty and be a valid Velocity candidate.
+When Crafty is the primary provider, HubPilot also checks the current Crafty inventory. The server needs to exist in Crafty and be a valid Velocity candidate.
 
 Check:
 
 - the server still exists in Crafty
-- the Velocity server entry points to the correct backend
-- the backend name and mapping are correct
-- the Crafty API connection is working
-- the server was not recreated in Crafty with a new controller ID
+- the Velocity entry points to the right backend
+- the backend name/mapping is correct
+- the Crafty API connection works
+- the server was not recreated with a new Crafty UUID
 
-HubPilot does not treat an old Velocity entry as proof that a Crafty server still exists.
+An old Velocity entry is not treated as proof that a Crafty server still exists.
 
-## Do my backend servers have to use ports in the `25600` range?
+## Do backend servers have to use ports in the `25600` range?
 
-No. `25600`, `25601`, `25602`, and so on are only a suggested convention.
+No. That is only a suggested convention.
 
-Every backend behind Velocity simply needs its own unique port.
-
-For example:
+Every backend simply needs its own unique port.
 
 ```text
 Velocity public port: 25565
@@ -160,7 +154,7 @@ Modded Survival:    25602
 Minigames:          25603
 ```
 
-Using one predictable range makes the setup easier to read and troubleshoot.
+A predictable range just makes setup and troubleshooting easier.
 
 If players always connect through Velocity, backend ports normally do not need to be exposed directly to the internet.
 
@@ -168,61 +162,59 @@ If players always connect through Velocity, backend ports normally do not need t
 
 Yes, as long as Velocity can reach the Minecraft backend and the configured provider can control it.
 
-The Minecraft server does not need to run on the same machine as Velocity.
+The backend does not need to be on the same machine as Velocity.
 
-Depending on the setup, the Velocity backend address may be:
+The address might be:
 
 - a LAN IP
 - a Docker/container hostname
 - a private network address
 - another reachable hostname
 
-Do not use `127.0.0.1` for a server on another machine or an isolated container network.
+Do not use `127.0.0.1` for a backend on another machine or an isolated container network.
 
 ## What happens when nobody is using a server?
 
-For provider-controlled servers, HubPilot can shut down unused servers according to the configured idle settings.
+Provider-controlled servers can shut down according to their configured idle settings.
 
-HubPilot also supports failed-request shutdown. If a server was started for a player but all connection attempts fail, HubPilot can shut it back down instead of leaving an unused server running.
+HubPilot also supports failed-request shutdown. If a server was started for a player but every connection attempt fails, HubPilot can stop it again instead of leaving an unused server running.
 
-Both features are optional and are mainly meant to avoid wasting CPU and memory.
+Both behaviors are optional.
 
 ## Can HubPilot be used without Crafty Controller?
 
 Yes.
 
-Crafty Controller is the only external controller integration currently covered by live beta testing, but it is not required.
-
 HubPilot includes:
 
-- Always-On for servers whose power is managed elsewhere
+- Always-On
 - Crafty Controller
 - Pterodactyl
-- Generic HTTP for custom APIs, webhooks, and other hosting setups
+- Generic HTTP
 
-Pterodactyl and Generic HTTP have controlled testing behind them but do not yet have the same live beta coverage as Crafty.
+Crafty is simply the only external controller with live beta coverage so far. Pterodactyl and Generic HTTP have controlled testing behind them.
 
 ## Can HubPilot work with modded Minecraft servers?
 
 Yes, as long as the backend is registered behind Velocity and the client can actually connect to it.
 
-The important part is client compatibility. A modded backend may require:
+A modded backend may require:
 
-- the exact Minecraft version
+- an exact Minecraft version
 - the correct loader
 - the same modpack
 - the forwarding setup required by that server
 
-HubPilot strict-version settings can be used when a server should reject incompatible clients before attempting the transfer.
+Use HubPilot strict-version rules when incompatible clients should be blocked before a transfer is attempted.
 
-ViaVersion can still be used where cross-version clients are actually compatible with the backend.
+ViaVersion can still be used where cross-version clients are actually compatible.
 
 ## Why did HubPilot stop my server after I tried to join it?
 
-The server may have been started specifically for the request, but the connection never completed.
+The server may have been started for that request, but the connection never completed.
 
-If failed-request shutdown is enabled, HubPilot can stop that server again after the configured retries fail, provided it is safe to do so.
+If failed-request shutdown is enabled, HubPilot can stop the server again after the configured retries fail, as long as it is safe to do so.
 
-This prevents a failed join from leaving a server running indefinitely with nobody connected.
+That keeps a failed join from leaving an empty server running forever.
 
-Check the backend server log and the HubPilot/Velocity logs to find out why the connection failed before disabling failed-request shutdown.
+Check the backend log and the HubPilot/Velocity logs to find out why the connection failed before turning that feature off.

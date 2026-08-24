@@ -1,39 +1,39 @@
 # HubPilot 1.0.0
 
-HubPilot 1.0.0 is the first public release of the project.
+HubPilot 1.0.0 is the first public release of the full HubPilot suite.
 
-HubPilot was created based on the [AutoServer](https://github.com/artificial-720/AutoServer) plugin and expanded into a larger suite for server navigation, power control, management, telemetry, and hub interactions.
+HubPilot started on top of [AutoServer](https://github.com/artificial-720/AutoServer) and grew into a larger system for server navigation, power control, management, telemetry, and hub interactions.
 
-The project was created and is maintained by `ohHeyItsCon`. AI tools were used heavily during development for implementation, debugging, testing, code inspection, and documentation.
+The project is created and maintained by `ohHeyItsCon`. AI tools were used heavily for coding, debugging, testing, code inspection, and documentation.
 
-**Crafty Controller is the only external server-management controller covered by live beta testing for this release.** Pterodactyl and Generic HTTP support are included, but do not yet have the same live testing coverage.
+Crafty Controller is the only external server-management controller with live beta coverage for this release. Pterodactyl and Generic HTTP are included and have controlled test coverage, but they have not had the same live-network testing yet.
 
 ## Components
 
 - `HubPilot-Core-1.0.0.jar` - Velocity routing, server requests, providers, discovery, setup, permissions, status, and commands
 - `HubPilot-Hub-1.0.0.jar` - Navigator/admin UI, setup/staff bridge, and hub settings
 - `HubPilot-Interact-1.0.0.jar` - entity, sign, portal, and supported mannequin bindings
-- `HubPilot-Link-1.0.0.jar` - hub-side Link/telemetry bridge
+- `HubPilot-Link-1.0.0.jar` - hub-side communication and telemetry
 
 ## Main features
 
-- in-game server Navigator and administration
+- in-game server Navigator and admin tools
 - Crafty-backed on-demand startup, shutdown, and discovery
-- Always-On mode for servers HubPilot should not power-manage
-- Pterodactyl and Generic HTTP adapters for other hosting setups
+- Always-On provider for externally managed servers
+- Pterodactyl and Generic HTTP providers
 - offline request, retry, and countdown flow
 - idle and failed-request shutdown for resource saving
-- role-based HubPilot administration
-- hub/world interaction bindings
+- HubPilot roles and permissions
+- entity, sign, portal, and mannequin bindings
 - HubPilot telemetry through Link
-- compatibility with [ViaVersion](https://github.com/ViaVersion/ViaVersion)
-- compatibility with [LuckPerms](https://github.com/LuckPerms/LuckPerms) for hub-side permissions
+- ViaVersion compatibility
+- LuckPerms support for hub-side permission nodes
 
 ## Recommended layout
 
-Keep a small hub server online all the time and use Always-On for it. Larger backend servers can then stay offline until requested and be started through Crafty or another power provider.
+A simple setup keeps one lightweight hub online all the time and lets larger backends stay offline until somebody asks for them.
 
-Servers behind Velocity should each use a unique internal port. A `2560x` layout such as `25600`, `25601`, and `25602` is an easy convention, but any unused ports will work.
+Every server behind Velocity needs its own internal port. `25600`, `25601`, and `25602` are an easy convention, but any unused ports work.
 
 ## Release integrity
 
@@ -56,18 +56,18 @@ HubPilot-1.0.0.zip
 2676bbd9e7bd451aee9d4ce5720e966f39bf3190a19f8e1f7ddb1e621376e015
 ```
 
-All 411 packaged classes and 2,753 concrete method bodies passed JDK ASM BasicVerifier after the 1.0.0 release rebase. The final JARs also pass archive integrity and main-class checks.
+All 411 packaged classes and 2,753 concrete method bodies passed JDK ASM BasicVerifier after the 1.0.0 version rebase. The final JARs also passed archive integrity and main-class checks.
 
-The full release validation record is in `release/1.0.0/VALIDATION.txt`.
+The full validation record is in `release/1.0.0/VALIDATION.txt`.
 
 ## Testing scope
 
-The 1.0.0 code payload is based on the validated 3.5.18 release candidate. The previous 3.5.18 report listed three deployment-specific live checks that were not separately recorded as completed. The maintainer approved proceeding with the 1.0.0 public release after the final version-rebase and bytecode validation.
+The 1.0.0 code payload comes from the validated 3.5.18 release candidate. The older report listed a few deployment-specific live checks that were not separately recorded as completed. The release still went through the final version, archive, metadata, and bytecode checks before publication.
 
 ## Installation and troubleshooting
 
-See [Installation](../../docs/INSTALLATION.md), [Providers](../../docs/PROVIDERS.md), and the [FAQ](../../docs/FAQ.md) before configuring a public server.
+See [Installation](../../docs/INSTALLATION.md), [Providers](../../docs/PROVIDERS.md), and the [FAQ](../../docs/FAQ.md).
 
 ## License
 
-HubPilot is released under the MIT License. AutoServer's original MIT notice is retained in the repository and release JARs.
+HubPilot is MIT licensed. AutoServer's original MIT notice is kept in the repo and inside the release JARs.

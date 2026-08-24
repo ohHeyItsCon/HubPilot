@@ -1,14 +1,14 @@
 name: Bug report
-description: Report a HubPilot problem that can be reproduced
+description: Report a HubPilot problem you can reproduce
 title: "[Bug] "
 labels: [bug]
 body:
   - type: markdown
     attributes:
       value: |
-        Check the FAQ first for common server-name, port, provider, timeout, and Velocity-address problems: https://github.com/ohHeyItsCon/HubPilot/blob/main/docs/FAQ.md
+        Check the FAQ first. It covers the common server-name, port, provider, timeout, and Velocity-address problems: https://github.com/ohHeyItsCon/HubPilot/blob/main/docs/FAQ.md
 
-        Remove API keys, tokens, passwords, private URLs, and `secrets.yml` before posting. Crafty is currently the only controller path covered by live beta testing, so clearly note Pterodactyl or Generic HTTP issues.
+        Remove API keys, tokens, passwords, private URLs, and `secrets.yml` before posting. Crafty is still the only controller path with live beta coverage, so please say clearly if the issue is on Pterodactyl or Generic HTTP.
   - type: input
     id: version
     attributes:
@@ -20,7 +20,7 @@ body:
     id: components
     attributes:
       label: Installed HubPilot components
-      description: List Core, Hub, Interact, and Link and the plugins folder where each one is installed.
+      description: List Core, Hub, Interact, and Link, plus where each one is installed.
     validations:
       required: true
   - type: input
@@ -50,12 +50,12 @@ body:
   - type: textarea
     id: expected
     attributes:
-      label: Expected behavior
+      label: What did you expect to happen?
     validations:
       required: true
   - type: textarea
     id: logs
     attributes:
       label: Relevant logs
-      description: Paste only the useful section and redact secrets first.
+      description: Paste the useful section only and redact secrets first.
       render: text
