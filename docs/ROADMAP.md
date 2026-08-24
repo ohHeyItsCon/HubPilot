@@ -24,6 +24,20 @@ Minigames Hub
 
 Several physical hubs could share one profile, which would also give larger networks a base for load balancing and redundant hub instances.
 
+Multi-hub management should use a dedicated **Hub Manager** instead of mixing hub instances into the normal server selector. The normal server selector should stay focused on playable backend destinations, while the Hub Manager handles things that only apply to hubs.
+
+Possible Hub Manager controls include:
+
+- add or remove hub instances
+- assign a Navigator profile to each hub
+- place several physical hubs into one logical hub group
+- choose the main/default hub or hub group
+- view hub health, player count, and current profile
+- configure load-balancing and failover behavior
+- choose which hubs can be used by `/hub`, `/lobby`, and fallback routing
+
+That keeps a large network with several hub instances from turning the main server management GUI into one mixed list of hubs and game servers.
+
 ### Nested Navigator folders
 
 Let Navigator entries open another Navigator page instead of always pointing straight to a server. Small networks could use folders on one hub, while larger networks could use the same profile system across real sub-hubs.
