@@ -6,12 +6,14 @@ The HubPilot idea, feature direction, requirements, testing decisions, and relea
 
 AI tools have been used heavily for coding, debugging, code inspection, test harnesses, regression checks, and documentation. That is stated here plainly so there is no confusion about how the project was made.
 
-## Beta testing
+## Testing
 
 Live beta testing was done on a Velocity + Paper network using **Crafty Controller** for server management. Crafty is still the only external controller integration with that level of real-network testing.
 
-Pterodactyl and Generic HTTP are also included. Both have controlled implementation testing, but they have not had the same live beta coverage yet.
+Pterodactyl and Generic HTTP are included and have controlled implementation testing, but they have not had the same live beta coverage yet.
 
 Always-On is not a controller. It tells HubPilot to leave power management to another system.
+
+The 1.0.0 release artifacts were checked for archive integrity, internal versioning, main classes, bytecode validity, private data, and release hashes. The exact record is kept in [release/1.0.0/VALIDATION.txt](release/1.0.0/VALIDATION.txt).
 
 Testing notes will be updated as more setups are used in the real world.
