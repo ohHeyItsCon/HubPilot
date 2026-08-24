@@ -23,6 +23,16 @@ For controller testing, **Crafty Controller is the only external server-manageme
 
 Backend game servers do not need HubPilot JARs for normal routing, server requests, or provider power control.
 
+## Versioning and component updates
+
+HubPilot uses one unified version number across Core, Hub, Interact, and Link. Every public HubPilot release belongs to one suite version so it is clear which component builds were released and tested together.
+
+**Core and Hub should stay on the exact same HubPilot version.** These two components handle the main proxy-to-hub behavior and should be updated together.
+
+Link and Interact do not need to be replaced every time a release changes only Core or Hub. Release notes will state when an existing Link or Interact build remains compatible and when an update is required.
+
+As a general compatibility limit, Link and Interact should not be more than **two published HubPilot releases behind** Core and Hub. If a release explicitly says that Link or Interact must be updated, that requirement overrides the two-release grace period.
+
 ## Main features
 
 - Configurable server Navigator

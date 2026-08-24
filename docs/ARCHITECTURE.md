@@ -20,6 +20,16 @@ Link runs on the hub Bukkit/Paper server alongside Hub. It provides the HubPilot
 
 Backend game servers do not need HubPilot JARs for normal routing, server requests, or provider power control.
 
+## Versioning and component compatibility
+
+HubPilot releases use one unified version number across Core, Hub, Interact, and Link. This keeps the suite on one compatibility line and makes it possible for a release to require matching components when shared protocols or internal formats change.
+
+Core and Hub should run the exact same HubPilot version.
+
+Link and Interact can remain on an older build when a release does not change those components and the release notes state that the existing build remains compatible. They should not be more than **two published HubPilot releases behind** Core and Hub.
+
+If a release explicitly requires a new Link or Interact build, that requirement overrides the two-release grace period and the affected component should be updated immediately.
+
 ## Recommended network layout
 
 HubPilot works best with a small hub server that stays online while larger backend servers are started only when they are needed.

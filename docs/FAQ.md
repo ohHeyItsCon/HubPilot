@@ -79,6 +79,18 @@ Hub Paper/Bukkit server/plugins/
 
 Backend game servers normally do not need HubPilot JARs for server requests, startup/shutdown, or routing through Velocity.
 
+## Do I need to update every HubPilot component with every release?
+
+Not always.
+
+Core and Hub should stay on the exact same HubPilot version and should normally be updated together.
+
+Link and Interact can stay on an older build when the release notes say that the existing version remains compatible. They should not be more than **two published HubPilot releases behind** Core and Hub.
+
+If a release explicitly says that Link or Interact must be updated, update that component even if it is still within the normal two-release compatibility window.
+
+HubPilot still publishes one unified suite version so users can see which builds belong to the same release and major compatibility changes can require matching components when needed.
+
 ## Does the hub server have to remain online?
 
 It is strongly recommended.
