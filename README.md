@@ -11,6 +11,7 @@ HubPilot can keep a lightweight hub online while larger backend servers stay off
 Main features include:
 
 - configurable server Navigator
+- live Navigator telemetry updates while the GUI stays open
 - server requests with retries and countdowns
 - Crafty Controller, Pterodactyl, Generic HTTP, and Always-On providers
 - per-server Always-On lifecycle option for managed servers
@@ -69,6 +70,8 @@ Minigames -> Crafty / another power provider
 
 Starting with 1.0.1, a Crafty/Pterodactyl/Generic HTTP server can also be marked **Always-On server** in its Automation Settings. HubPilot can still start it through the provider if needed, but it will not automatically stop that server for idle time, failed requests, or an empty request queue.
 
+Navigator server items also update their telemetry while the menu stays open. HubPilot refreshes the open Navigator after each complete status sync, using the existing status cycle instead of adding another repeating task.
+
 Every server behind Velocity still needs its own listening port. The full setup, including provider API keys, port examples, discovery, ViaVersion, and LuckPerms, is covered in [Installation](docs/INSTALLATION.md) and [Server Providers](docs/PROVIDERS.md).
 
 ## Versioning
@@ -85,7 +88,9 @@ Core runs on Velocity. Hub, Interact, and Link target the Bukkit/Paper 1.21 API 
 
 Crafty Controller is the only external controller with live beta coverage from the 1.0.0 testing cycle. Pterodactyl and Generic HTTP are included and have controlled testing behind them, but not the same live network coverage yet.
 
-The 1.0.1 Always-On server path was tested across the exact packaged Hub and Core classes from Hub setting storage through settings transport, Core reload, and the effective lifecycle values used for managed servers.
+The 1.0.1 Always-On server path was tested across the exact packaged Hub and Core classes from Hub setting storage through settings transport, Core reload, and the effective lifecycle values used for managed servers. Live testing also confirmed that Always-On can override idle shutdown without blocking manual Stop Server.
+
+The live Navigator refresh uses the existing status-sync path. Exact packaged-code tests confirmed that open Navigator inventories update in place and refresh once after `STATUS_SYNC_END` instead of once for every server row.
 
 HubPilot works alongside [ViaVersion](https://github.com/ViaVersion/ViaVersion) and supports [LuckPerms](https://github.com/LuckPerms/LuckPerms) for normal hub-side permission nodes.
 
