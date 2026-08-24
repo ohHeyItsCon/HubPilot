@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.1 - 2026-08-24
+
+The first post-release update adds a per-server **Always-On server** option without changing the existing provider system.
+
+### Added
+
+- Always-On server toggle in Hub Automation Settings
+- global default and per-server override support through `hubpilot.properties`
+- Core handling for the new setting over the existing `hubpilot:settings` sync path
+
+When enabled on a managed server, HubPilot keeps provider startup available but disables its automatic idle, failed-request, and queue-empty shutdown behavior for that server. Manual Stop Server behavior is unchanged.
+
+Core and Hub should be updated together for 1.0.1. Interact 1.0.0 and Link 1.0.0 remain compatible because they have no functional changes in this release. Matching 1.0.1 builds are still published with the suite.
+
 ## 1.0.0 - 2026-08-23
 
 HubPilot 1.0.0 is the first public release of the full suite: Core, Hub, Interact, and Link.

@@ -2,10 +2,10 @@
 
 ## 1. Velocity proxy
 
-Put `HubPilot-Core-1.0.0.jar` in the Velocity proxy's `plugins` folder.
+Put `HubPilot-Core-1.0.1.jar` in the Velocity proxy's `plugins` folder.
 
 ```text
-velocity/plugins/HubPilot-Core-1.0.0.jar
+velocity/plugins/HubPilot-Core-1.0.1.jar
 ```
 
 Core only belongs on Velocity.
@@ -15,9 +15,9 @@ Core only belongs on Velocity.
 Put the hub-side JARs in the hub server's `plugins` folder.
 
 ```text
-hub/plugins/HubPilot-Hub-1.0.0.jar
-hub/plugins/HubPilot-Interact-1.0.0.jar
-hub/plugins/HubPilot-Link-1.0.0.jar
+hub/plugins/HubPilot-Hub-1.0.1.jar
+hub/plugins/HubPilot-Interact-1.0.1.jar
+hub/plugins/HubPilot-Link-1.0.1.jar
 ```
 
 - `HubPilot-Hub` is required for the HubPilot hub UI and setup flow.
@@ -27,6 +27,12 @@ hub/plugins/HubPilot-Link-1.0.0.jar
 Do not keep multiple versions of the same HubPilot component in one `plugins` folder.
 
 Backend game servers do not need HubPilot JARs for normal routing, server requests, or provider power control.
+
+### Updating from 1.0.0
+
+Update Core and Hub together to 1.0.1.
+
+Link 1.0.0 and Interact 1.0.0 remain compatible with 1.0.1 because they have no functional changes in this release. Matching 1.0.1 builds are still included so new installs can keep the whole suite on one version number.
 
 ## 3. Keep a hub online
 
@@ -42,6 +48,8 @@ Survival  -> Crafty / another power provider
 Modded    -> Crafty / another power provider
 Minigames -> Crafty / another power provider
 ```
+
+Starting in 1.0.1, a provider-controlled server that should stay running can also use the **Always-On server** toggle in Hub Automation Settings. This is different from the Always-On provider. The provider still controls startup and manual stop, while the lifecycle toggle prevents HubPilot from automatically shutting that server down.
 
 ## 4. Give every server its own port
 

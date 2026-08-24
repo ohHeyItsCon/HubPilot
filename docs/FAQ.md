@@ -69,12 +69,12 @@ The normal layout is:
 
 ```text
 Velocity proxy/plugins/
-└── HubPilot-Core-1.0.0.jar
+└── HubPilot-Core-1.0.1.jar
 
 Hub Paper/Bukkit server/plugins/
-├── HubPilot-Hub-1.0.0.jar
-├── HubPilot-Interact-1.0.0.jar
-└── HubPilot-Link-1.0.0.jar
+├── HubPilot-Hub-1.0.1.jar
+├── HubPilot-Interact-1.0.1.jar
+└── HubPilot-Link-1.0.1.jar
 ```
 
 Backend game servers normally do not need HubPilot JARs for requests, startup/shutdown, or routing through Velocity.
@@ -87,7 +87,7 @@ Core and Hub should stay on the exact same HubPilot version and should normally 
 
 Link and Interact can stay on an older build when the release notes say that build is still compatible. They should not be more than **two published HubPilot releases behind** Core and Hub.
 
-If a release says Link or Interact must be updated, update it even if it is still inside the normal two-release window.
+For 1.0.1 specifically, Core and Hub need the update. Link 1.0.0 and Interact 1.0.0 remain compatible because neither one has functional changes in 1.0.1.
 
 HubPilot still publishes one suite version so it is clear which builds belong to the same release.
 
@@ -104,7 +104,7 @@ Modded    -> Crafty / another power provider
 Minigames -> Crafty / another power provider
 ```
 
-Large networks with enough hardware can keep more servers online if they want. Future operating-mode presets are listed in the [roadmap](ROADMAP.md).
+Large networks with enough hardware can keep more servers online if they want.
 
 ## What does the Always-On provider actually do?
 
@@ -113,7 +113,7 @@ It tells HubPilot not to control that server's power.
 Use it for:
 
 - the hub
-- 24/7 servers
+- 24/7 servers managed outside HubPilot
 - paid hosts that handle startup
 - manually managed servers
 - Docker or systemd setups controlled outside HubPilot
@@ -121,7 +121,17 @@ Use it for:
 
 Always-On does not need a controller URL or API key.
 
-If an Always-On server is offline, something outside HubPilot has to start it.
+If an Always-On provider server is offline, something outside HubPilot has to start it.
+
+## What is the difference between the Always-On provider and the Always-On server option?
+
+They solve different problems.
+
+The **Always-On provider** means HubPilot does not own power control for that server at all. HubPilot cannot start or stop it.
+
+The **Always-On server** option added in 1.0.1 is a lifecycle setting for servers that still use a managed provider such as Crafty, Pterodactyl, or Generic HTTP. HubPilot can start those servers and manual Stop Server still works, but automatic idle, failed-request, and queue-empty shutdowns are disabled while the option is on.
+
+This lets a larger network keep popular servers running without giving up provider control.
 
 ## Why doesn't `/hp discover` show one of my servers?
 
@@ -179,7 +189,7 @@ Provider-controlled servers can shut down according to their configured idle set
 
 HubPilot also supports failed-request shutdown. If a server was started for a player but every connection attempt fails, HubPilot can stop it again instead of leaving an unused server running.
 
-Both behaviors are optional.
+If **Always-On server** is enabled for that server, these automatic shutdown paths are disabled.
 
 ## Can HubPilot be used without Crafty Controller?
 
@@ -215,6 +225,6 @@ The server may have been started for that request, but the connection never comp
 
 If failed-request shutdown is enabled, HubPilot can stop the server again after the configured retries fail, as long as it is safe to do so.
 
-That keeps a failed join from leaving an empty server running forever.
+If the server should stay running regardless of failed joins or idle time, enable **Always-On server** in its Automation Settings.
 
-Check the backend log and the HubPilot/Velocity logs to find out why the connection failed before turning that feature off.
+Check the backend log and the HubPilot/Velocity logs to find out why the connection failed before changing the lifecycle behavior.

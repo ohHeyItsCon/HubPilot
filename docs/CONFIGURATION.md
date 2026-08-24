@@ -71,12 +71,33 @@ countdown:
 
 Use it when a host, Docker, systemd, another panel, or another process manager keeps the server running. The hub is a common example because it normally stays online while larger backends are allowed to shut down.
 
-HubPilot can route players to an Always-On server while it is online, but it will not start or stop the process. A direct power action is rejected instead of pretending it worked.
+HubPilot can route players to an Always-On provider server while it is online, but it will not start or stop the process. A direct power action is rejected instead of pretending it worked.
 
 Built-in provider ID: `always-online`  
 Provider type: `always-on`
 
 If an offline server should start when somebody requests it, give that server a power provider instead.
+
+## Always-On server option
+
+Added in 1.0.1, **Always-On server** is a lifecycle setting and is separate from the Always-On provider.
+
+A server can use Crafty, Pterodactyl, Generic HTTP, or another managed provider and still have Always-On server enabled. When it is on, HubPilot keeps provider startup available but disables automatic shutdown for:
+
+- idle time
+- failed player requests
+- an empty startup/request queue
+
+Manual Stop Server still works.
+
+The setting is available in Hub Automation Settings and can be set globally or overridden per server. It is stored in the synchronized `hubpilot.properties` file as:
+
+```properties
+global.always-on-server=false
+server.<server-id>.always-on-server=true
+```
+
+The default is `false`, so upgrading from 1.0.0 does not change existing lifecycle behavior until the option is enabled.
 
 ## Startup and retry timing
 

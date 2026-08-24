@@ -1,0 +1,143 @@
+HubPilot 1.0.1 - release validation
+===================================
+Date: 2026-08-24
+
+Release change
+--------------
+1.0.1 adds the per-server Always-On server option.
+
+This is separate from the Always-On provider. A server can still use Crafty, Pterodactyl, Generic HTTP, or another managed provider while being marked Always-On.
+
+When Always-On server is enabled, HubPilot keeps provider startup available but disables its automatic shutdown paths for that server:
+- idle shutdown
+- failed-request shutdown
+- queue-empty shutdown
+
+Manual server stop behavior is unchanged.
+
+Final artifacts
+---------------
+HubPilot-Core-1.0.1.jar
+HubPilot-Hub-1.0.1.jar
+HubPilot-Interact-1.0.1.jar
+HubPilot-Link-1.0.1.jar
+
+SHA-256
+-------
+Core     a985b29d0c2b8253e2240f5aff293172f2ad39dee0c5015655ce8532bd773b84
+Hub      166e4e1482eab3ef622c6283df65c5e95f873b3da6dba2d58195221ccb2d4c93
+Interact c19a6a25d3d2e6c3f4803a97d9950b8a4d5ad3403bff8313717c93e4eb27ed4f
+Link     5fc5b10ada5fa7f3b6ce5bacf81c4d6ee3b80516446f768db9883d240d91fc26
+
+SWEEP 1 - archive, metadata, and version integrity: PASS
+--------------------------------------------------------
+- All four exact final JARs pass ZIP/JAR integrity testing.
+- Core velocity-plugin.json reports 1.0.1.
+- Hub, Interact, and Link plugin.yml files report 1.0.1.
+- Every declared plugin main class exists in its final JAR.
+- No 1.0.0 or 3.5.18 version strings remain in the final JAR content.
+- Existing HubPilot and AutoServer license/author metadata remains packaged.
+
+SWEEP 2 - bytecode/control-flow verification: PASS
+--------------------------------------------------
+JDK-internal ASM ClassReader + BasicVerifier ran against every concrete method body in the exact final JARs.
+
+Core:     300 classes, 2029 methods, 2001 concrete bodies
+Hub:       98 classes,  636 methods,  634 concrete bodies
+Interact:  11 classes,  102 methods,  102 concrete bodies
+Link:       3 classes,   21 methods,   21 concrete bodies
+TOTAL:    412 classes, 2788 methods, 2758 concrete bodies
+Failures: 0
+
+SWEEP 3 - Hub setting storage and inheritance: PASS
+---------------------------------------------------
+The exact 1.0.1 Hub SettingKey and HubPilotStore were executed.
+
+Verified:
+- Always-On server defaults to false.
+- A global Always-On value is inherited by servers with no override.
+- A per-server value overrides the global value.
+- The setting persists as global.always-on-server / server.<id>.always-on-server in hubpilot.properties.
+
+SWEEP 4 - Hub settings transport: PASS
+--------------------------------------
+The exact 1.0.1 Hub SettingsSyncSender was executed with the real HubPilotStore.
+
+Verified that a server Always-On value is included in the SETTINGS_SNAPSHOT payload sent over hubpilot:settings.
+
+SWEEP 5 - Core settings acceptance and filtering: PASS
+------------------------------------------------------
+The exact 1.0.1 Core SettingsSyncHook was executed.
+
+Verified:
+- always-on-server is accepted for global and per-server settings.
+- an unknown test setting is filtered out.
+- the accepted snapshot is written to hubpilot.properties.
+- Core reloads after the synchronized settings file changes.
+
+SWEEP 6 - exact Hub -> Core Always-On round trip: PASS
+------------------------------------------------------
+An integration harness used the exact packaged 1.0.1 Hub and Core classes for the changed path:
+
+HubPilotStore
+-> Hub SettingsSyncSender
+-> hubpilot:settings SETTINGS_SNAPSHOT bytes
+-> Core SettingsSyncHook
+-> sanitized hubpilot.properties
+-> HubPilotConfig.reload()
+-> ManagedServer used by Core lifecycle logic
+
+A Crafty-backed test server marked Always-On finished the round trip with:
+- provider still set to crafty
+- autoStartEnabled = true
+- stopAfterFailure = false
+- stopWhenQueueEmpty = false
+- idleShutdownMinutes = 0
+
+Turning the setting back off and reloading restored the normal configured/default shutdown values.
+
+SWEEP 7 - Hub GUI wiring: PASS
+------------------------------
+Exact final Hub bytecode was inspected after patching.
+
+Verified:
+- SettingKey includes ALWAYS_ON_SERVER with property always-on-server and default false.
+- Automation Settings slot 25 renders the Always-On server toggle.
+- the listener maps slot 25 to ALWAYS_ON_SERVER.
+- normal click toggles the boolean using the same path as the existing boolean automation settings.
+- the GUI description states that automatic HubPilot shutdown is disabled while provider startup still works.
+
+SWEEP 8 - regression boundary and public scrub: PASS
+----------------------------------------------------
+Compared 1.0.1 to the exact 1.0.0 release after normalizing only release-version metadata.
+
+Functional changes are limited to:
+Core:
+- ADDED   dev/hubpilot/core/OperatingModeRules.class
+- CHANGED dev/hubpilot/core/HubPilotConfig.class
+- CHANGED dev/hubpilot/core/SettingsSyncHook.class
+
+Hub:
+- CHANGED dev/hubpilot/hub/bridge/SettingKey.class
+- CHANGED dev/hubpilot/hub/bridge/HubPilotMenuBuilder.class
+- CHANGED dev/hubpilot/hub/bridge/HubPilotMenuListener.class
+
+Interact:
+- no functional changes
+
+Link:
+- no functional changes
+
+LifecycleManager and the existing manual stop implementation are unchanged from 1.0.0. The new mode works by changing the effective per-server lifecycle values Core reads, so manual Stop Server behavior is not blocked.
+
+Final JARs were also scanned for known private deployment names/paths and test/harness class leakage. No private server names, NAS paths, or packaged test/harness classes were found. The public ohHeyItsCon author/license attribution remains intentionally present.
+
+Compatibility note
+------------------
+Core and Hub should be updated together to 1.0.1.
+
+Interact 1.0.0 and Link 1.0.0 remain compatible with 1.0.1 because neither component has functional changes in this release. Matching 1.0.1 JARs are still provided to keep the suite on one public version number.
+
+Testing scope
+-------------
+The changed Hub -> Core path has exact packaged-code integration coverage and all packaged bytecode passes verification. A real Velocity + Paper network remains the final field environment for live acceptance after installation.

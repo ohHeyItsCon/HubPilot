@@ -2,7 +2,7 @@
 
 HubPilot is a Minecraft server-network suite for Velocity + Paper/Bukkit. It started on top of [AutoServer](https://github.com/artificial-720/AutoServer) and grew into a larger system for server navigation, on-demand startup, provider control, hub management, and telemetry.
 
-> **Current release:** HubPilot 1.0.0
+> **Current release:** HubPilot 1.0.1
 
 ## What HubPilot does
 
@@ -13,6 +13,7 @@ Main features include:
 - configurable server Navigator
 - server requests with retries and countdowns
 - Crafty Controller, Pterodactyl, Generic HTTP, and Always-On providers
+- per-server Always-On lifecycle option for managed servers
 - idle and failed-request shutdown for resource saving
 - per-server version rules
 - Owner, Admin, Moderator, and Helper roles
@@ -39,15 +40,15 @@ Backend game servers do not need HubPilot JARs for normal routing, requests, or 
 Put Core on Velocity:
 
 ```text
-velocity/plugins/HubPilot-Core-1.0.0.jar
+velocity/plugins/HubPilot-Core-1.0.1.jar
 ```
 
 Put Hub and Link on the Paper/Bukkit hub. Interact is optional:
 
 ```text
-hub/plugins/HubPilot-Hub-1.0.0.jar
-hub/plugins/HubPilot-Link-1.0.0.jar
-hub/plugins/HubPilot-Interact-1.0.0.jar
+hub/plugins/HubPilot-Hub-1.0.1.jar
+hub/plugins/HubPilot-Link-1.0.1.jar
+hub/plugins/HubPilot-Interact-1.0.1.jar
 ```
 
 Restart Velocity, restart the hub, join as an operator, then run:
@@ -66,6 +67,8 @@ Modded    -> Crafty / another power provider
 Minigames -> Crafty / another power provider
 ```
 
+Starting with 1.0.1, a Crafty/Pterodactyl/Generic HTTP server can also be marked **Always-On server** in its Automation Settings. HubPilot can still start it through the provider if needed, but it will not automatically stop that server for idle time, failed requests, or an empty request queue.
+
 Every server behind Velocity still needs its own listening port. The full setup, including provider API keys, port examples, discovery, ViaVersion, and LuckPerms, is covered in [Installation](docs/INSTALLATION.md) and [Server Providers](docs/PROVIDERS.md).
 
 ## Versioning
@@ -74,13 +77,15 @@ All four HubPilot plugins share one public version number.
 
 **Core and Hub should always run the same HubPilot version.** Link and Interact can stay on an older build when the release notes say that build is still compatible, but they should not be more than **two published HubPilot releases behind** Core and Hub.
 
-If a release says Link or Interact must be updated, that requirement overrides the normal two-release window.
+For 1.0.1, Core and Hub need to be updated together. Link 1.0.0 and Interact 1.0.0 remain compatible because neither component has functional changes in this release.
 
 ## Compatibility and testing
 
 Core runs on Velocity. Hub, Interact, and Link target the Bukkit/Paper 1.21 API family.
 
-Crafty Controller is the only external controller with live beta coverage for 1.0.0. Pterodactyl and Generic HTTP are included and have controlled testing behind them, but not the same live network coverage yet.
+Crafty Controller is the only external controller with live beta coverage from the 1.0.0 testing cycle. Pterodactyl and Generic HTTP are included and have controlled testing behind them, but not the same live network coverage yet.
+
+The 1.0.1 Always-On server path was tested across the exact packaged Hub and Core classes from Hub setting storage through settings transport, Core reload, and the effective lifecycle values used for managed servers.
 
 HubPilot works alongside [ViaVersion](https://github.com/ViaVersion/ViaVersion) and supports [LuckPerms](https://github.com/LuckPerms/LuckPerms) for normal hub-side permission nodes.
 
@@ -95,7 +100,7 @@ HubPilot works alongside [ViaVersion](https://github.com/ViaVersion/ViaVersion) 
 - [Architecture](docs/ARCHITECTURE.md)
 - [Roadmap](docs/ROADMAP.md)
 - [Project Transparency](TRANSPARENCY.md)
-- [1.0.0 Validation Record](release/1.0.0/VALIDATION.txt)
+- [1.0.1 Validation Record](release/1.0.1/VALIDATION.txt)
 - [Security](SECURITY.md)
 
 ## License and project history
