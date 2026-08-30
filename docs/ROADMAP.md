@@ -73,6 +73,22 @@ As part of setup, HubPilot should perform an initial server/world discovery and 
 
 This hub selection should also provide the starting point for future multi-hub support, where more than one discovered hub can be assigned to the Hub Manager and given hub-specific profiles, routing, lifecycle, and failover rules.
 
+When multi-hub support is released, setup should also offer a separate **Multi-Hub Setup** path instead of forcing larger networks through the normal single-hub flow. That setup would be focused on identifying and organizing several hubs at once.
+
+Possible Multi-Hub Setup steps include:
+
+- discover available hub candidates
+- select every server that should be treated as a hub
+- choose the main/default hub or hub group
+- create hub groups for identical or load-balanced hub instances
+- assign a Navigator profile to each hub or group
+- choose `/hub`, `/lobby`, and fallback routing targets
+- configure hub-specific lifecycle rules
+- configure load balancing and failover defaults
+- review the resulting Hub Manager layout before applying it
+
+The normal setup path would stay simple for single-hub networks, while Multi-Hub Setup would handle the extra decisions that only matter when several hubs are present.
+
 Possible questions:
 
 - small, medium, or large network?
