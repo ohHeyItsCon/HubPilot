@@ -16,6 +16,12 @@ If the hub is added or treated as a normal managed server, it can inherit the gl
 
 For a normal HubPilot network, the hub is usually expected to stay online so players always have somewhere to land while other servers start.
 
+#### Current planned fix
+
+The current plan is to expand `/hp setup` with an initial server/world discovery step and ask which discovered server is the hub. The selected hub would be assigned hub-specific lifecycle rules instead of being treated as a normal managed backend.
+
+That same hub-role foundation can later expand into the dedicated Hub Manager and multi-hub system described in the [roadmap](docs/ROADMAP.md).
+
 #### Workaround
 
 Until this is fixed:
