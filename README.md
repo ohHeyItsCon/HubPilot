@@ -88,7 +88,7 @@ Core runs on Velocity. Hub, Interact, and Link target the Bukkit/Paper 1.21 API 
 
 Crafty Controller is the only external controller with live beta coverage from the 1.0.0 testing cycle. Pterodactyl and Generic HTTP are included and have controlled testing behind them, but not the same live network coverage yet.
 
-The 1.0.1 Always-On server path was tested across the exact packaged Hub and Core classes from Hub setting storage through settings transport, Core reload, and the effective lifecycle values used for managed servers. Live testing also confirmed that Always-On can override idle shutdown without blocking manual Stop Server.
+The 1.0.1 Always-On path passed packaged and live testing without blocking manual Stop Server. Live Navigator testing confirmed startup progress from 0% to 100%, changing ping, Online status, countdown, and player transfer without reopening the menu. Crafty discovery, duplicate migration, shared layouts, and Admin editing were also tested on the final release build.
 
 The live Navigator refresh uses the existing status-sync path. Exact packaged-code tests confirmed that open Navigator inventories update in place and refresh once after `STATUS_SYNC_END` instead of once for every server row.
 
@@ -106,6 +106,7 @@ HubPilot works alongside [ViaVersion](https://github.com/ViaVersion/ViaVersion) 
 - [Roadmap](docs/ROADMAP.md)
 - [Project Transparency](TRANSPARENCY.md)
 - [1.0.1 Validation Record](release/1.0.1/VALIDATION.txt)
+- [1.0.1 Release Notes](release/1.0.1/RELEASE-NOTES.md)
 - [Security](SECURITY.md)
 
 ## License and project history

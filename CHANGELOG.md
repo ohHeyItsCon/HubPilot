@@ -11,6 +11,20 @@ The first post-release update adds a per-server **Always-On server** option and 
 - Core handling for the new setting over the existing `hubpilot:settings` sync path
 - live Navigator telemetry updates while the GUI stays open
 
+### Fixed during testing
+
+- Crafty-only servers can now be discovered from Crafty's API-reported name, address, port, and UUID without editing `velocity.toml`.
+- Crafty-discovered Velocity registrations are persisted and restored when Core restarts.
+- Crafty discovery now honors trusted-LAN TLS mode consistently when the panel is addressed by a LAN IP.
+- Crafty display names are reconciled with equivalent existing Velocity names so discovery does not create hyphenated duplicates.
+- Crafty servers are also reconciled by their registered Velocity address, covering aliases such as `the-hub` and `hub` whose names are not textually equivalent.
+- Discovery repairs aliases imported by earlier prerelease builds: duplicate Core definitions are archived for recovery and only their matching Navigator destinations are removed.
+- The Admin destination menu and player Navigator now render destinations from the same saved slot layout, and admin clicks resolve through that shared layout.
+- Admin destination cards retain their exact server identity in the open inventory, restoring left-click editing after the shared-layout change.
+- Fixed a Paper runtime linkage error in the Admin click patch by compiling `Player.openInventory` with Bukkit's correct `InventoryView` return type.
+
+Full release notes, including which fixes introduced follow-up bugs and how each was corrected, are available in [release/1.0.1/RELEASE-NOTES.md](release/1.0.1/RELEASE-NOTES.md).
+
 When Always-On server is enabled on a managed server, HubPilot keeps provider startup available but disables its automatic idle, failed-request, and queue-empty shutdown behavior for that server. Manual Stop Server behavior is unchanged.
 
 Open Navigator menus now refresh their server items after each complete status sync. The refresh uses the existing status cycle and happens once at `STATUS_SYNC_END`, so it does not add another repeating scheduler or rebuild once per server row.

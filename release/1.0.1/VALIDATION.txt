@@ -1,11 +1,14 @@
-HubPilot 1.0.1 - pre-release validation
-=======================================
-Date: 2026-08-24
+HubPilot 1.0.1 - release validation
+===================================
+Last updated: 2026-08-26
 
 Release changes
 ---------------
 1. Per-server Always-On server lifecycle option.
 2. Live Navigator telemetry refresh while the Navigator GUI remains open.
+3. Crafty-backed discovery and dynamic Velocity registration.
+4. Duplicate discovery migration and Navigator cleanup.
+5. Shared Admin and player Navigator layout.
 
 Always-On server
 ----------------
@@ -30,8 +33,8 @@ The corrected 1.0.1 Hub JAR was rebuilt and revalidated. Exact packaged-bytecode
 - the refresh path updates only open DestinationMenuHolder inventories.
 - unrelated open inventories are ignored.
 
-Final pre-release artifacts
----------------------------
+Final release artifacts
+-----------------------
 HubPilot-Core-1.0.1.jar
 HubPilot-Hub-1.0.1.jar
 HubPilot-Interact-1.0.1.jar
@@ -39,22 +42,27 @@ HubPilot-Link-1.0.1.jar
 
 SHA-256
 -------
-Core     a985b29d0c2b8253e2240f5aff293172f2ad39dee0c5015655ce8532bd773b84
-Hub      d58201571d0513a013c4111de640afb5cf06838e722fe49cc700874ce799e02c
+Core     2757c7c872a3015ff683c5c084e76611e9d1e3dbcc51435d8b4a20c605e1a8bd
+Hub      e7b4f70d6a35f4282f0f5eb83137d4369120de9d0a4fac11d203bbe690913815
 Interact c19a6a25d3d2e6c3f4803a97d9950b8a4d5ad3403bff8313717c93e4eb27ed4f
 Link     5fc5b10ada5fa7f3b6ce5bacf81c4d6ee3b80516446f768db9883d240d91fc26
+ZIP      d7f1a51a8def902d43ee729b766820c10abc2d83b36e89f1fd615bf6fb807f23
 
 SWEEP 1 - archive, metadata, and version integrity: PASS
 --------------------------------------------------------
-- All four exact JARs pass ZIP/JAR integrity testing.
+- All four final JARs are assembled in HubPilot-1.0.1.zip and pass archive inspection.
+- Every artifact matches the SHA-256 value listed above and in CHECKSUMS-SHA256.txt.
 - Core velocity-plugin.json reports 1.0.1.
 - Hub, Interact, and Link plugin.yml report 1.0.1.
 - Every declared plugin main class exists.
 - Existing HubPilot and AutoServer license/author metadata remains packaged.
 
-SWEEP 2 - bytecode/control-flow verification: PASS
---------------------------------------------------
-JDK-internal ASM ClassReader + BasicVerifier ran against every concrete method body in the corrected exact JARs.
+SWEEP 2 - bytecode/control-flow and changed-path verification: PASS
+-------------------------------------------------------------------
+The whole-suite ASM baseline completed with the totals below. Later changed packaged paths were
+compiled and inspected individually. Runtime harnesses covered discovery registration, duplicate
+migration, Hub destination cleanup, and live Navigator refresh. Final Admin menu bytecode was
+checked against Paper's exact openInventory descriptor and then passed live testing.
 
 Core:     300 classes, 2029 methods, 2001 concrete bodies
 Hub:       99 classes,  638 methods,  636 concrete bodies
@@ -125,9 +133,10 @@ Only these functional differences were introduced by the correction:
 
 No Core, Interact, or Link changes were needed for this correction.
 
-SWEEP 10 - public scrub: PASS
------------------------------
-The corrected JARs were checked for known private deployment names/paths and packaged test/harness classes. No private server names, NAS paths, or test/harness classes are packaged.
+SWEEP 10 - final bundle public scrub: PASS
+------------------------------------------
+The final four-JAR bundle and release notes use generic deployment examples. No private server
+names were found in the public release package.
 
 Live field status
 -----------------
@@ -135,7 +144,13 @@ Always-On server has already passed live testing on the maintainer network:
 - a managed server stayed online past a shortened idle-shutdown timer while Always-On was enabled.
 - manual Stop Server still worked with Always-On enabled.
 
-The corrected live Navigator refresh still needs one final real Velocity + Paper visual field test before 1.0.1 should be promoted from pre-release to stable.
+The final combined build has passed live Velocity + Paper testing:
+- Navigator startup progress changed from 0% to 100% without reopening the menu.
+- ping and Online status updated in place.
+- countdown and transfer completed normally.
+- duplicate discovery records were repaired without removing the original servers.
+- Admin and player menu layouts matched.
+- Admin left-click editing worked after the final Paper API linkage correction.
 
 Compatibility
 -------------
