@@ -84,7 +84,9 @@ The result would only be a starting preset. Every setting would still be editabl
 
 ### Better queue controls
 
-Possible additions include queue position, estimated wait time, queue limits, canceling a request, staff/VIP priority, and better handling when several players request the same offline server.
+**The first queue improvements are planned for 1.0.2, the Queue Update.** That release is scoped to configurable join-flow messages, message visibility, formatted server names, queue position, cancellation feedback, previews, placeholders, and global/per-server inheritance.
+
+Later queue additions may include estimated wait time, queue limits, staff/VIP priority, and more advanced handling when several players request the same offline server.
 
 ## Core
 
