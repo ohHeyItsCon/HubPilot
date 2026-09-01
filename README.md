@@ -2,7 +2,8 @@
 
 HubPilot is a Minecraft server-network suite for Velocity + Paper/Bukkit. It started on top of [AutoServer](https://github.com/artificial-720/AutoServer) and grew into a larger system for server navigation, on-demand startup, provider control, hub management, and telemetry.
 
-> **Current pre-release:** HubPilot 1.0.2 — Queue Update  
+> **Current pre-release:** HubPilot 1.0.2 — Queue Update
+>
 > **Current stable release:** HubPilot 1.0.1
 
 ## What HubPilot does
