@@ -99,6 +99,40 @@ server.<server-id>.always-on-server=true
 
 The default is `false`, so upgrading from 1.0.0 does not change existing lifecycle behavior until the option is enabled.
 
+## Join and queue messages
+
+HubPilot 1.0.2 adds an in-game editor for messages used during server requests, startup queues, countdowns, retries, and transfers.
+
+Open **Automation Settings**, then select **Join & Queue Messages**. Global settings are inherited by every server unless that server has its own override.
+
+Controls:
+
+- left-click: show or hide the event
+- right-click: edit the template in chat
+- middle-click: preview the template
+- shift-right-click: reset the global default or clear a server override
+
+Templates use `&` color codes. `{server}` uses the same bold white server-name format as the Navigator item. Use `{server_plain}` when formatting should be supplied entirely by the template.
+
+Other event-specific placeholders include `{position}`, `{queue_size}`, `{seconds}`, `{attempt}`, `{max}`, `{delay}`, `{required}`, `{current}`, and `{error}`.
+
+Fresh installations use event-based entries in `messages/en_US.yml`:
+
+```yaml
+events:
+  queue-position:
+    enabled: true
+    text: "&7You are now queue position &f{position}&7 of &f{queue_size}&7 for {server}&7."
+```
+
+Existing flat entries remain valid:
+
+```yaml
+starting: "Starting <server>... You are queued."
+```
+
+In-game edits are saved in `hubpilot.properties` and sent to Core through the trusted `hubpilot:settings` channel. Provider secrets and unrelated settings are not accepted through that channel.
+
 ## Startup and retry timing
 
 Large modded servers can take a lot longer to become connectable than a small Paper server. If the controller starts the process but HubPilot times out before Minecraft begins listening, increase the startup or ping timeout values for that server.

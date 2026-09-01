@@ -1,5 +1,30 @@
 # Changelog
 
+## 1.0.2 - 2026-09-01 (pre-release)
+
+The **Queue Update** adds configurable join-flow messages and clearer startup-queue feedback.
+
+### Added
+
+- in-game Join & Queue Messages editor under Automation Settings
+- per-event show/hide controls, text editing, previews, and reset/inherit controls
+- global message defaults with optional per-server overrides
+- queue position when joining and updates only when the position changes
+- separate configurable `/hp cancel` success and no-pending-request messages
+- `{server}` formatting that matches the Navigator server-name style
+- event placeholders for queue, countdown, retry, version, and failure information
+- backward compatibility with flat 1.0.1 message files and `<placeholder>` syntax
+
+### Fixed during testing
+
+- hiding countdown text no longer disables the configured countdown sound
+- Paper countdown feedback now preserves custom message colors instead of forcing yellow
+- the trusted settings filter now carries valid message settings without accepting unrelated or sensitive keys
+
+Core and Hub must be updated together. Link and Interact have no functional changes; matching 1.0.2 builds are included for suite-wide version consistency.
+
+See [release/1.0.2/RELEASE-NOTES.md](release/1.0.2/RELEASE-NOTES.md) for update instructions and current field-test status.
+
 ## 1.0.1 - 2026-08-24
 
 The first post-release update adds a per-server **Always-On server** option and live Navigator telemetry refresh without changing the existing provider system.

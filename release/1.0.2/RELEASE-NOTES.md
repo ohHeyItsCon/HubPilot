@@ -1,108 +1,137 @@
 # HubPilot 1.0.2 — Queue Update
 
-> Development pre-release draft. Features and testing results must be verified against the final packaged build before publication.
+HubPilot 1.0.2 makes the server request and startup queue easier to understand and easier to customize.
 
-HubPilot 1.0.2 focuses on the messages players see while HubPilot starts a server, manages its queue, and completes the connection.
+This is a pre-release. The packaged builds have passed controlled validation, but the new message editor and multi-player queue-position flow still need a short live test on Velocity and Paper before 1.0.2 is promoted to stable.
 
-## Planned changes
+## Join and queue message controls
 
-### Configurable join-flow messages
+The messages shown while HubPilot starts and joins a server can now be managed in-game.
 
-Server owners will be able to control the messages shown during the complete join flow.
+- Open **Automation Settings**, then select **Join & Queue Messages**.
+- Left-click a message to show or hide it.
+- Right-click a message to edit its text, colors, and formatting in chat.
+- Middle-click a message to preview it.
+- Shift-right-click a message to restore the built-in default or inherit the global message.
+- Configure global defaults or give an individual server its own overrides.
+- Changes use the existing trusted Hub-to-Core settings channel and do not require a network restart.
 
-- Show or hide individual message events
-- Edit message text, colors, and formatting
-- Preview messages from the Admin menu
-- Restore individual messages to their defaults
-- Use global defaults with optional per-server overrides
-- Reload message changes without restarting the network
+The editor covers these events:
 
-Planned configurable events include:
+- already connected
+- request sent
+- server unavailable
+- automatic startup disabled
+- server starting
+- server already starting
+- queue joined
+- already queued
+- queue position changed
+- server ready
+- countdown
+- joining
+- connection failed
+- retrying
+- request canceled
+- no pending request
+- start failed
+- maintenance
+- wrong client version
+- missing permission
 
-- Already connected
-- Connecting
-- Server unavailable
-- Automatic startup disabled
-- Starting server
-- Already starting
-- Added to queue
-- Already queued
-- Queue position changed
-- Server ready
-- Countdown
-- Joining
-- Connection failed
-- Retrying
-- Request canceled
-- No pending request
-- Start failed
-- Maintenance
-- Wrong version
-- Missing permission
+Templates remain tied to known HubPilot events. This update does not add arbitrary commands or event scripting.
 
-### Shared server-name formatting
+## Queue feedback
 
-The `{server}` placeholder will use the same display name, color, and formatting shown by the server in the Navigator instead of falling back to an unformatted internal server name.
+- Players are told their position when they enter a startup queue.
+- Position updates are sent only when a player's position actually changes.
+- Leaving, disconnecting, or using `/hp cancel` updates the remaining players' positions.
+- `/hp cancel` now has separate configurable messages for a canceled request and for having no pending request.
 
-Message templates will support placeholders appropriate to their event, including:
+## Server-name formatting
 
-- `{server}`
+`{server}` now uses the same bold white server-name style as the Navigator item instead of showing an unformatted internal name.
+
+`{server_plain}` is also available when a template needs the display name without Navigator formatting.
+
+Other placeholders are available where the event supplies them:
+
+- `{id}`
 - `{position}`
 - `{queue_size}`
 - `{seconds}`
 - `{attempt}`
-- `{max_attempts}`
+- `{max}`
 - `{delay}`
-- `{required_version}`
-- `{current_version}`
+- `{required}`
+- `{current}`
 - `{error}`
 
-### Queue position and cancellation feedback
+Both `{placeholder}` and the older `<placeholder>` style are accepted.
 
-- Players will be told their position when joining a startup queue.
-- Position updates will only be sent when a player's position changes.
-- `/hp cancel` will use configurable success and no-pending-request messages.
-- Queue messages will use the same visibility and formatting controls as the rest of the join flow.
+## Configuration compatibility
 
-### Safe custom templates
+- Existing flat `messages/en_US.yml` entries from 1.0.1 remain supported.
+- Fresh installations receive the new event-based message defaults.
+- In-game edits are stored with the existing HubPilot settings and synchronized to Core through `hubpilot:settings`.
+- Core continues to reject unrelated or sensitive keys from the settings payload.
+- Existing server, provider, discovery, destination, layout, and telemetry files do not need to be replaced.
 
-Owners will be able to create custom templates for supported HubPilot events. Arbitrary event scripting is outside the scope of 1.0.2; every template must be attached to a known event so HubPilot knows when and where to display it.
+## Bugs found and fixed during this update
 
-## Configuration plan
+### Hiding the countdown message also silenced its sound
 
-- `messages/en_US.yml` remains the source for global message defaults.
-- Each event stores an enabled state and message template.
-- Per-server overrides inherit from the global event unless explicitly changed.
-- Existing 1.0.1 flat message entries remain compatible and are migrated without losing custom text.
-- Core owns lifecycle, startup, queue, retry, and transfer messages.
-- Hub owns immediate Navigator feedback and the in-game message editor.
+**Found after:** Message visibility controls were added to the countdown path.
 
-## Compatibility
+The first implementation stopped the whole countdown announcement when its text was hidden. That also stopped the existing countdown sound even though only the message had been disabled.
 
-- Core and Hub must be updated together for 1.0.2.
-- Existing 1.0.1 server, provider, destination, layout, and message files will remain supported.
-- Existing Always-On behavior, Crafty discovery, live Navigator telemetry, and Admin layout behavior must remain unchanged.
-- Link and Interact compatibility will be confirmed before the pre-release is published.
+**Fixed:** Countdown text and countdown sound are now handled separately. A hidden countdown message produces no blank chat or action-bar line, while the configured sound continues normally.
 
-## Testing required before publication
+### Countdown colors were lost on the Paper hub
 
-- Upgrade from an existing customized 1.0.1 `messages/en_US.yml`
-- Fresh-install default generation
-- Global visibility toggles
-- Per-server inheritance and overrides
-- Navigator-formatted `{server}` output
-- Queue positions with several players
-- Position updates after a player leaves or cancels
-- Cancellation with and without a pending request
-- Hidden messages producing no blank chat lines
-- Placeholder replacement and unknown-placeholder handling
-- Countdown, retry, failure, and successful transfer flows
-- Velocity and Paper restart persistence
-- Regression checks for Always-On, discovery, live telemetry, shared layouts, and Admin editing
+**Found after:** Countdown messages were changed from fixed text to editable templates.
+
+The Hub feedback bridge treated the received template as plain text and forced a yellow prefix, so custom colors could be ignored or displayed incorrectly.
+
+**Fixed:** The bridge now applies the template's legacy color formatting before displaying the action bar and no longer forces one color.
+
+### Message settings could be dropped by the existing sync filter
+
+**Found after:** The message editor was connected to the existing Hub-to-Core settings channel.
+
+The original filter only accepted the automation keys used by 1.0.1. New message keys would have been removed before Core reloaded them.
+
+**Fixed:** The filter now accepts only the defined global and per-server message-key shapes while continuing to reject provider credentials, unknown fields, and unrelated settings.
+
+## Preserved 1.0.1 behavior
+
+- per-server Always-On behavior
+- manual provider start and stop controls
+- Crafty discovery and dynamic Velocity registration
+- duplicate discovery repair
+- live Navigator telemetry refresh
+- shared Admin and player Navigator layouts
+- Admin left-click server editing
+- the corrected Paper `openInventory` runtime signature
+
+## Updating
+
+Update Core and Hub together:
+
+- `HubPilot-Core-1.0.2.jar` on Velocity
+- `HubPilot-Hub-1.0.2.jar` on the Paper hub
+
+HubPilot Link and HubPilot Interact have no functional changes in this update. Their 1.0.1 builds remain compatible. Matching 1.0.2 builds are included so the installed suite can use one version number.
+
+Restart Velocity and the hub after replacing the JARs. Existing configuration is loaded automatically.
 
 ## Testing status
 
-- Implementation: Not complete
-- Packaged validation: Not started
-- Live Velocity and Paper testing: Not started
-- Release status: Development draft
+- exact packaged Core message rendering and inheritance: passed
+- legacy flat-message compatibility: passed
+- global and per-server show/hide behavior: passed
+- Hub message storage, persistence, reset, and inheritance: passed
+- trusted message-key filtering: passed
+- packaged class and metadata inspection: passed
+- Link and Interact version-only equivalence: passed
+- live Velocity and Paper field test: pending

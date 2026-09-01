@@ -1,0 +1,64 @@
+HubPilot 1.0.2 - pre-release validation
+=======================================
+Last updated: 2026-09-01
+
+Release scope
+-------------
+1. Configurable lifecycle, join, and queue messages.
+2. Global defaults and per-server message overrides.
+3. Queue position and cancellation feedback.
+4. Navigator-style formatting for the server placeholder.
+5. Backward compatibility with 1.0.1 message and server configuration.
+
+Packaged artifacts
+------------------
+HubPilot-Core-1.0.2.jar
+HubPilot-Hub-1.0.2.jar
+HubPilot-Interact-1.0.2.jar
+HubPilot-Link-1.0.2.jar
+
+SHA-256
+-------
+Core     ffd14a101d69078440cfe419abc154f44c9c5a0fc748ee9808d4f85c5ddd32a9
+Hub      0fd5b813a049b7d3bff57cf2e8fc8328ab50e1647f43200ff4b5eaceca1b02ec
+Interact 23b724228a43c0466b0b897fab016ad42232d286bbc55ebdcb2101d59c86908f
+Link     516c56a6edffc3fe5aa2e9bdf9b8bbb2f03e3114737332ca870e75c1cc7cdf50
+
+Controlled validation
+---------------------
+PASS - Core loads legacy flat messages and replaces old and new placeholder styles.
+PASS - Core loads synchronized global and per-server message overrides.
+PASS - A per-server disabled state hides the selected event.
+PASS - Removing the server override restores the synchronized global message.
+PASS - The formatted server placeholder renders as the Navigator-style display name.
+PASS - Hub message storage persists global text, global visibility, server text, and server visibility.
+PASS - Clearing a server override restores global inheritance.
+PASS - Clearing a global override restores the built-in default.
+PASS - The trusted settings filter accepts only valid message key shapes and rejects unrelated keys.
+PASS - Link and Interact differ from the final 1.0.1 builds only by their 1.0.2 version strings.
+PASS - All four plugin metadata files report 1.0.2 and each declared main class is packaged.
+
+Regression boundary
+-------------------
+Core changes are limited to lifecycle messages, queue-position bookkeeping, message configuration,
+and the existing trusted settings synchronization filter.
+
+Hub changes are limited to the message editor, immediate Navigator request feedback, countdown
+formatting, and the existing Automation Settings navigation path.
+
+The final 1.0.1 JARs were used as the packaging base so the tested Always-On, discovery, duplicate
+repair, live Navigator telemetry, shared layout, and Admin editing corrections remain present.
+
+Live test still required
+------------------------
+Before stable promotion, test on a real Velocity + Paper network:
+- edit, preview, hide, reset, and inherit messages from the GUI;
+- queue at least two players for one offline server;
+- confirm position changes after one player cancels or disconnects;
+- confirm a hidden countdown message does not hide its configured sound;
+- confirm successful countdown and transfer;
+- quickly recheck Always-On, discovery, live Navigator refresh, and Admin server editing.
+
+Release state
+-------------
+Suitable for GitHub pre-release publication. Not yet approved for stable promotion.

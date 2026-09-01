@@ -2,7 +2,8 @@
 
 HubPilot is a Minecraft server-network suite for Velocity + Paper/Bukkit. It started on top of [AutoServer](https://github.com/artificial-720/AutoServer) and grew into a larger system for server navigation, on-demand startup, provider control, hub management, and telemetry.
 
-> **Current release:** HubPilot 1.0.1
+> **Current pre-release:** HubPilot 1.0.2 — Queue Update  
+> **Current stable release:** HubPilot 1.0.1
 
 ## What HubPilot does
 
@@ -13,6 +14,8 @@ Main features include:
 - configurable server Navigator
 - live Navigator telemetry updates while the GUI stays open
 - server requests with retries and countdowns
+- configurable join and queue messages with global and per-server controls
+- queue position and cancellation feedback
 - Crafty Controller, Pterodactyl, Generic HTTP, and Always-On providers
 - per-server Always-On lifecycle option for managed servers
 - idle and failed-request shutdown for resource saving
@@ -41,15 +44,15 @@ Backend game servers do not need HubPilot JARs for normal routing, requests, or 
 Put Core on Velocity:
 
 ```text
-velocity/plugins/HubPilot-Core-1.0.1.jar
+velocity/plugins/HubPilot-Core-1.0.2.jar
 ```
 
 Put Hub and Link on the Paper/Bukkit hub. Interact is optional:
 
 ```text
-hub/plugins/HubPilot-Hub-1.0.1.jar
-hub/plugins/HubPilot-Link-1.0.1.jar
-hub/plugins/HubPilot-Interact-1.0.1.jar
+hub/plugins/HubPilot-Hub-1.0.2.jar
+hub/plugins/HubPilot-Link-1.0.2.jar
+hub/plugins/HubPilot-Interact-1.0.2.jar
 ```
 
 Restart Velocity, restart the hub, join as an operator, then run:
@@ -80,7 +83,7 @@ All four HubPilot plugins share one public version number.
 
 **Core and Hub should always run the same HubPilot version.** Link and Interact can stay on an older build when the release notes say that build is still compatible, but they should not be more than **two published HubPilot releases behind** Core and Hub.
 
-For 1.0.1, Core and Hub need to be updated together. Link 1.0.0 and Interact 1.0.0 remain compatible because neither component has functional changes in this release.
+For 1.0.2, Core and Hub need to be updated together. Link and Interact have no functional changes, so their 1.0.1 builds remain compatible. Matching 1.0.2 builds are provided for consistent suite versioning.
 
 ## Compatibility and testing
 
@@ -107,6 +110,8 @@ HubPilot works alongside [ViaVersion](https://github.com/ViaVersion/ViaVersion) 
 - [Project Transparency](TRANSPARENCY.md)
 - [1.0.1 Validation Record](release/1.0.1/VALIDATION.txt)
 - [1.0.1 Release Notes](release/1.0.1/RELEASE-NOTES.md)
+- [1.0.2 Pre-release Notes](release/1.0.2/RELEASE-NOTES.md)
+- [1.0.2 Validation Record](release/1.0.2/VALIDATION.txt)
 - [Security](SECURITY.md)
 
 ## License and project history
