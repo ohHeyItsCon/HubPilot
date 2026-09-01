@@ -20,6 +20,7 @@ The **Queue Update** adds configurable join-flow messages and clearer startup-qu
 - hiding countdown text no longer disables the configured countdown sound
 - Paper countdown feedback now preserves custom message colors instead of forcing yellow
 - the trusted settings filter now carries valid message settings without accepting unrelated or sensitive keys
+- `/hp discover` now protects the configured hub across listing, suggestions, bulk discovery, and final import, including common equivalent hub names
 
 Core and Hub must be updated together. Link and Interact have no functional changes; matching 1.0.2 builds are included for suite-wide version consistency.
 

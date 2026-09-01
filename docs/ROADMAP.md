@@ -69,7 +69,7 @@ Seasonal       -> Custom
 
 Expand `/hp setup` so a new install can start with useful defaults based on its network.
 
-As part of setup, HubPilot should perform an initial server/world discovery and ask the owner which discovered server is the hub. The selected hub would then be treated as a hub role instead of a normal managed backend and receive its own lifecycle rules. This is the current planned fix for the 1.0.1 bug where the hub can appear in `/hp discover` and inherit global backend auto-stop settings.
+As part of setup, HubPilot should perform an initial server/world discovery and ask the owner which discovered server is the hub. The selected hub would then be treated as a hub role instead of a normal managed backend and receive its own lifecycle rules. HubPilot 1.0.2 fixes the immediate 1.0.1 discovery regression by excluding the configured hub; this guided setup remains a broader usability improvement.
 
 This hub selection should also provide the starting point for future multi-hub support, where more than one discovered hub can be assigned to the Hub Manager and given hub-specific profiles, routing, lifecycle, and failover rules.
 

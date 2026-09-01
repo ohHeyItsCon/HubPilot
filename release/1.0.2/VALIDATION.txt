@@ -19,7 +19,7 @@ HubPilot-Link-1.0.2.jar
 
 SHA-256
 -------
-Core     ffd14a101d69078440cfe419abc154f44c9c5a0fc748ee9808d4f85c5ddd32a9
+Core     c46c406e6bc2794f5b64c1692e8062bd1042d848f2b49a0551876e79dc1327b2
 Hub      0fd5b813a049b7d3bff57cf2e8fc8328ab50e1647f43200ff4b5eaceca1b02ec
 Interact 23b724228a43c0466b0b897fab016ad42232d286bbc55ebdcb2101d59c86908f
 Link     516c56a6edffc3fe5aa2e9bdf9b8bbb2f03e3114737332ca870e75c1cc7cdf50
@@ -35,6 +35,7 @@ PASS - Hub message storage persists global text, global visibility, server text,
 PASS - Clearing a server override restores global inheritance.
 PASS - Clearing a global override restores the built-in default.
 PASS - The trusted settings filter accepts only valid message key shapes and rejects unrelated keys.
+PASS - Discovery recognizes exact and common equivalent configured-hub names and rejects them before import.
 PASS - Link and Interact differ from the final 1.0.1 builds only by their 1.0.2 version strings.
 PASS - All four plugin metadata files report 1.0.2 and each declared main class is packaged.
 

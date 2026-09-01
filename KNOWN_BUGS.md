@@ -1,30 +1,30 @@
 # Known Bugs
 
-This page tracks confirmed issues in public HubPilot releases that have not been fixed yet.
+This page tracks confirmed issues in public HubPilot releases and where their fixes are available.
 
 ## 1.0.1
 
 ### Hub server can appear in `/hp discover`
 
-**Status:** Open
+**Status:** Fixed in the 1.0.2 pre-release
 
 Starting with 1.0.1, the configured hub server can appear in `/hp discover` where it was previously ignored.
 
-This is unintended behavior and will be fixed in the next update.
+This is unintended behavior. HubPilot 1.0.2 excludes the configured hub from discovery lists, suggestions, bulk discovery, and the final import path. The comparison also covers common equivalent hub names so an API-reported alias is not imported as a backend.
 
 If the hub is added or treated as a normal managed server, it can inherit the global lifecycle defaults. That includes automatic shutdown settings intended for backend game servers.
 
 For a normal HubPilot network, the hub is usually expected to stay online so players always have somewhere to land while other servers start.
 
-#### Current planned fix
+#### Fix
 
-The current plan is to expand `/hp setup` with an initial server/world discovery step and ask which discovered server is the hub. The selected hub would be assigned hub-specific lifecycle rules instead of being treated as a normal managed backend.
+The immediate regression is fixed in 1.0.2 without changing existing configuration. The configured `hub-server` and its managed-server identity are treated as a protected hub role during discovery.
 
-That same hub-role foundation can later expand into the dedicated Hub Manager and multi-hub system described in the [roadmap](docs/ROADMAP.md).
+The larger guided hub-selection flow remains planned for setup and the future Hub Manager described in the [roadmap](docs/ROADMAP.md).
 
 #### Workaround
 
-Until this is fixed:
+On stable 1.0.1, until upgrading:
 
 - do not add the hub as a normal managed backend through `/hp discover`
 - if the hub is already managed, explicitly enable **Always-On server** for it or otherwise disable its automatic shutdown settings

@@ -103,6 +103,14 @@ The original filter only accepted the automation keys used by 1.0.1. New message
 
 **Fixed:** The filter now accepts only the defined global and per-server message-key shapes while continuing to reject provider credentials, unknown fields, and unrelated settings.
 
+### The configured hub could appear in server discovery
+
+**Found in:** HubPilot 1.0.1 discovery testing after the stable release.
+
+The configured hub could be offered as a normal backend by `/hp discover`. If it was imported, it could inherit lifecycle defaults intended for game servers.
+
+**Fixed:** Discovery now excludes the configured hub from lists, suggestions, bulk discovery, and the final import path. It also recognizes common equivalent hub names reported by a controller or existing Velocity registration.
+
 ## Preserved 1.0.1 behavior
 
 - per-server Always-On behavior
