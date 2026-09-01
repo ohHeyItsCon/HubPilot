@@ -69,10 +69,31 @@ Seasonal       -> Custom
 
 Expand `/hp setup` so a new install can start with useful defaults based on its network.
 
+As part of setup, HubPilot should perform an initial server/world discovery and ask the owner which discovered server is the hub. The selected hub would then be treated as a hub role instead of a normal managed backend and receive its own lifecycle rules. This is the current planned fix for the 1.0.1 bug where the hub can appear in `/hp discover` and inherit global backend auto-stop settings.
+
+This hub selection should also provide the starting point for future multi-hub support, where more than one discovered hub can be assigned to the Hub Manager and given hub-specific profiles, routing, lifecycle, and failover rules.
+
+When multi-hub support is released, setup should also offer a separate **Multi-Hub Setup** path instead of forcing larger networks through the normal single-hub flow. That setup would be focused on identifying and organizing several hubs at once.
+
+Possible Multi-Hub Setup steps include:
+
+- discover available hub candidates
+- select every server that should be treated as a hub
+- choose the main/default hub or hub group
+- create hub groups for identical or load-balanced hub instances
+- assign a Navigator profile to each hub or group
+- choose `/hub`, `/lobby`, and fallback routing targets
+- configure hub-specific lifecycle rules
+- configure load balancing and failover defaults
+- review the resulting Hub Manager layout before applying it
+
+The normal setup path would stay simple for single-hub networks, while Multi-Hub Setup would handle the extra decisions that only matter when several hubs are present.
+
 Possible questions:
 
 - small, medium, or large network?
 - one hub or several?
+- which discovered server is the hub?
 - mostly Always On, On Demand, or mixed?
 - which power provider?
 - Paper, modded, or mixed backends?
