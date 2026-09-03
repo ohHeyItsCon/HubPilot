@@ -110,6 +110,18 @@ Found while reviewing the discovery regression. Core now exempts the configured 
 - Admin left-click server editing
 - the corrected Paper `openInventory` runtime signature
 
+## Interact expansion — in development
+
+The next 1.0.2 prerelease build is being extended with:
+
+- selectable portal styles and an in-world region selection workflow;
+- floating destination labels above signs, entities and NPCs;
+- portal labels centered across the selection, around 1–2 blocks above its floor;
+- a separate multipurpose Interact editing item for selecting, binding and adjusting interactions;
+- inventory toggles for the Interact tool and Hub admin item, with a saved hidden preference.
+
+These features are in development and are not in the currently published JARs yet. Existing hub shutdown protection is already available in the current Core download.
+
 ## Updating
 
 ### September 3 automatic hub repair (version remains 1.0.2)
@@ -144,3 +156,4 @@ Restart Velocity and the hub after replacing the JARs. Existing configuration is
 - packaged class and metadata inspection: passed
 - Link and Interact version-only equivalence: passed
 - live Velocity and Paper field test: pending
+
