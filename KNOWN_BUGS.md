@@ -18,7 +18,13 @@ For a normal HubPilot network, the hub is usually expected to stay online so pla
 
 #### Fix
 
-The immediate regression is fixed in 1.0.2 without changing existing configuration. The configured `hub-server` and its managed-server identity are treated as a protected hub role during discovery.
+The September 3 repaired 1.0.2 Core automatically treats the configured `hub-server` and its managed-server identity as a protected hub role on startup and every successful configuration reload. Protection is applied after YAML defaults and shared GUI settings: idle shutdown is disabled, stop-after-failure is false, and stop-when-queue-empty is false. Explicit unsafe overrides cannot re-enable these automatic shutdown paths for the configured hub.
+
+The managed entry is retained. No server files, destinations, provider mappings, or unrelated servers are deleted by this repair. Saved settings and comments remain intact; changing `hub-server` later restores the old entry's configured backend behavior. Provider startup preferences are preserved. Manual Stop Server remains available.
+
+The common automatic-stop dispatcher also checks the current hub identity, protecting sessions created before a reload. `/hp discover` exclusion is unchanged.
+
+The originally published September 1 Core fixed discovery but did not repair already imported hubs. An intermediate local idle-only guard was not in that published artifact and did not cover every shutdown path. Replace Core with the repaired artifact and restart Velocity; no manual Always-On toggle or configuration deletion is required. An existing 1.0.2 Hub can remain installed. When upgrading from 1.0.1, also install the existing 1.0.2 Hub for the Queue Update. Version remains 1.0.2, so identify the repaired build by its supplied SHA-256, not the version label alone.
 
 The larger guided hub-selection flow remains planned for setup and the future Hub Manager described in the [roadmap](docs/ROADMAP.md).
 

@@ -15,12 +15,14 @@ The **Queue Update** adds configurable join-flow messages and clearer startup-qu
 - event placeholders for queue, countdown, retry, version, and failure information
 - backward compatibility with flat 1.0.1 message files and `<placeholder>` syntax
 
-### Fixed during testing
+### Fixed
 
+- September 3 Core repair: startup/reload derives a protected hub role for existing managed entries after all configuration inheritance; idle, failed-request, and queue-empty shutdown are disabled, with a final guard for pre-reload sessions. Original files and startup preferences are preserved. Only Core is rebuilt; see the supplied checksums to distinguish it from the original 1.0.2 artifact.
 - hiding countdown text no longer disables the configured countdown sound
 - Paper countdown feedback now preserves custom message colors instead of forcing yellow
 - the trusted settings filter now carries valid message settings without accepting unrelated or sensitive keys
 - `/hp discover` now protects the configured hub across listing, suggestions, bulk discovery, and final import, including common equivalent hub names
+- the configured hub is now exempt from automatic idle shutdown even if discovery created a managed entry for it or it inherits a global idle timeout
 
 Core and Hub must be updated together. Link and Interact have no functional changes; matching 1.0.2 builds are included for suite-wide version consistency.
 

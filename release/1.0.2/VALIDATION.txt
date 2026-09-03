@@ -1,65 +1,41 @@
-HubPilot 1.0.2 - pre-release validation
-=======================================
-Last updated: 2026-09-01
+HubPilot 1.0.2 validation - 2026-09-03
 
-Release scope
--------------
-1. Configurable lifecycle, join, and queue messages.
-2. Global defaults and per-server message overrides.
-3. Queue position and cancellation feedback.
-4. Navigator-style formatting for the server placeholder.
-5. Backward compatibility with 1.0.1 message and server configuration.
+Status: validated pre-release.
 
-Packaged artifacts
-------------------
-HubPilot-Core-1.0.2.jar
-HubPilot-Hub-1.0.2.jar
-HubPilot-Interact-1.0.2.jar
-HubPilot-Link-1.0.2.jar
+Base: published September 1 Core, verified against GitHub release asset digest:
+c46c406e6bc2794f5b64c1692e8062bd1042d848f2b49a0551876e79dc1327b2
+An intermediate local idle-only build (47368573...) was not the published Core.
 
-SHA-256
--------
-Core     c46c406e6bc2794f5b64c1692e8062bd1042d848f2b49a0551876e79dc1327b2
-Hub      0fd5b813a049b7d3bff57cf2e8fc8328ab50e1647f43200ff4b5eaceca1b02ec
-Interact 23b724228a43c0466b0b897fab016ad42232d286bbc55ebdcb2101d59c86908f
-Link     516c56a6edffc3fe5aa2e9bdf9b8bbb2f03e3114737332ca870e75c1cc7cdf50
+Final Core SHA-256:
+503deebfd9f925017a0fcf675cc9a839f5346480d359e6a9941e79e50411cb9f
 
-Controlled validation
----------------------
-PASS - Core loads legacy flat messages and replaces old and new placeholder styles.
-PASS - Core loads synchronized global and per-server message overrides.
-PASS - A per-server disabled state hides the selected event.
-PASS - Removing the server override restores the synchronized global message.
-PASS - The formatted server placeholder renders as the Navigator-style display name.
-PASS - Hub message storage persists global text, global visibility, server text, and server visibility.
-PASS - Clearing a server override restores global inheritance.
-PASS - Clearing a global override restores the built-in default.
-PASS - The trusted settings filter accepts only valid message key shapes and rejects unrelated keys.
-PASS - Discovery recognizes exact and common equivalent configured-hub names and rejects them before import.
-PASS - Link and Interact differ from the final 1.0.1 builds only by their 1.0.2 version strings.
-PASS - All four plugin metadata files report 1.0.2 and each declared main class is packaged.
+Only Core rebuilt. Hub, Link and Interact match published 1.0.2 asset digests.
+Version remains 1.0.2. Live network validation remains pending.
 
-Regression boundary
--------------------
-Core changes are limited to lifecycle messages, queue-position bookkeeping, message configuration,
-and the existing trusted settings synchronization filter.
+PASS - Exact output JAR tested with Java 21 and -Xverify:all.
+PASS - Startup automatically protects an existing 1.0.1-style managed hub.
+PASS - Managed ID differing from configured Velocity hub name is protected.
+PASS - Global and per-server settings cannot re-enable automatic hub shutdown.
+PASS - Reload without a shared properties file still repairs YAML inheritance.
+PASS - Repeated reload is idempotent; input configuration files remain byte-identical.
+PASS - Startup preference, provider ID, access permission and unrelated servers retained.
+PASS - Identical display name and hub-games substring do not protect unrelated servers.
+PASS - Reassigning hub-server restores former hub's saved backend defaults.
+PASS - Common automatic-stop dispatcher blocks idle, failed connection, failed startup,
+       and queue-empty reasons for stale session definitions of the current hub.
+PASS - Actual failStart and stopAndRemove session cleanup dispatch no hub HTTP stop.
+PASS - Normal backend dispatch reaches actual packaged provider HTTP transport.
+PASS - Explicit manual provider stop remains available for the hub.
+PASS - Existing exact/equivalent-name discovery exclusion regression.
+PASS - Existing hub identity/idle guard regression.
+PASS - Queue message rendering, inheritance and legacy compatibility regression.
+PASS - Trusted settings-key filtering regression.
+PASS - ZIP entry comparison: only HubPilotConfig, LifecycleManager and their nested
+       classes changed; HubProtection added. No entries removed. Discovery unchanged.
+PASS - Core metadata remains 1.0.2 with its original plugin entry point.
 
-Hub changes are limited to the message editor, immediate Navigator request feedback, countdown
-formatting, and the existing Automation Settings navigation path.
-
-The final 1.0.1 JARs were used as the packaging base so the tested Always-On, discovery, duplicate
-repair, live Navigator telemetry, shared layout, and Admin editing corrections remain present.
-
-Live test still required
-------------------------
-Before stable promotion, test on a real Velocity + Paper network:
-- edit, preview, hide, reset, and inherit messages from the GUI;
-- queue at least two players for one offline server;
-- confirm position changes after one player cancels or disconnects;
-- confirm a hidden countdown message does not hide its configured sound;
-- confirm successful countdown and transfer;
-- quickly recheck Always-On, discovery, live Navigator refresh, and Admin server editing.
-
-Release state
--------------
-Suitable for GitHub pre-release publication. Not yet approved for stable promotion.
+Boundary: controlled end-to-end configuration -> packaged lifecycle -> packaged
+provider -> loopback HTTP test. Velocity APIs are simulated. A live Paper/Velocity
+network and real Crafty panel were not available; live field testing remains pending.
+Hub's existing editor can display saved preferences; Core enforces effective hub
+protection. Manual stop and shutdown by external software remain possible.

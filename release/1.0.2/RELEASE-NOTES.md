@@ -77,39 +77,27 @@ Both `{placeholder}` and the older `<placeholder>` style are accepted.
 - Core continues to reject unrelated or sensitive keys from the settings payload.
 - Existing server, provider, discovery, destination, layout, and telemetry files do not need to be replaced.
 
-## Bugs found and fixed during this update
+## Bug fixes
 
 ### Hiding the countdown message also silenced its sound
 
-**Found after:** Message visibility controls were added to the countdown path.
-
-The first implementation stopped the whole countdown announcement when its text was hidden. That also stopped the existing countdown sound even though only the message had been disabled.
-
-**Fixed:** Countdown text and countdown sound are now handled separately. A hidden countdown message produces no blank chat or action-bar line, while the configured sound continues normally.
+Found while adding message visibility controls. Countdown text and sound are now handled separately, so hiding the message does not silence the configured sound or produce a blank chat or action-bar line.
 
 ### Countdown colors were lost on the Paper hub
 
-**Found after:** Countdown messages were changed from fixed text to editable templates.
-
-The Hub feedback bridge treated the received template as plain text and forced a yellow prefix, so custom colors could be ignored or displayed incorrectly.
-
-**Fixed:** The bridge now applies the template's legacy color formatting before displaying the action bar and no longer forces one color.
+Found while validating editable countdown templates. The Paper feedback bridge now applies the template's color formatting and no longer forces yellow.
 
 ### Message settings could be dropped by the existing sync filter
 
-**Found after:** The message editor was connected to the existing Hub-to-Core settings channel.
-
-The original filter only accepted the automation keys used by 1.0.1. New message keys would have been removed before Core reloaded them.
-
-**Fixed:** The filter now accepts only the defined global and per-server message-key shapes while continuing to reject provider credentials, unknown fields, and unrelated settings.
+Found while validating Hub-to-Core message synchronization. The trusted filter now accepts the defined global and per-server message keys while continuing to reject credentials, unknown fields, and unrelated settings.
 
 ### The configured hub could appear in server discovery
 
-**Found in:** HubPilot 1.0.1 discovery testing after the stable release.
+Found after the 1.0.1 discovery changes. Discovery now excludes the configured hub from lists, suggestions, bulk discovery, and final import, including common equivalent names reported by a controller or Velocity.
 
-The configured hub could be offered as a normal backend by `/hp discover`. If it was imported, it could inherit lifecycle defaults intended for game servers.
+### The configured hub could inherit automatic idle shutdown
 
-**Fixed:** Discovery now excludes the configured hub from lists, suggestions, bulk discovery, and the final import path. It also recognizes common equivalent hub names reported by a controller or existing Velocity registration.
+Found while reviewing the discovery regression. Core now exempts the configured `hub-server`, including common equivalent names, from automatic idle shutdown. This protects the single configured main hub without changing manual Stop Server or normal backend lifecycle behavior.
 
 ## Preserved 1.0.1 behavior
 
@@ -123,6 +111,18 @@ The configured hub could be offered as a normal backend by `/hp discover`. If it
 - the corrected Paper `openInventory` runtime signature
 
 ## Updating
+
+### September 3 automatic hub repair (version remains 1.0.2)
+
+Replace Core on Velocity with the repaired Core JAR and restart Velocity. Already running Hub 1.0.2 does not need replacement for this repair. Upgrading from 1.0.1 still requires the existing Hub 1.0.2 for Queue Update compatibility.
+
+On startup and each successful configuration reload, Core matches `hub-server` against managed IDs and Velocity names, using existing 1.0.2 equivalent-name rules. It applies a protected role after all defaults and GUI overrides: idle minutes become zero, stop-after-failure becomes false, and stop-when-queue-empty becomes false. A final automatic-stop guard covers sessions holding pre-reload definitions. Discovery exclusion remains intact.
+
+No manual configuration step is needed when `hub-server` correctly identifies the hub. The repair retains the managed entry and saved configuration instead of deleting or archiving it. Provider identity, startup preference, access settings, and unrelated servers remain intact. Changing the configured hub later restores the former hub's saved backend settings. Manual Stop Server is still intentional and available. The Hub editor may still display saved backend preferences; Core's protected role overrides them while that entry is the configured hub.
+
+The original September 1 published Core only contained the discovery exclusion; it did not contain the later local idle-only guard. Use this build's checksum to verify the repaired download. This package remains a pre-release. Controlled packaged tests passed; live Velocity/Paper field testing is pending.
+
+### Original Queue Update upgrade
 
 Update Core and Hub together:
 
@@ -140,6 +140,7 @@ Restart Velocity and the hub after replacing the JARs. Existing configuration is
 - global and per-server show/hide behavior: passed
 - Hub message storage, persistence, reset, and inheritance: passed
 - trusted message-key filtering: passed
+- configured-hub idle-shutdown protection: passed
 - packaged class and metadata inspection: passed
 - Link and Interact version-only equivalence: passed
 - live Velocity and Paper field test: pending
