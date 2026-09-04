@@ -1,3 +1,28 @@
+HubPilot 1.0.2 Interact expansion - 2026-09-03
+
+Rebuilt: Hub and Interact. Core and Link unchanged from the preceding publication.
+See CHECKSUMS-SHA256.txt for the exact current artifacts.
+
+PASS - Candidate JARs run with Java 21 -Xverify:all and Paper 1.21.10 API.
+PASS - Portal styles persist across reload; legacy regions default to Nether style.
+PASS - Missing portals, unknown styles and cross-world selections are rejected.
+PASS - Admin and Interact tool toggles respect permissions and avoid duplicates.
+PASS - Ordinary items are preserved; full inventories are not overwritten.
+PASS - Hidden admin PDC preference prevents automatic item restoration.
+PASS - The brush selects both corners and saves through the actual editor menu.
+PASS - Editor inventory click is cancelled, preventing UI item extraction.
+PASS - Entity, sign and portal bindings receive destination labels.
+PASS - Portal position is centered horizontally and 1.5 blocks above its floor.
+PASS - Entity labels follow movement; saved height offsets update position.
+PASS - Refresh does not duplicate labels; unbinding and shutdown remove labels.
+
+Boundary: MockBukkit Paper simulation with actual packaged classes. The test fixture
+initializes plugin data without a complete server startup. Test-only display setters
+cover styling methods unimplemented by MockBukkit. Actual visual appearance, full
+plugin startup, multiplayer input and live world/chunk behavior need field testing.
+No production world was modified by these tests.
+
+Previous Core validation (Core binary unchanged):
 HubPilot 1.0.2 validation - 2026-09-03
 
 Status: validated pre-release.
@@ -39,3 +64,4 @@ provider -> loopback HTTP test. Velocity APIs are simulated. A live Paper/Veloci
 network and real Crafty panel were not available; live field testing remains pending.
 Hub's existing editor can display saved preferences; Core enforces effective hub
 protection. Manual stop and shutdown by external software remain possible.
+

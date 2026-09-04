@@ -34,3 +34,15 @@
 Link runs on the hub, so its command is mostly for plugin information and connection/status checks.
 
 If a command is not behaving as expected, check the [FAQ](FAQ.md).
+
+## Interact editing items and portal styles
+
+- `/hpi items [all|admin|interact] [on|off|toggle]` toggles editing items.
+- `/hpi tool` toggles the Interact brush.
+- `/hpi portal create <name> <destination>` starts a brush selection.
+- `/hpi portal type <name> <nether|end|water|invisible>` sets the particle style.
+- Sneak + right-click the brush to choose a destination and editing mode.
+- Portal mode uses left/right-click for the two corners; save from the brush menu.
+- Label modes move floating destination names up or down by 0.25 blocks.
+
+The hidden admin item stays hidden across automatic reconciliation and player reconnects. Showing items requires inventory space. Full instructions are in the 1.0.2 release notes.

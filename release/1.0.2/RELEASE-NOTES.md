@@ -110,17 +110,46 @@ Found while reviewing the discovery regression. Core now exempts the configured 
 - Admin left-click server editing
 - the corrected Paper `openInventory` runtime signature
 
-## Interact expansion — in development
+## Interact portals, destination labels, and editing tools
 
-The next 1.0.2 prerelease build is being extended with:
+The latest 1.0.2 prerelease includes the Interact expansion. Replace **Hub** and **Interact** on the Paper hub and restart it. Core's September 3 hub-protection build is unchanged, so an existing idle-shutdown test can continue on that Core. Link is unchanged. Check the included SHA-256 list because the version remains 1.0.2.
 
-- selectable portal styles and an in-world region selection workflow;
-- floating destination labels above signs, entities and NPCs;
-- portal labels centered across the selection, around 1–2 blocks above its floor;
-- a separate multipurpose Interact editing item for selecting, binding and adjusting interactions;
-- inventory toggles for the Interact tool and Hub admin item, with a saved hidden preference.
+### Put editing items away
 
-These features are in development and are not in the currently published JARs yet. Existing hub shutdown protection is already available in the current Core download.
+- `/hpi items` toggles your Hub admin item and Interact brush together.
+- `/hpi items admin` toggles only the admin item.
+- `/hpi items interact` or `/hpi tool` toggles only the brush.
+- Add `on` or `off` after the target for an explicit state: `/hpi items admin off`.
+
+The hidden-admin preference is saved on the player and respected by Hub's automatic restoration, including reconnects and respawns. The brush is a separate tagged item, not a renamed ordinary brush. Commands check editing permissions, avoid duplicate tools, and leave ordinary inventory items intact. A full inventory is never overwritten; free a slot to show a missing tool.
+
+### In-world editing
+
+Sneak + right-click the brush to open the Interact editor. Select a destination and a mode:
+
+- **Bind:** right-click a sign or entity to link it.
+- **Portal:** left-click and right-click blocks to select two corners; open the editor and choose **Save new portal**.
+- **Inspect:** select an existing interaction for editing.
+- **Unbind:** remove the selected interaction without deleting its blocks or entity.
+- **Label Up / Label Down:** click a target to adjust its floating label by 0.25 blocks.
+
+Use `/hpi portal create <name> <destination>` to start a named portal selection. Each editor has their own selection. Cross-world selections and duplicate names are rejected. Existing `/hpi portal pos1`, `pos2`, `save`, and `delete` commands remain available.
+
+### Portal styles
+
+Use the editor's **Portal style** control or `/hpi portal type <name> <nether|end|water|invisible>`.
+
+Styles use portal-themed particle outlines around the selected region. Invisible regions have no particle outline. They do not replace blocks with real Nether portal, End portal, or water blocks. Existing portal regions keep the Nether particle style by default. Existing particle enable/period settings remain supported.
+
+### Floating destination names
+
+Text displays show the current destination label above bound signs, entities, and native NPCs. Existing bindings receive labels automatically. Entity labels follow their targets; portal labels use the horizontal center of the selected region, 1.5 blocks above its bottom. Label height can be adjusted with the brush. Labels refresh when destinations change and disappear when their bindings are removed. Labels are temporary, cleaned up on plugin shutdown, and do not force-load chunks.
+
+Set `destination-labels: false` in Interact's config to disable them; `/hpi reload` reloads configuration and bindings. Native NPC availability still depends on the server platform.
+
+### Validation
+
+The exact packaged Hub and Interact passed controlled Paper 1.21.10 simulation tests for portal persistence, legacy defaults, permission checks, inventory toggles, hidden-admin restoration, full inventories, brush corner selection and saving, centered labels, entity movement, duplicate prevention, and cleanup. The test framework required test-only display-style setters. Actual in-game appearance, client interaction and a complete live Paper startup remain to be field-tested; this remains a prerelease.
 
 ## Updating
 
@@ -156,4 +185,5 @@ Restart Velocity and the hub after replacing the JARs. Existing configuration is
 - packaged class and metadata inspection: passed
 - Link and Interact version-only equivalence: passed
 - live Velocity and Paper field test: pending
+
 

@@ -1,0 +1,20 @@
+name: HubPilotInteract
+version: '1.0.2'
+main: dev.hubpilot.interact.HubPilotInteractPlugin
+api-version: '1.21'
+author: ohHeyItsCon
+depend: [HubPilot]
+description: Entity, sign, portal, and native mannequin interaction triggers for HubPilot destinations.
+commands:
+  hpi:
+    aliases: [hubpilotinteract]
+    description: Configure HubPilot interaction triggers and NPCs.
+    usage: /hpi <items|tool|bind|portal|npc|list|reload|cancel>
+permissions:
+  hubpilot.interact.admin:
+    description: Legacy/full Interact management permission. HubPilot owner/admin roles are also recognized.
+    default: op
+  hubpilot.interact.edit:
+    description: Allows editing HubPilot interaction triggers without granting broader HubPilot administration.
+    default: false
+
