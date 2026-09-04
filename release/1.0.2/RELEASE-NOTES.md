@@ -116,12 +116,12 @@ The latest 1.0.2 prerelease includes the Interact expansion. Replace **Hub** and
 
 ### Put editing items away
 
-- `/hpi items` toggles your Hub admin item and Interact brush together.
-- `/hpi items admin` toggles only the admin item.
-- `/hpi items interact` or `/hpi tool` toggles only the brush.
-- Add `on` or `off` after the target for an explicit state: `/hpi items admin off`.
+- `/hp adminitem` toggles Hub's admin item. This is implemented in Hub and works without Interact installed; Core continues to forward the existing command unchanged.
+- `/hpi tool` toggles only Interact's brush.
+- `/hpi tool on` and `/hpi tool off` explicitly show or hide the brush.
+- `/hpi items` is a brush-only alias. The earlier combined/admin-target syntax no longer controls Hub items; use `/hp adminitem` instead.
 
-The hidden-admin preference is saved on the player and respected by Hub's automatic restoration, including reconnects and respawns. The brush is a separate tagged item, not a renamed ordinary brush. Commands check editing permissions, avoid duplicate tools, and leave ordinary inventory items intact. A full inventory is never overwritten; free a slot to show a missing tool.
+The hidden-admin preference remains saved on the player and is respected by Hub's automatic restoration, including reconnects and respawns. Existing hidden preferences survive this update. Each component manages only its own tagged item. Editing permissions are checked, ordinary items are left intact, and a full inventory is never overwritten. Free a slot to show a missing item.
 
 ### In-world editing
 
@@ -185,5 +185,3 @@ Restart Velocity and the hub after replacing the JARs. Existing configuration is
 - packaged class and metadata inspection: passed
 - Link and Interact version-only equivalence: passed
 - live Velocity and Paper field test: pending
-
-

@@ -9,7 +9,8 @@ Compile `src` and `hub-src` together with Java 21, annotation processing disable
 against HubPilot-Hub-1.0.2.jar, HubPilot-Interact-1.0.2.jar, Paper API 1.21.10,
 Adventure API/key, examination API/string, SLF4J API and BungeeCord chat.
 Overlay only `dev/hubpilot/interact` into Interact and
-`dev/hubpilot/hub/publicapi/SetupItemManager*.class` into Hub. Include the Interact
+`dev/hubpilot/hub/publicapi/SetupItemManager*.class`, `AdminItemManager.class`, and
+`dev/hubpilot/hub/command/HubPilotGuiCommand.class` into Hub. Include the Interact
 resource files. Never package the Paper API, test framework or test classes.
 
 InteractValidation.java executes the packaged JARs using MockBukkit 4.95.0 and Paper
@@ -20,3 +21,6 @@ implement them. Live client appearance and complete server startup are not cover
 All filenames and plugin versions remain the standard 1.0.2 names. Core is unchanged
 from the hub-protection build with SHA-256
 503deebfd9f925017a0fcf675cc9a839f5346480d359e6a9941e79e50411cb9f.
+
+
+HubToggleValidation.java runs with Hub and the test dependencies but without Interact, exercising the existing Core-to-Hub command message and item safety.

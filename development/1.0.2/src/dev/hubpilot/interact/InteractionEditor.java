@@ -1,8 +1,8 @@
 package dev.hubpilot.interact;
 
-import dev.hubpilot.hub.publicapi.PublicHubBootstrap;
-import dev.hubpilot.hub.publicapi.SetupItemManager;
-import dev.hubpilot.hub.util.MenuItems;
+
+
+
 import java.io.IOException;
 import java.util.*;
 import org.bukkit.*;
@@ -36,13 +36,13 @@ final class InteractionEditor implements Listener {
         public Inventory getInventory() { return inventory; }
     }
     private final HubPilotInteractPlugin plugin;
-    private final NamespacedKey toolKey, shownKey, adminHidden;
+    private final NamespacedKey toolKey, shownKey;
     private final Map<UUID, Session> sessions = new HashMap<>();
     InteractionEditor(HubPilotInteractPlugin plugin) {
         this.plugin = plugin;
         toolKey = new NamespacedKey(plugin, "interaction_tool");
         shownKey = new NamespacedKey(plugin, "tool_shown");
-        adminHidden = new NamespacedKey(plugin.hub(), "admin_item_hidden");
+
     }
     private Session session(Player p) { return sessions.computeIfAbsent(p.getUniqueId(), id -> new Session()); }
     private boolean tool(ItemStack item) {
@@ -56,39 +56,32 @@ final class InteractionEditor implements Listener {
         item.setItemMeta(meta); return item;
     }
     private ItemStack createTool() {
-        ItemStack item = item(Material.BRUSH, "&b&lHubPilot Interact", "&7Sneak + right-click: editor menu", "&7Click targets to use the selected mode", "&7Portal: left/right-click its two corners", "&7/hpi items to put tools away");
+        ItemStack item = item(Material.BRUSH, "&b&lHubPilot Interact", "&7Sneak + right-click: editor menu", "&7Click targets to use the selected mode", "&7Portal: left/right-click its two corners", "&7/hpi tool to put the brush away");
         ItemMeta meta = item.getItemMeta(); meta.getPersistentDataContainer().set(toolKey, PersistentDataType.BYTE, (byte)1); item.setItemMeta(meta); return item;
     }
-    private boolean has(Player p, boolean admin) {
-        for (ItemStack item : p.getInventory().getContents()) if (admin ? MenuItems.isAdminOpener(plugin.hub(), item) : tool(item)) return true;
-        return admin ? MenuItems.isAdminOpener(plugin.hub(), p.getItemOnCursor()) : tool(p.getItemOnCursor());
+    private boolean has(Player p) {
+        for (ItemStack item : p.getInventory().getContents()) if (tool(item)) return true;
+        return tool(p.getItemOnCursor());
     }
-    private void remove(Player p, boolean admin) {
+    private void remove(Player p) {
         PlayerInventory inventory = p.getInventory();
-        for (int i = 0; i < inventory.getSize(); i++) if (admin ? MenuItems.isAdminOpener(plugin.hub(), inventory.getItem(i)) : tool(inventory.getItem(i))) inventory.setItem(i, null);
-        if (admin ? MenuItems.isAdminOpener(plugin.hub(), p.getItemOnCursor()) : tool(p.getItemOnCursor())) p.setItemOnCursor(null);
+        for (int i = 0; i < inventory.getSize(); i++) if (tool(inventory.getItem(i))) inventory.setItem(i, null);
+        if (tool(p.getItemOnCursor())) p.setItemOnCursor(null);
     }
-    private boolean show(Player p, boolean admin) {
-        if (admin && !PublicHubBootstrap.canAdmin(p)) return false;
-        if (has(p, admin)) return true;
+    private boolean show(Player p) {
+        if (has(p)) return true;
         if (p.getInventory().firstEmpty() < 0) { p.sendMessage("§eMake one inventory slot available first."); return false; }
-        ItemStack item = admin ? MenuItems.createAdminOpener(plugin.hub(), plugin.hub().getMenuConfig()) : createTool();
-        return p.getInventory().addItem(item).isEmpty();
+        return p.getInventory().addItem(createTool()).isEmpty();
     }
-    private void toggle(Player p, String target, String action) {
-        boolean admin = !target.equals("interact") && PublicHubBootstrap.canAdmin(p);
-        boolean interact = !target.equals("admin");
-        if (!admin && !interact) { p.sendMessage("§cThe admin item requires a HubPilot admin role."); return; }
-        boolean visible = action.equals("on") || (action.equals("toggle") && !(admin && has(p, true) || interact && has(p, false)));
-        if (admin) {
-            if (!visible) { p.getPersistentDataContainer().set(adminHidden, PersistentDataType.BYTE, (byte)1); remove(p, true); }
-            else if (show(p, true)) p.getPersistentDataContainer().remove(adminHidden);
+    private void toggle(Player p, String action) {
+        boolean visible = action.equals("on") || (action.equals("toggle") && !has(p));
+        if (!visible) {
+            p.getPersistentDataContainer().remove(shownKey); remove(p);
+            p.sendMessage("§aInteract brush hidden. Use /hpi tool to bring it back.");
+        } else if (show(p)) {
+            p.getPersistentDataContainer().set(shownKey, PersistentDataType.BYTE, (byte)1);
+            p.sendMessage("§aInteract brush shown. Sneak + right-click to edit.");
         }
-        if (interact) {
-            if (!visible) { p.getPersistentDataContainer().remove(shownKey); remove(p, false); }
-            else if (show(p, false)) p.getPersistentDataContainer().set(shownKey, PersistentDataType.BYTE, (byte)1);
-        }
-        p.sendMessage(visible ? "§aTools requested. Sneak + right-click the brush to edit." : "§aTools hidden. Use /hpi items to bring them back.");
     }
     boolean command(CommandSender sender, String[] args) {
         if (args == null || args.length == 0) return false;
@@ -112,14 +105,13 @@ final class InteractionEditor implements Listener {
                     p.sendMessage("§e/hpi portal create <name> <destination> (use a unique name)"); return true;
                 }
                 Session s = session(p); s.mode = Mode.PORTAL; s.portalName = args[2].toLowerCase(Locale.ROOT); s.destination = args[3]; s.first = null; s.second = null;
-                show(p, false); p.sendMessage("§aLeft/right-click two blocks with the brush, then sneak + right-click and Save portal."); return true;
+                show(p); p.sendMessage("§aLeft/right-click two blocks with the brush, then sneak + right-click and Save portal."); return true;
             }
-            String target = args[0].equalsIgnoreCase("tool") ? "interact" : args.length > 1 ? args[1].toLowerCase(Locale.ROOT) : "all";
-            String action = args[0].equalsIgnoreCase("tool") ? "toggle" : args.length > 2 ? args[2].toLowerCase(Locale.ROOT) : "toggle";
-            if (!List.of("all", "admin", "interact").contains(target) || !List.of("on", "off", "toggle").contains(action)) {
-                p.sendMessage("§e/hpi items [all|admin|interact] [on|off|toggle]"); return true;
+            String action = args.length > 1 ? args[1].toLowerCase(Locale.ROOT) : "toggle";
+            if (args.length > 2 || !List.of("on", "off", "toggle").contains(action)) {
+                p.sendMessage("§e/hpi tool [on|off|toggle]. Use /hp adminitem for Hub's admin item."); return true;
             }
-            toggle(p, target, action);
+            toggle(p, action);
         } catch (IOException e) { sender.sendMessage("§cCould not save: " + e.getMessage()); }
         return true;
     }
@@ -127,7 +119,7 @@ final class InteractionEditor implements Listener {
         if (!PublicInteractGate.canManage(sender)) return List.of();
         List<String> choices;
         if (args.length == 1) choices = List.of("items", "tool", "bind", "portal", "npc", "list", "reload", "cancel");
-        else if (args[0].equalsIgnoreCase("items")) choices = args.length == 2 ? List.of("all", "admin", "interact") : List.of("on", "off", "toggle");
+        else if ((args[0].equalsIgnoreCase("items") || args[0].equalsIgnoreCase("tool")) && args.length == 2) choices = List.of("on", "off", "toggle");
         else if (args[0].equalsIgnoreCase("portal") && args.length == 2) choices = List.of("create", "type", "pos1", "pos2", "save", "delete");
         else if (args[0].equalsIgnoreCase("portal") && args.length == 4 && args[1].equalsIgnoreCase("type")) choices = STYLES;
         else return null;
@@ -152,7 +144,7 @@ final class InteractionEditor implements Listener {
             menu.inventory.setItem(28, item(Material.ENDER_EYE, "&dPortal style: " + s.style, "&7Click to cycle", "&7Applies to selected or next portal"));
             menu.inventory.setItem(30, item(Material.LIME_DYE, "&aSave new portal", "&7Two corners and a destination required"));
             menu.inventory.setItem(32, item(Material.PAPER, "&fSelected: " + (s.selected == null ? "none" : s.selected), "&7Inspect a sign, entity, or portal first", "&7Label modes adjust height by 0.25 blocks"));
-            menu.inventory.setItem(49, item(Material.BARRIER, "&ePut editing items away"));
+            menu.inventory.setItem(49, item(Material.BARRIER, "&ePut Interact brush away"));
         }
         p.openInventory(menu.inventory);
     }
@@ -181,7 +173,7 @@ final class InteractionEditor implements Listener {
                 plugin.store().portalStyle(name, s.style);
                 s.selected = "portal." + name; s.first = null; s.second = null; s.portalName = null; s.mode = Mode.INSPECT;
                 p.closeInventory(); p.sendMessage("§aPortal " + name + " saved.");
-            } else if (slot == 49) { p.closeInventory(); toggle(p, "all", "off"); }
+            } else if (slot == 49) { p.closeInventory(); toggle(p, "off"); }
         } catch (IOException e) { p.sendMessage("§cCould not save: " + e.getMessage()); }
     }
     @EventHandler public void drag(InventoryDragEvent event) {
@@ -240,7 +232,7 @@ final class InteractionEditor implements Listener {
     @EventHandler public void join(PlayerJoinEvent event) {
         Player p = event.getPlayer();
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            if (p.isOnline() && PublicInteractGate.canManage(p) && p.getPersistentDataContainer().has(shownKey, PersistentDataType.BYTE)) show(p, false);
+            if (p.isOnline() && PublicInteractGate.canManage(p) && p.getPersistentDataContainer().has(shownKey, PersistentDataType.BYTE)) show(p);
         }, 20);
     }
 }

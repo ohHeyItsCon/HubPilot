@@ -17,4 +17,3 @@ permissions:
   hubpilot.interact.edit:
     description: Allows editing HubPilot interaction triggers without granting broader HubPilot administration.
     default: false
-

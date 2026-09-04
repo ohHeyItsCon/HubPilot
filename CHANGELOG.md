@@ -9,7 +9,7 @@ The **Queue Update** adds configurable join-flow messages and clearer startup-qu
 - Interact brush with binding, portal selection, inspection, removal and label-height modes
 - Nether, End, water and invisible portal particle styles
 - automatic floating destination labels for existing and new bindings
-- /hpi items toggles with persistent admin-item hiding and inventory safeguards
+- independent `/hp adminitem` (Hub) and `/hpi tool` (Interact) toggles, with persistent admin hiding and inventory safeguards
 
 
 - in-game Join & Queue Messages editor under Automation Settings
@@ -101,5 +101,3 @@ ViaVersion support follows the ViaVersion setup installed on the proxy. If Veloc
 - Crafty discovery checks Velocity candidates against a fresh Crafty server list.
 - Crafty provider-ID repair uses the live Crafty inventory instead of stale filesystem/config/script data.
 - Existing managed-server config is not deleted just because one Crafty inventory response no longer contains that server.
-
-

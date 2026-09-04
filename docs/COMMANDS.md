@@ -37,8 +37,8 @@ If a command is not behaving as expected, check the [FAQ](FAQ.md).
 
 ## Interact editing items and portal styles
 
-- `/hpi items [all|admin|interact] [on|off|toggle]` toggles editing items.
-- `/hpi tool` toggles the Interact brush.
+- `/hp adminitem` toggles Hub's admin item without requiring Interact.
+- `/hpi tool [on|off|toggle]` controls only the Interact brush; `/hpi items` is a brush-only alias.
 - `/hpi portal create <name> <destination>` starts a brush selection.
 - `/hpi portal type <name> <nether|end|water|invisible>` sets the particle style.
 - Sneak + right-click the brush to choose a destination and editing mode.

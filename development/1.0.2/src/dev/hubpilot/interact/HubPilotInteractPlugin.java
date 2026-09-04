@@ -144,4 +144,3 @@ extends JavaPlugin {
 
     }
 }
-

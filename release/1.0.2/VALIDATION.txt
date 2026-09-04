@@ -65,3 +65,11 @@ network and real Crafty panel were not available; live field testing remains pen
 Hub's existing editor can display saved preferences; Core enforces effective hub
 protection. Manual stop and shutdown by external software remain possible.
 
+
+Separated item command validation:
+PASS - Hub tested with no Interact JAR on the runtime classpath.
+PASS - Existing Core GUI:adminitem message reaches Hub's show/hide command.
+PASS - Hidden admin preference is retained; full inventories and ordinary items are preserved.
+PASS - Interact brush toggles and legacy invalid admin arguments do not alter Hub's admin item.
+PASS - Existing portal selection, persistence, and hologram regressions passed.
+Core and Link remain unchanged. Live server field testing remains pending.
