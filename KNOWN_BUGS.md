@@ -1,39 +1,27 @@
 # Known Bugs
 
-This page tracks confirmed issues in public HubPilot releases and where their fixes are available.
+## Hub discovery and automatic shutdown in 1.0.1
 
-## 1.0.1
+**Fix available in the September 3 Core build of the 1.0.2 prerelease. Live testing is still pending.**
 
-### Hub server can appear in `/hp discover`
+In 1.0.1, `/hp discover` could include the configured hub. Once imported as a managed backend, it could inherit automatic shutdown settings meant for game servers.
 
-**Status:** Fixed in the 1.0.2 pre-release
+The original September 1 Core download excluded the hub from discovery but didn't repair hubs already imported. The later September 3 build covers those too.
 
-Starting with 1.0.1, the configured hub server can appear in `/hp discover` where it was previously ignored.
+### Installing the fix
 
-This is unintended behavior. HubPilot 1.0.2 excludes the configured hub from discovery lists, suggestions, bulk discovery, and the final import path. The comparison also covers common equivalent hub names so an API-reported alias is not imported as a backend.
+Replace Core and restart Velocity. If `hub-server` already identifies the right hub, no manual Always-On toggle or configuration deletion is needed.
 
-If the hub is added or treated as a normal managed server, it can inherit the global lifecycle defaults. That includes automatic shutdown settings intended for backend game servers.
+An existing Hub 1.0.2 can stay installed for this repair. If you're coming from 1.0.1, update Hub to 1.0.2 as well. Use the supplied SHA-256 list to identify the repaired Core; both downloads are named 1.0.2.
 
-For a normal HubPilot network, the hub is usually expected to stay online so players always have somewhere to land while other servers start.
+Core disables idle, failed-request, and queue-empty shutdown for the configured hub. This overrides YAML defaults and saved menu settings at startup and after a successful reload, including requests still holding older settings. Discovery also excludes common equivalent hub names.
 
-#### Fix
+The repair keeps the managed entry, saved settings and comments, destinations, provider mappings, and startup preferences. Other servers aren't removed or changed. If you choose a different hub later, the former hub uses its saved backend settings again. **Manual Stop Server still works.**
 
-The September 3 repaired 1.0.2 Core automatically treats the configured `hub-server` and its managed-server identity as a protected hub role on startup and every successful configuration reload. Protection is applied after YAML defaults and shared GUI settings: idle shutdown is disabled, stop-after-failure is false, and stop-when-queue-empty is false. Explicit unsafe overrides cannot re-enable these automatic shutdown paths for the configured hub.
+### Staying on stable 1.0.1
 
-The managed entry is retained. No server files, destinations, provider mappings, or unrelated servers are deleted by this repair. Saved settings and comments remain intact; changing `hub-server` later restores the old entry's configured backend behavior. Provider startup preferences are preserved. Manual Stop Server remains available.
+- Don't import the hub as a normal backend through `/hp discover`.
+- If it's already managed, enable **Always-On server** or disable its automatic shutdown settings.
+- Check that it isn't inheriting a global idle timeout.
 
-The common automatic-stop dispatcher also checks the current hub identity, protecting sessions created before a reload. `/hp discover` exclusion is unchanged.
-
-The originally published September 1 Core fixed discovery but did not repair already imported hubs. An intermediate local idle-only guard was not in that published artifact and did not cover every shutdown path. Replace Core with the repaired artifact and restart Velocity; no manual Always-On toggle or configuration deletion is required. An existing 1.0.2 Hub can remain installed. When upgrading from 1.0.1, also install the existing 1.0.2 Hub for the Queue Update. Version remains 1.0.2, so identify the repaired build by its supplied SHA-256, not the version label alone.
-
-The larger guided hub-selection flow remains planned for setup and the future Hub Manager described in the [roadmap](docs/ROADMAP.md).
-
-#### Workaround
-
-On stable 1.0.1, until upgrading:
-
-- do not add the hub as a normal managed backend through `/hp discover`
-- if the hub is already managed, explicitly enable **Always-On server** for it or otherwise disable its automatic shutdown settings
-- verify the hub is not inheriting a global idle-shutdown value before leaving the network unattended
-
-The intended behavior is for HubPilot to distinguish configured hub servers from normal backend discovery targets so the hub is not accidentally subjected to backend lifecycle defaults.
+Guided hub selection during setup and a separate multi-hub setup path are still planned. See the [roadmap](docs/ROADMAP.md).

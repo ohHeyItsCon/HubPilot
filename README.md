@@ -1,102 +1,67 @@
 # HubPilot
 
-HubPilot is a Minecraft server-network suite for Velocity + Paper/Bukkit. It started on top of [AutoServer](https://github.com/artificial-720/AutoServer) and grew into a larger system for server navigation, on-demand startup, provider control, hub management, and telemetry.
+HubPilot manages a Velocity Minecraft network from its Paper/Bukkit hub. Players can request an offline server, wait while it starts, and join when it's ready. Servers can shut down when they're no longer needed, or stay online if that's how you run your network.
 
-> **Current pre-release:** HubPilot 1.0.2 — Queue Update
->
-> **Current stable release:** HubPilot 1.0.1
+> **Stable:** [1.0.1](https://github.com/ohHeyItsCon/HubPilot/releases/tag/v1.0.1)  
+> **Prerelease:** [1.0.2: Queue Update](release/1.0.2/RELEASE-NOTES.md)
 
-## What HubPilot does
+## Features
 
-HubPilot can keep a lightweight hub online while larger backend servers stay off until somebody actually requests them. It also works fine on networks that keep servers running all the time, since power management is optional.
-
-Main features include:
-
-- configurable server Navigator
-- live Navigator telemetry updates while the GUI stays open
-- server requests with retries and countdowns
-- configurable join and queue messages with global and per-server controls
-- queue position and cancellation feedback
+- Server Navigator with live status, player counts, ping, and startup progress
+- On-demand startup, retries, countdowns, and automatic shutdown
 - Crafty Controller, Pterodactyl, Generic HTTP, and Always-On providers
-- per-server Always-On lifecycle option for managed servers
-- idle and failed-request shutdown for resource saving
-- per-server version rules
+- Per-server Always-On option that keeps provider startup and manual stop available
+- In-game server and Navigator editing
 - Owner, Admin, Moderator, and Helper roles
-- in-game admin tools
-- entity, sign, portal, and mannequin bindings through Interact
-- hub-side telemetry through Link
+- Entity, sign, portal, and supported mannequin bindings through Interact
+- Per-server version rules, ViaVersion compatibility, and LuckPerms permission support
 - `/hub` and `/lobby` routing
-- ViaVersion compatibility
-- LuckPerms support for hub-side permission nodes
+
+The **1.0.2 prerelease** adds editable join and queue messages, queue positions, Interact editing tools and labels, and a repair for automatic hub shutdown. See its [release notes](release/1.0.2/RELEASE-NOTES.md) for the builds to use and the live tests still pending.
 
 ## Components
 
-| Component | Install on | What it handles |
+| Plugin | Install on | What it handles |
 | --- | --- | --- |
-| **HubPilot Core** | Velocity proxy | Routing, requests, providers, discovery, setup, permissions, status, statistics, and `/hp` commands |
-| **HubPilot Hub** | Hub Paper/Bukkit server | Navigator, admin GUI, setup, staff tools, and hub items |
-| **HubPilot Interact** | Hub Paper/Bukkit server | Entity, sign, portal, and supported mannequin bindings |
-| **HubPilot Link** | Hub Paper/Bukkit server | Communication and telemetry between the hub and Core |
+| Core | Velocity proxy | Routing, requests, power providers, discovery, roles, status, and `/hp` commands |
+| Hub | Paper/Bukkit hub | Navigator, admin menus, setup, and hub items |
+| Interact | Paper/Bukkit hub | Entity, sign, portal, and supported mannequin bindings |
+| Link | Paper/Bukkit hub | Communication and telemetry between the hub and Core |
 
-Backend game servers do not need HubPilot JARs for normal routing, requests, or provider power control.
+Backend game servers don't need HubPilot JARs for normal requests, routing, or provider power control.
 
 ## Quick install
 
-Put Core on Velocity:
+These examples use stable **1.0.1**. For prerelease installs, follow the [1.0.2 update instructions](release/1.0.2/RELEASE-NOTES.md#which-files-to-replace).
 
-```text
-velocity/plugins/HubPilot-Core-1.0.2.jar
-```
+Put Core in Velocity's `plugins` folder. Put Hub and Link in the Paper hub's `plugins` folder, plus Interact if you want world interactions. Keep only one version of each plugin.
 
-Put Hub and Link on the Paper/Bukkit hub. Interact is optional:
-
-```text
-hub/plugins/HubPilot-Hub-1.0.2.jar
-hub/plugins/HubPilot-Link-1.0.2.jar
-hub/plugins/HubPilot-Interact-1.0.2.jar
-```
-
-Restart Velocity, restart the hub, join as an operator, then run:
+Restart Velocity and the hub, join the configured hub as an operator, then run:
 
 ```text
 /hp claimowner
 /hp setup
 ```
 
-A common resource-saving layout is:
+Keep a hub online so players have somewhere to wait. Each backend needs an address and port that Velocity can reach. For the full setup, see [Installation](docs/INSTALLATION.md) and [Server Providers](docs/PROVIDERS.md).
 
-```text
-Hub       -> Always-On
-Survival  -> Crafty / another power provider
-Modded    -> Crafty / another power provider
-Minigames -> Crafty / another power provider
-```
+## Updating
 
-Starting with 1.0.1, a Crafty/Pterodactyl/Generic HTTP server can also be marked **Always-On server** in its Automation Settings. HubPilot can still start it through the provider if needed, but it will not automatically stop that server for idle time, failed requests, or an empty request queue.
+Core and Hub must run the same HubPilot version. Update them together.
 
-Navigator server items also update their telemetry while the menu stays open. HubPilot refreshes the open Navigator after each complete status sync, using the existing status cycle instead of adding another repeating task.
+Link and Interact can stay on an older build only when the release notes say it's compatible, and no more than **two published releases behind**. If a release requires an update, that takes priority.
 
-Every server behind Velocity still needs its own listening port. The full setup, including provider API keys, port examples, discovery, ViaVersion, and LuckPerms, is covered in [Installation](docs/INSTALLATION.md) and [Server Providers](docs/PROVIDERS.md).
-
-## Versioning
-
-All four HubPilot plugins share one public version number.
-
-**Core and Hub should always run the same HubPilot version.** Link and Interact can stay on an older build when the release notes say that build is still compatible, but they should not be more than **two published HubPilot releases behind** Core and Hub.
-
-For 1.0.2, Core and Hub need to be updated together. Link and Interact have no functional changes, so their 1.0.1 builds remain compatible. Matching 1.0.2 builds are provided for consistent suite versioning.
+The latest 1.0.2 Interact features need the newer Hub and Interact builds. Link 1.0.1 remains compatible. Several 1.0.2 JARs kept their filenames after repairs, so check the supplied SHA-256 list.
 
 ## Compatibility and testing
 
-Core runs on Velocity. Hub, Interact, and Link target the Bukkit/Paper 1.21 API family.
+Core runs on Velocity. The hub-side plugins target the Bukkit/Paper 1.21 API family.
 
-Crafty Controller is the only external controller with live beta coverage from the 1.0.0 testing cycle. Pterodactyl and Generic HTTP are included and have controlled testing behind them, but not the same live network coverage yet.
+Crafty Controller has live beta coverage. Pterodactyl and Generic HTTP have controlled test coverage, but haven't had the same live network testing.
 
-The 1.0.1 Always-On path passed packaged and live testing without blocking manual Stop Server. Live Navigator testing confirmed startup progress from 0% to 100%, changing ping, Online status, countdown, and player transfer without reopening the menu. Crafty discovery, duplicate migration, shared layouts, and Admin editing were also tested on the final release build.
+Always-On and live Navigator refresh passed live testing in 1.0.1. The full results are in the [1.0.1 notes](release/1.0.1/RELEASE-NOTES.md). **1.0.2 still has live tests pending.**
 
-The live Navigator refresh uses the existing status-sync path. Exact packaged-code tests confirmed that open Navigator inventories update in place and refresh once after `STATUS_SYNC_END` instead of once for every server row.
-
-HubPilot works alongside [ViaVersion](https://github.com/ViaVersion/ViaVersion) and supports [LuckPerms](https://github.com/LuckPerms/LuckPerms) for normal hub-side permission nodes.
+[ViaVersion](https://github.com/ViaVersion/ViaVersion) handles protocol translation. HubPilot's strict version rules can still block a transfer. [LuckPerms](https://github.com/LuckPerms/LuckPerms) can grant permission nodes on the hub; it is optional.
 
 ## Documentation
 
@@ -109,17 +74,13 @@ HubPilot works alongside [ViaVersion](https://github.com/ViaVersion/ViaVersion) 
 - [Known Bugs](KNOWN_BUGS.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Roadmap](docs/ROADMAP.md)
-- [Project Transparency](TRANSPARENCY.md)
-- [1.0.1 Validation Record](release/1.0.1/VALIDATION.txt)
-- [1.0.1 Release Notes](release/1.0.1/RELEASE-NOTES.md)
-- [1.0.2 Pre-release Notes](release/1.0.2/RELEASE-NOTES.md)
-- [1.0.2 Validation Record](release/1.0.2/VALIDATION.txt)
+- [Contributing](CONTRIBUTING.md)
 - [Security](SECURITY.md)
+- [1.0.1 Validation](release/1.0.1/VALIDATION.txt)
+- [1.0.2 Validation](release/1.0.2/VALIDATION.txt)
 
-## License and project history
+## Project history and license
 
-HubPilot is released under the [MIT License](LICENSE).
+Created and maintained by `ohHeyItsCon`, HubPilot grew from [AutoServer](https://github.com/artificial-720/AutoServer) by Artificial-720. It uses the [MIT License](LICENSE), with the original notice kept in [Third-Party Notices](THIRD_PARTY_NOTICES.md) and the release JARs.
 
-HubPilot was built on top of AutoServer by Artificial-720. The original AutoServer MIT notice is kept in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and inside the release JARs.
-
-AI tools have been used heavily during development for coding, debugging, testing, code review, and documentation. More detail is in [TRANSPARENCY.md](TRANSPARENCY.md).
+AI tools have been used for coding, debugging, testing, review, and documentation. See [Project Transparency](TRANSPARENCY.md) for how the project was developed.

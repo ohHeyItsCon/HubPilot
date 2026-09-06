@@ -1,180 +1,84 @@
 # HubPilot Roadmap
 
-These are ideas being considered for future versions. They are not promises or assigned to a release until they move into an actual release plan.
-
-The roadmap is grouped by the component that would handle most of the work.
+These are planned directions, not release commitments. Items are grouped by the plugins involved.
 
 ## Core + Hub
 
+### Guided hub selection
+
+During `/hp setup`, discover the available servers/worlds and ask the owner which server is the hub. Give that server its own hub rules.
+
+This is the planned setup improvement following the 1.0.1 hub-discovery bug. The 1.0.2 prerelease handles the immediate problem through discovery exclusion and automatic shutdown protection; guided selection is still to come.
+
 ### Multi-hub and Navigator profiles
 
-Let different hubs use different Navigator layouts and server groups.
+Let hubs use different Navigator layouts and server groups. A Minigames Hub could list BedWars, SkyWars, and Parkour, while a Modded Hub lists modpacks. Several physical hubs could share the same profile.
 
-```text
-Main Hub
-├── Survival Hub
-├── Minigames Hub
-└── Modded Hub
+A dedicated **Hub Manager** would keep hub administration separate from the normal backend selector. It would let owners:
 
-Minigames Hub
-├── BedWars
-├── SkyWars
-└── Parkour
-```
+- Add or remove hub instances and assign profiles.
+- Group identical hubs and choose the main hub or group.
+- View health, player counts, and profile assignments.
+- Set targets for `/hub`, `/lobby`, and fallback routing.
+- Configure hub lifecycle rules, load balancing, and failover.
 
-Several physical hubs could share one profile, which would also give larger networks a base for load balancing and redundant hub instances.
+Core could route players to a healthy or less populated hub in a group, with another hub available if one goes offline.
 
-Multi-hub management should use a dedicated **Hub Manager** instead of mixing hub instances into the normal server selector. The normal server selector should stay focused on playable backend destinations, while the Hub Manager handles things that only apply to hubs.
+### Separate multi-hub setup
 
-Possible Hub Manager controls include:
+When multi-hub support arrives, add a **Multi-Hub Setup** path alongside normal single-hub setup.
 
-- add or remove hub instances
-- assign a Navigator profile to each hub
-- place several physical hubs into one logical hub group
-- choose the main/default hub or hub group
-- view hub health, player count, and current profile
-- configure load-balancing and failover behavior
-- choose which hubs can be used by `/hub`, `/lobby`, and fallback routing
+It would discover hub candidates, let the owner select several hubs, create groups, assign profiles, and choose the default hub. Routing, lifecycle, load balancing, and failover settings would be reviewed before applying the setup.
 
-That keeps a large network with several hub instances from turning the main server management GUI into one mixed list of hubs and game servers.
+### Setup presets
 
-### Nested Navigator folders
+Offer starting settings for small, medium, and large networks. Ask about providers, Paper or modded backends, expected startup times, automatic shutdown, and Navigator groups. Every setting would remain editable afterward.
 
-Let Navigator entries open another Navigator page instead of always pointing straight to a server. Small networks could use folders on one hub, while larger networks could use the same profile system across real sub-hubs.
+### Navigator folders
 
-### Hub groups, load balancing, and failover
+Let an entry open another Navigator page. Small networks could organize servers into folders on one hub; multi-hub networks could use those folders within their profiles.
 
-Treat several hub servers as one group. Core could pick the healthiest or least-populated hub for `/hub`, `/lobby`, and fallback routing, then move players to another hub if one goes offline.
+### Server operating modes
 
-### Per-server operating modes
+**Always-On server shipped in 1.0.1.** It keeps provider startup and manual stop available while disabling automatic idle, failed-request, and queue-empty shutdown.
 
-**Always-On server shipped in 1.0.1.** It keeps provider startup and manual stop available while disabling HubPilot's automatic idle, failed-request, and queue-empty shutdown behavior for that server.
+Possible next modes:
 
-The broader operating-mode idea is still on the roadmap. Possible additions include:
+- **On Demand:** a preset for startup, queues, and automatic shutdown.
+- **Custom:** owner-defined lifecycle settings.
 
-- **On Demand:** use startup, queue, idle, and failed-request automation as a preset
-- **Custom:** let the owner build a lifecycle policy without using a preset
+### Queue controls
 
-A mixed network could eventually look like:
+The **1.0.2 prerelease** adds editable join and queue messages, visibility controls, formatted names, queue positions, cancellation feedback, previews, placeholders, and global/per-server settings.
 
-```text
-Main Hub       -> Always On
-BedWars        -> Always On
-Events         -> On Demand
-Modded SMP     -> On Demand
-Seasonal       -> Custom
-```
-
-### Guided setup and network-size presets
-
-Expand `/hp setup` so a new install can start with useful defaults based on its network.
-
-As part of setup, HubPilot should perform an initial server/world discovery and ask the owner which discovered server is the hub. The selected hub would then be treated as a hub role instead of a normal managed backend and receive its own lifecycle rules. HubPilot 1.0.2 fixes the immediate 1.0.1 discovery regression by excluding the configured hub; this guided setup remains a broader usability improvement.
-
-This hub selection should also provide the starting point for future multi-hub support, where more than one discovered hub can be assigned to the Hub Manager and given hub-specific profiles, routing, lifecycle, and failover rules.
-
-When multi-hub support is released, setup should also offer a separate **Multi-Hub Setup** path instead of forcing larger networks through the normal single-hub flow. That setup would be focused on identifying and organizing several hubs at once.
-
-Possible Multi-Hub Setup steps include:
-
-- discover available hub candidates
-- select every server that should be treated as a hub
-- choose the main/default hub or hub group
-- create hub groups for identical or load-balanced hub instances
-- assign a Navigator profile to each hub or group
-- choose `/hub`, `/lobby`, and fallback routing targets
-- configure hub-specific lifecycle rules
-- configure load balancing and failover defaults
-- review the resulting Hub Manager layout before applying it
-
-The normal setup path would stay simple for single-hub networks, while Multi-Hub Setup would handle the extra decisions that only matter when several hubs are present.
-
-Possible questions:
-
-- small, medium, or large network?
-- one hub or several?
-- which discovered server is the hub?
-- mostly Always On, On Demand, or mixed?
-- which power provider?
-- Paper, modded, or mixed backends?
-- normal startup time?
-- should idle shutdown be enabled?
-- one Navigator or several groups?
-
-The result would only be a starting preset. Every setting would still be editable afterward.
-
-### Better queue controls
-
-**The first queue improvements shipped in the 1.0.2 Queue Update pre-release.** They include configurable join-flow messages, message visibility, formatted server names, queue position, cancellation feedback, previews, placeholders, and global/per-server inheritance.
-
-Later queue additions may include estimated wait time, queue limits, staff/VIP priority, and more advanced handling when several players request the same offline server.
+Later additions could include wait estimates, queue limits, staff/VIP priority, and better handling of simultaneous requests.
 
 ## Core
 
-### Scheduled server availability
+### Scheduled availability
 
-Allow event, seasonal, weekend-only, or maintenance servers to become available on a schedule. A server could be hidden, shown as unavailable, or blocked from starting outside its configured window.
+Set availability windows for events, seasonal servers, weekends, or maintenance. Outside those hours, a server could be hidden, shown as unavailable, or blocked from starting.
 
-### More server-management providers
+### More providers
 
-Add direct integrations when there is real demand. AMP, Multicraft, Pelican, and other common panels are possible candidates. Generic HTTP would remain available for custom APIs.
+Add panel integrations where there's demand. AMP, Multicraft, and Pelican are possible candidates. Generic HTTP would continue to cover custom APIs.
 
-### Network statistics and history
+### Network history
 
-Keep longer-term information such as:
-
-- server starts
-- uptime
-- peak players
-- average startup time
-- failed starts
-- idle/failed-request shutdowns
-- time spent powered off
-
-This could make HubPilot's resource savings measurable instead of only visible in the moment.
+Keep records of starts, uptime, peak players, average startup time, failed starts, automatic shutdowns, and time spent powered off. Owners could use those records to see which servers get used and how much runtime is saved.
 
 ## Hub
 
-### Navigator profile editor
-
-Create, copy, assign, and edit Navigator profiles in-game once multi-hub support exists.
-
-### Server-group and folder editing
-
-Build nested folders and server groups from the admin GUI, including slots, icons, titles, parent menus, and destinations.
-
-### Network preset review
-
-Show what a Small, Medium, or Large setup preset is about to change before the owner accepts it.
+- Create, copy, assign, and edit Navigator profiles in-game once multi-hub support exists.
+- Build folders and server groups from the admin GUI, including slots, icons, titles, parent menus, and destinations.
+- Show what a setup preset will change before the owner accepts it.
 
 ## Interact
 
-### Navigator and profile targets
-
-Let an NPC, sign, portal, entity, or mannequin open a Navigator profile/folder instead of only requesting one server.
-
-### More flexible interaction rules
-
-Add more control over who can use a binding, when it is active, and whether it points to a server, hub, group, or Navigator page.
+Let NPCs, signs, portals, entities, and mannequins open a Navigator profile or folder. Add rules for who can use a binding, when it's active, and whether it targets a server, hub, group, or menu.
 
 ## Link
 
-### Multi-hub telemetry sync
+Report each hub's player count, response state, and profile to Core for routing, hub groups, load balancing, and failover. This telemetry would stay inside the HubPilot network.
 
-Let several Hub servers report their local state to Core for hub groups, load balancing, and failover.
-
-### Hub health reporting
-
-Send lightweight hub health such as player count, response state, and assigned Navigator profile so Core can make better routing choices.
-
-HubPilot telemetry would stay inside the HubPilot network and would not be sent to an outside analytics/tracking service.
-
-## Versioning and component compatibility
-
-HubPilot keeps one public release number across Core, Hub, Interact, and Link.
-
-Core and Hub should normally run the exact same version. Link and Interact can stay on an older compatible build when the release notes say so, but should not be more than two published releases behind.
-
-## How roadmap items are chosen
-
-Features move forward based on usefulness, implementation risk, testing needs, and feedback from real HubPilot networks.
+Features will be chosen based on demand, usefulness, implementation risk, and the testing they need.

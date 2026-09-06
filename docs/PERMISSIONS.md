@@ -4,13 +4,7 @@ HubPilot has its own role system, so you do not need a Velocity permission plugi
 
 ## LuckPerms
 
-HubPilot works with [LuckPerms](https://github.com/LuckPerms/LuckPerms) on the Paper/Bukkit hub.
-
-Hub uses normal Bukkit/Paper permission checks, so LuckPerms can grant HubPilot nodes to players and groups just like it does for other plugins.
-
-LuckPerms is optional. HubPilot's built-in Owner, Admin, Moderator, and Helper roles still work without it.
-
-HubPilot Owner is separate from a permission group. Owner is stored by HubPilot and has to be claimed or changed through HubPilot itself.
+[LuckPerms](https://github.com/LuckPerms/LuckPerms) can grant HubPilot nodes to players and groups on the Paper/Bukkit hub. It's optional; the built-in roles work without it. A LuckPerms group doesn't make someone the HubPilot Owner.
 
 ## Owner
 

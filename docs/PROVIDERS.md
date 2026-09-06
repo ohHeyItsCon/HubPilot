@@ -1,8 +1,6 @@
 # Server Providers
 
-Providers tell HubPilot how a managed server's power should be handled. Provider settings and credentials are kept separate so normal config can be shared without leaking API keys.
-
-HubPilot currently includes Always-On, Crafty Controller, Pterodactyl, and Generic HTTP.
+Choose a provider for each server HubPilot manages: Always-On, Crafty Controller, Pterodactyl, or Generic HTTP. Definitions go in `providers.yml`; credentials go in `secrets.yml`.
 
 ## Always-On
 
@@ -208,7 +206,7 @@ Pterodactyl has controlled validation, but it has not had the same live beta cov
 
 Generic HTTP is for hosts, panels, scripts, or webhooks that expose usable HTTP endpoints but do not have a dedicated HubPilot provider.
 
-There is no single API-key setup for Generic HTTP because every service can be different. Check that service's API or webhook docs and find:
+Check your service's API or webhook documentation for:
 
 1. the endpoint that starts a server;
 2. the endpoint that stops a server;
@@ -323,23 +321,11 @@ If `status-url` is configured, HubPilot uses it for the provider test and replac
 
 If the service has no simple status endpoint, `status-url` can be left blank. Start and stop can still work, but the provider test cannot prove the remote power endpoint works before the first real request.
 
-For Generic HTTP, the remote service's docs are the source of truth for the URL, method, body, and authentication format.
+Generic HTTP has controlled test coverage, but hasn't had the same live beta testing as Crafty.
 
 ## If a server does not start
 
-Check:
-
-- server name and backend/provider mapping
-- `startup.provider-server-id`
-- port registered in Velocity
-- address Velocity uses to reach the backend
-- provider assigned to the server
-- panel/controller URL
-- API credential and permissions
-- startup and ping timeout values
-- whether the controller server was renamed or recreated
-
-The full troubleshooting list is in the [FAQ](FAQ.md).
+The [FAQ](FAQ.md) covers provider mappings, credentials, backend addresses, ports, and startup timeouts.
 
 ## Secrets
 

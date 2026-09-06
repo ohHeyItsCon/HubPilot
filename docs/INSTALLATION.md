@@ -1,5 +1,7 @@
 # Installation
 
+These instructions use stable **1.0.1**. For the **1.0.2 prerelease**, follow its [update instructions](../release/1.0.2/RELEASE-NOTES.md#which-files-to-replace) and check the listed testing limits.
+
 ## 1. Velocity proxy
 
 Put `HubPilot-Core-1.0.1.jar` in the Velocity proxy's `plugins` folder.
@@ -36,18 +38,7 @@ Link 1.0.0 and Interact 1.0.0 remain compatible with 1.0.1 because they have no 
 
 ## 3. Keep a hub online
 
-The easiest HubPilot layout is one small hub that stays online while larger game servers are allowed to shut down when nobody is using them.
-
-That gives players a permanent place to land while an offline backend starts.
-
-A common layout:
-
-```text
-Hub       -> Always-On
-Survival  -> Crafty / another power provider
-Modded    -> Crafty / another power provider
-Minigames -> Crafty / another power provider
-```
+Keep a small hub online so players have somewhere to wait while an offline game server starts. Use the Always-On provider if another system keeps the hub running, and Crafty or another power provider for servers you want HubPilot to start.
 
 Starting in 1.0.1, a provider-controlled server that should stay running can also use the **Always-On server** toggle in Hub Automation Settings. This is different from the Always-On provider. The provider still controls startup and manual stop, while the lifecycle toggle prevents HubPilot from automatically shutting that server down.
 
@@ -129,7 +120,9 @@ Add a server with:
 /hp discover add <server>
 ```
 
-When Crafty is the primary provider, discovery checks Velocity candidates against a fresh Crafty server list. Old Velocity entries for servers that no longer exist in Crafty are filtered out.
+With Crafty as the primary provider, 1.0.1 reads Crafty's server inventory and can register missing backends with Velocity. You don't need to add each new Crafty server to `velocity.toml` first. Stale Velocity entries for servers no longer in Crafty are filtered out.
+
+On 1.0.1, avoid importing the hub as a backend. If it is already managed, enable **Always-On server**. See [Known Bugs](../KNOWN_BUGS.md) for the 1.0.2 repair.
 
 For other providers, make sure `startup.provider` and `startup.provider-server-id` point to the right provider and controller server ID.
 

@@ -1,10 +1,8 @@
 # Contributing
 
-Bug reports and real-world testing are especially useful while HubPilot is still young.
-
 ## Reporting a bug
 
-Check the [FAQ](docs/FAQ.md) first. It covers the common stuff like server names, ports, provider mappings, startup timeouts, and bad Velocity addresses.
+Check the [FAQ](docs/FAQ.md) for server names, ports, provider mappings, and connection problems.
 
 If the problem is still there, include:
 
@@ -27,4 +25,4 @@ Open an issue before starting a large code change. It is easier to agree on the 
 
 ## AI-assisted contributions
 
-AI-assisted contributions are allowed. The contributor is still responsible for understanding the change, testing it, checking nearby behavior, and making sure nothing private or legally questionable is being submitted.
+AI-assisted contributions are welcome. Review and understand the code you submit, test the changed behavior and nearby features, and check that you have permission to share everything included.

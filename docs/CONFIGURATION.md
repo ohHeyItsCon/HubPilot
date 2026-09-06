@@ -1,6 +1,6 @@
 # Configuration
 
-HubPilot creates its config files on first start. Most of them are fine to share after checking them, but **`secrets.yml` must stay private**.
+HubPilot creates its config files on first start. Check files for private details before sharing them. **Keep `secrets.yml` private.**
 
 ## Core files
 
@@ -19,7 +19,7 @@ A legacy `providers/crafty.yml` file may still be created when loading older 3.x
 
 ## Core defaults
 
-Some packaged defaults:
+The examples below show packaged defaults. A server can override inherited values.
 
 ```yaml
 shared-directory: shared
@@ -99,6 +99,12 @@ server.<server-id>.always-on-server=true
 
 The default is `false`, so upgrading from 1.0.0 does not change existing lifecycle behavior until the option is enabled.
 
+## Configured hub in the 1.0.2 prerelease
+
+The September 3 Core repair disables idle, failed-request, and queue-empty shutdown for the server identified by `hub-server`. It overrides defaults and saved menu settings at startup and after a successful reload. The menu may still show the saved values, but Core won't use them to automatically stop the configured hub. Manual Stop Server remains available.
+
+See [Known Bugs](../KNOWN_BUGS.md) for the repaired build and update steps. Live testing is still pending.
+
 ## Join and queue messages
 
 HubPilot 1.0.2 adds an in-game editor for messages used during server requests, startup queues, countdowns, retries, and transfers.
@@ -131,7 +137,7 @@ Existing flat entries remain valid:
 starting: "Starting <server>... You are queued."
 ```
 
-In-game edits are saved in `hubpilot.properties` and sent to Core through the trusted `hubpilot:settings` channel. Provider secrets and unrelated settings are not accepted through that channel.
+Hub saves in-game edits in `hubpilot.properties` and sends them to Core through `hubpilot:settings`. That channel accepts the defined message settings, not provider secrets or unrelated fields.
 
 ## Startup and retry timing
 
@@ -143,7 +149,7 @@ The [FAQ](FAQ.md) covers the common startup and connection problems.
 
 `strict-version: false` leaves normal proxy compatibility in place, including [ViaVersion](https://github.com/ViaVersion/ViaVersion) when it supports that client/backend combination.
 
-Use a strict version rule for servers that really need an exact Minecraft version. Modded servers are the obvious example because the loader or modpack may matter too.
+Use a strict version rule when a server requires an exact Minecraft version. Modded backends may also need a particular loader or modpack.
 
 ## Hub config
 
@@ -168,4 +174,6 @@ particle-period-ticks: 20
 portal-cooldown-ms: 3000
 ```
 
-After changing owner-editable files, use `/hp reload` or the component-specific reload command once first-time setup is complete.
+In the latest 1.0.2 Interact build, `destination-labels: false` disables floating destination names. `/hpi reload` reloads Interact's configuration and bindings.
+
+After editing other owner-editable files, use `/hp reload` or the relevant component's reload command once setup is complete.

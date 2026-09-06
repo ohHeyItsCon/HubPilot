@@ -2,16 +2,14 @@
 
 ## 1.0.2 - 2026-09-01 (pre-release)
 
-The **Queue Update** adds configurable join-flow messages and clearer startup-queue feedback.
+The **Queue Update** adds editable join and queue messages, queue positions, and new Interact tools.
 
 ### Added
 
 - Interact brush with binding, portal selection, inspection, removal and label-height modes
 - Nether, End, water and invisible portal particle styles
 - automatic floating destination labels for existing and new bindings
-- independent `/hp adminitem` (Hub) and `/hpi tool` (Interact) toggles, with persistent admin hiding and inventory safeguards
-
-
+- separate `/hp adminitem` and `/hpi tool` toggles; Hub remembers hidden admin items and tools don't overwrite a full inventory
 - in-game Join & Queue Messages editor under Automation Settings
 - per-event show/hide controls, text editing, previews, and reset/inherit controls
 - global message defaults with optional per-server overrides
@@ -23,12 +21,11 @@ The **Queue Update** adds configurable join-flow messages and clearer startup-qu
 
 ### Fixed
 
-- September 3 Core repair: startup/reload derives a protected hub role for existing managed entries after all configuration inheritance; idle, failed-request, and queue-empty shutdown are disabled, with a final guard for pre-reload sessions. Original files and startup preferences are preserved. That change rebuilt only Core; see the supplied checksums to distinguish it from the original 1.0.2 artifact.
+- September 3 Core repair: the configured hub is exempt from idle, failed-request, and queue-empty shutdown, including already imported hubs and requests left over from a reload. Saved settings stay in place. Check the supplied SHA-256 list to identify the repaired Core.
 - hiding countdown text no longer disables the configured countdown sound
 - Paper countdown feedback now preserves custom message colors instead of forcing yellow
-- the trusted settings filter now carries valid message settings without accepting unrelated or sensitive keys
+- message edits reach Core without being dropped by the settings filter; unrelated and sensitive keys are still rejected
 - `/hp discover` now protects the configured hub across listing, suggestions, bulk discovery, and final import, including common equivalent hub names
-- the configured hub is now exempt from automatic idle shutdown even if discovery created a managed entry for it or it inherits a global idle timeout
 
 For the latest additions, update Hub and Interact together. Keep the September 3 Core build installed; Link remains unchanged.
 
@@ -36,7 +33,7 @@ See [release/1.0.2/RELEASE-NOTES.md](release/1.0.2/RELEASE-NOTES.md) for update 
 
 ## 1.0.1 - 2026-08-24
 
-The first post-release update adds a per-server **Always-On server** option and live Navigator telemetry refresh without changing the existing provider system.
+1.0.1 adds the **Always-On server** option and updates Navigator status while the menu stays open.
 
 ### Added
 
@@ -57,11 +54,9 @@ The first post-release update adds a per-server **Always-On server** option and 
 - Admin destination cards retain their exact server identity in the open inventory, restoring left-click editing after the shared-layout change.
 - Fixed a Paper runtime linkage error in the Admin click patch by compiling `Player.openInventory` with Bukkit's correct `InventoryView` return type.
 
-Full release notes, including which fixes introduced follow-up bugs and how each was corrected, are available in [release/1.0.1/RELEASE-NOTES.md](release/1.0.1/RELEASE-NOTES.md).
+See the [1.0.1 notes](release/1.0.1/RELEASE-NOTES.md) for the fixes and testing results.
 
-When Always-On server is enabled on a managed server, HubPilot keeps provider startup available but disables its automatic idle, failed-request, and queue-empty shutdown behavior for that server. Manual Stop Server behavior is unchanged.
-
-Open Navigator menus now refresh their server items after each complete status sync. The refresh uses the existing status cycle and happens once at `STATUS_SYNC_END`, so it does not add another repeating scheduler or rebuild once per server row.
+Always-On server disables automatic idle, failed-request, and queue-empty shutdown. Provider startup and manual Stop Server remain available.
 
 Core and Hub should be updated together for 1.0.1. Interact 1.0.0 and Link 1.0.0 remain compatible because they have no functional changes in this release. Matching 1.0.1 builds are still published with the suite.
 

@@ -1,8 +1,8 @@
 # Frequently Asked Questions
 
-## Why isn't my server starting with Crafty, Pterodactyl, Generic HTTP, or another controller setup?
+## Why isn't my server starting?
 
-Check the pieces that connect Velocity, HubPilot, and the controller before assuming the plugin itself is broken.
+Start with the mapping between Velocity, HubPilot, and the controller.
 
 Start with the **server name**. The Velocity server entry, the HubPilot destination/server entry, and the controller mapping all need to lead to the same backend. Display names can be different, but the real backend/provider mapping still has to match.
 
@@ -22,7 +22,7 @@ Finally, check the **startup timeout**. Large modded servers can take much longe
 
 Provider setup is covered in [Server Providers](PROVIDERS.md).
 
-For Crafty, `/hp discover` is also a quick way to see whether HubPilot currently sees the server as a valid Velocity/Crafty candidate.
+For Crafty, `/hp discover` shows the servers HubPilot can import.
 
 ## My server starts, but HubPilot never sends me to it. What should I check?
 
@@ -63,48 +63,23 @@ See [Permissions and Roles](PERMISSIONS.md) for the available nodes.
 
 ## Do all backend servers need HubPilot installed?
 
-No.
-
-The normal layout is:
-
-```text
-Velocity proxy/plugins/
-└── HubPilot-Core-1.0.1.jar
-
-Hub Paper/Bukkit server/plugins/
-├── HubPilot-Hub-1.0.1.jar
-├── HubPilot-Interact-1.0.1.jar
-└── HubPilot-Link-1.0.1.jar
-```
-
-Backend game servers normally do not need HubPilot JARs for requests, startup/shutdown, or routing through Velocity.
+No. Put Core on Velocity and Hub, Link, and optional Interact on the Paper/Bukkit hub. Backend game servers don't need HubPilot JARs for normal requests, power control, or routing. See [Installation](INSTALLATION.md).
 
 ## Do I need to update every HubPilot component with every release?
 
-Not always.
-
-Core and Hub should stay on the exact same HubPilot version and should normally be updated together.
+Update Core and Hub together so their versions match.
 
 Link and Interact can stay on an older build when the release notes say that build is still compatible. They should not be more than **two published HubPilot releases behind** Core and Hub.
 
 For 1.0.1 specifically, Core and Hub need the update. Link 1.0.0 and Interact 1.0.0 remain compatible because neither one has functional changes in 1.0.1.
 
-HubPilot still publishes one suite version so it is clear which builds belong to the same release.
+For the latest 1.0.2 prerelease, use the newer Hub and Interact builds for the editing tools. Link 1.0.1 remains compatible. Check the [release notes](../release/1.0.2/RELEASE-NOTES.md) and supplied checksums.
 
 ## Does the hub server have to stay online?
 
-It is strongly recommended for the normal resource-saving layout.
+Keep a hub online so players have somewhere to wait while other servers start. You can keep additional servers running too.
 
-A small always-online hub gives players somewhere to wait while larger game servers start only when somebody asks for them.
-
-```text
-Hub       -> Always-On
-Survival  -> Crafty / another power provider
-Modded    -> Crafty / another power provider
-Minigames -> Crafty / another power provider
-```
-
-Large networks with enough hardware can keep more servers online if they want.
+If the hub is shutting down unexpectedly, check [Known Bugs](../KNOWN_BUGS.md) for the 1.0.1 discovery problem and the 1.0.2 repair.
 
 ## What does the Always-On provider actually do?
 
@@ -125,19 +100,13 @@ If an Always-On provider server is offline, something outside HubPilot has to st
 
 ## What is the difference between the Always-On provider and the Always-On server option?
 
-They solve different problems.
-
 The **Always-On provider** means HubPilot does not own power control for that server at all. HubPilot cannot start or stop it.
 
 The **Always-On server** option added in 1.0.1 is a lifecycle setting for servers that still use a managed provider such as Crafty, Pterodactyl, or Generic HTTP. HubPilot can start those servers and manual Stop Server still works, but automatic idle, failed-request, and queue-empty shutdowns are disabled while the option is on.
 
-This lets a larger network keep popular servers running without giving up provider control.
-
 ## Why doesn't `/hp discover` show one of my servers?
 
-First, make sure the server is registered in Velocity.
-
-When Crafty is the primary provider, HubPilot also checks the current Crafty inventory. The server needs to exist in Crafty and be a valid Velocity candidate.
+With Crafty as the primary provider, 1.0.1 reads the current Crafty inventory and can register missing backends with Velocity. Manual registration isn't required for each new Crafty server.
 
 Check:
 
@@ -147,39 +116,17 @@ Check:
 - the Crafty API connection works
 - the server was not recreated with a new Crafty UUID
 
-An old Velocity entry is not treated as proof that a Crafty server still exists.
+A leftover Velocity entry won't make a deleted Crafty server discoverable. The configured hub is intentionally excluded in the repaired 1.0.2 build.
 
 ## Do backend servers have to use ports in the `25600` range?
 
-No. That is only a suggested convention.
-
-Every backend simply needs its own unique port.
-
-```text
-Velocity public port: 25565
-
-Hub:                25600
-Survival:           25601
-Modded Survival:    25602
-Minigames:          25603
-```
-
-A predictable range just makes setup and troubleshooting easier.
+No. Use any unused port for each server. The `25600` range in [Installation](INSTALLATION.md) is just an example.
 
 If players always connect through Velocity, backend ports normally do not need to be exposed directly to the internet.
 
 ## Can HubPilot manage servers on another machine?
 
-Yes, as long as Velocity can reach the Minecraft backend and the configured provider can control it.
-
-The backend does not need to be on the same machine as Velocity.
-
-The address might be:
-
-- a LAN IP
-- a Docker/container hostname
-- a private network address
-- another reachable hostname
+Yes, if Velocity can reach the backend and the provider can control it. Use a reachable LAN/private address or container hostname.
 
 Do not use `127.0.0.1` for a backend on another machine or an isolated container network.
 
@@ -193,16 +140,7 @@ If **Always-On server** is enabled for that server, these automatic shutdown pat
 
 ## Can HubPilot be used without Crafty Controller?
 
-Yes.
-
-HubPilot includes:
-
-- Always-On
-- Crafty Controller
-- Pterodactyl
-- Generic HTTP
-
-Crafty is simply the only external controller with live beta coverage so far. Pterodactyl and Generic HTTP have controlled testing behind them.
+Yes. Pterodactyl and Generic HTTP provide power control, and Always-On leaves it to another system. Crafty has live beta coverage; Pterodactyl and Generic HTTP have controlled tests. See [Server Providers](PROVIDERS.md).
 
 ## Can HubPilot work with modded Minecraft servers?
 
