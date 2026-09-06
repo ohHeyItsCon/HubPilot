@@ -1,6 +1,27 @@
 # HubPilot Roadmap
 
-These are planned directions, not release commitments. Items are grouped by the plugins involved.
+The next major update after the current 1.0.2 prerelease is **Prepare for Velocity**. The remaining items below are longer-term plans, grouped by plugin.
+
+## Next major update: Prepare for Velocity
+
+**Core + Hub, starting with Crafty Controller.** This follows the current 1.0.2 prerelease. Its version number has not been assigned.
+
+A new Fabric server can start successfully but reject players because its forwarding mod or secret is missing. Add a **Prepare for Velocity** action to the in-game server setup so owners can handle that from the hub.
+
+The first release should:
+
+- Detect the backend's Minecraft and Fabric versions. Report missing or uncertain version information before choosing downloads.
+- Install compatible FabricProxy-Lite and required dependencies, checking what's already in the modpack first.
+- Configure the existing Velocity forwarding secret without showing it in chat, menus, or logs.
+- Check the Crafty account's server access and file permissions, with instructions for anything the owner needs to grant.
+- Back up changed files, preserve unrelated settings, and apply changes while the backend is stopped.
+- Check the result and explain any remaining setup problems before the server is ready for players.
+
+Core would handle the provider's file operations and configuration. Hub would provide the setup action and progress messages. FabricProxy-Lite would still be installed on the backend; players would not need that mod on their clients.
+
+Start with the owner-triggered setup action. Optional automatic preparation of newly imported servers can follow once that path is verified. Other providers will need their own file-management support.
+
+Test the full Crafty setup and Velocity-to-Fabric login path, including existing mods, missing permissions, interrupted installation, and recovery from the saved files. A successful download alone does not prove the server is ready.
 
 ## Core + Hub
 
@@ -81,4 +102,4 @@ Let NPCs, signs, portals, entities, and mannequins open a Navigator profile or f
 
 Report each hub's player count, response state, and profile to Core for routing, hub groups, load balancing, and failover. This telemetry would stay inside the HubPilot network.
 
-Features will be chosen based on demand, usefulness, implementation risk, and the testing they need.
+The remaining roadmap items will be chosen based on demand, usefulness, implementation risk, and the testing they need.
