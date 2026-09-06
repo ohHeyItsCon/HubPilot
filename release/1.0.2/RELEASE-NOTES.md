@@ -1,187 +1,131 @@
-# HubPilot 1.0.2 — Queue Update
+# HubPilot 1.0.2: Queue Update
 
-HubPilot 1.0.2 makes the server request and startup queue easier to understand and easier to customize.
+1.0.2 adds an in-game editor for join and queue messages, queue position updates, and more tools for building interactions in the hub. It also includes the repair for hubs that were still shutting down automatically.
 
-This is a pre-release. The packaged builds have passed controlled validation, but the new message editor and multi-player queue-position flow still need a short live test on Velocity and Paper before 1.0.2 is promoted to stable.
+This is still a prerelease. The builds passed the simulation tests described below, but live testing on Velocity and Paper is still pending.
 
-## Join and queue message controls
+## Join and queue messages
 
-The messages shown while HubPilot starts and joins a server can now be managed in-game.
+Open **Automation Settings → Join & Queue Messages** to change what players see while requesting, waiting for, and joining a server. Set defaults for the whole network or give a server its own messages. Edits take effect without restarting the network.
 
-- Open **Automation Settings**, then select **Join & Queue Messages**.
-- Left-click a message to show or hide it.
-- Right-click a message to edit its text, colors, and formatting in chat.
-- Middle-click a message to preview it.
-- Shift-right-click a message to restore the built-in default or inherit the global message.
-- Configure global defaults or give an individual server its own overrides.
-- Changes use the existing trusted Hub-to-Core settings channel and do not require a network restart.
+- **Left-click** to show or hide a message.
+- **Right-click** to edit its text, colors, and formatting in chat.
+- **Middle-click** to preview it.
+- **Shift-right-click** to restore the built-in default or use the global message again.
 
-The editor covers these events:
+The editor includes messages for requests, startup, queues, countdowns, joining, retries, cancellation, and errors. It also covers maintenance, disabled automatic startup, wrong client versions, missing permissions, unavailable servers, and players who are already connected or queued. Request cancellation and “no pending request” each have their own message.
 
-- already connected
-- request sent
-- server unavailable
-- automatic startup disabled
-- server starting
-- server already starting
-- queue joined
-- already queued
-- queue position changed
-- server ready
-- countdown
-- joining
-- connection failed
-- retrying
-- request canceled
-- no pending request
-- start failed
-- maintenance
-- wrong client version
-- missing permission
+These templates change the text for HubPilot's existing events. They don't run commands or add scripted events.
 
-Templates remain tied to known HubPilot events. This update does not add arbitrary commands or event scripting.
+### Queue positions
 
-## Queue feedback
+Players see their position when they join a startup queue. After that, they get an update only when their position changes. Leaving the queue, disconnecting, or using `/hp cancel` updates the positions of everyone still waiting.
 
-- Players are told their position when they enter a startup queue.
-- Position updates are sent only when a player's position actually changes.
-- Leaving, disconnecting, or using `/hp cancel` updates the remaining players' positions.
-- `/hp cancel` now has separate configurable messages for a canceled request and for having no pending request.
+### Names and placeholders
 
-## Server-name formatting
+`{server}` uses the same bold white display name as the Navigator. Use `{server_plain}` for the display name without that formatting.
 
-`{server}` now uses the same bold white server-name style as the Navigator item instead of showing an unformatted internal name.
+Depending on the message, you can also use `{id}`, `{position}`, `{queue_size}`, `{seconds}`, `{attempt}`, `{max}`, `{delay}`, `{required}`, `{current}`, and `{error}`. A placeholder needs data from that event to work.
 
-`{server_plain}` is also available when a template needs the display name without Navigator formatting.
+Both `{placeholder}` and the older `<placeholder>` format work.
 
-Other placeholders are available where the event supplies them:
+## Hub shutdown repair
 
-- `{id}`
-- `{position}`
-- `{queue_size}`
-- `{seconds}`
-- `{attempt}`
-- `{max}`
-- `{delay}`
-- `{required}`
-- `{current}`
-- `{error}`
+The September 3 Core build fixes the configured hub being treated like a regular backend and shut down automatically. If `hub-server` already points to the right server, replacing Core and restarting Velocity is all you need to do.
 
-Both `{placeholder}` and the older `<placeholder>` style are accepted.
+Core matches that setting against managed server IDs and Velocity names, including the equivalent names already recognized by 1.0.2. It then disables idle shutdown, shutdown after a failed request, and shutdown when the queue becomes empty for that hub. The protection applies after the global defaults and saved menu settings, on startup and after a successful configuration reload. It also covers requests that still hold settings from before a reload.
 
-## Configuration compatibility
+Your hub's saved settings stay in place. Its provider, startup preference, and access settings are kept, and other servers keep their own settings. If you choose a different hub later, the old one uses its saved backend settings again.
 
-- Existing flat `messages/en_US.yml` entries from 1.0.1 remain supported.
-- Fresh installations receive the new event-based message defaults.
-- In-game edits are stored with the existing HubPilot settings and synchronized to Core through `hubpilot:settings`.
-- Core continues to reject unrelated or sensitive keys from the settings payload.
-- Existing server, provider, discovery, destination, layout, and telemetry files do not need to be replaced.
+**Manual Stop Server still works.** The Hub editor may also still show saved shutdown preferences, but Core overrides those while the server is the configured hub.
 
-## Bug fixes
+The hub is excluded from discovery lists, suggestions, bulk discovery, and import, including common alternate names reported by the controller or Velocity.
 
-### Hiding the countdown message also silenced its sound
+The original September 1 Core download only excluded the hub from discovery. It did not include the later shutdown protection. Since both builds are named 1.0.2, check the download against the included SHA-256 list.
 
-Found while adding message visibility controls. Countdown text and sound are now handled separately, so hiding the message does not silence the configured sound or produce a blank chat or action-bar line.
+## Interact editing tools
 
-### Countdown colors were lost on the Paper hub
+### Showing and hiding the tools
 
-Found while validating editable countdown templates. The Paper feedback bridge now applies the template's color formatting and no longer forces yellow.
+Use `/hp adminitem` to put away or bring back Hub's admin item. This works with Hub alone; Interact isn't required.
 
-### Message settings could be dropped by the existing sync filter
+For the Interact brush:
 
-Found while validating Hub-to-Core message synchronization. The trusted filter now accepts the defined global and per-server message keys while continuing to reject credentials, unknown fields, and unrelated settings.
+- `/hpi tool` toggles it.
+- `/hpi tool on` shows it.
+- `/hpi tool off` hides it.
+- `/hpi items` is another way to toggle the brush.
 
-### The configured hub could appear in server discovery
+The older combined/admin-target syntax no longer controls Hub's item. Use `/hp adminitem` for that.
 
-Found after the 1.0.1 discovery changes. Discovery now excludes the configured hub from lists, suggestions, bulk discovery, and final import, including common equivalent names reported by a controller or Velocity.
+Hub remembers when you've hidden the admin item, including after reconnecting, respawning, or updating. Each plugin handles its own tagged item and checks your editing permissions. Other inventory items are left alone. If your inventory is full, free a slot before bringing a missing tool back.
 
-### The configured hub could inherit automatic idle shutdown
+### Editing in the world
 
-Found while reviewing the discovery regression. Core now exempts the configured `hub-server`, including common equivalent names, from automatic idle shutdown. This protects the single configured main hub without changing manual Stop Server or normal backend lifecycle behavior.
-
-## Preserved 1.0.1 behavior
-
-- per-server Always-On behavior
-- manual provider start and stop controls
-- Crafty discovery and dynamic Velocity registration
-- duplicate discovery repair
-- live Navigator telemetry refresh
-- shared Admin and player Navigator layouts
-- Admin left-click server editing
-- the corrected Paper `openInventory` runtime signature
-
-## Interact portals, destination labels, and editing tools
-
-The latest 1.0.2 prerelease includes the Interact expansion. Replace **Hub** and **Interact** on the Paper hub and restart it. Core's September 3 hub-protection build is unchanged, so an existing idle-shutdown test can continue on that Core. Link is unchanged. Check the included SHA-256 list because the version remains 1.0.2.
-
-### Put editing items away
-
-- `/hp adminitem` toggles Hub's admin item. This is implemented in Hub and works without Interact installed; Core continues to forward the existing command unchanged.
-- `/hpi tool` toggles only Interact's brush.
-- `/hpi tool on` and `/hpi tool off` explicitly show or hide the brush.
-- `/hpi items` is a brush-only alias. The earlier combined/admin-target syntax no longer controls Hub items; use `/hp adminitem` instead.
-
-The hidden-admin preference remains saved on the player and is respected by Hub's automatic restoration, including reconnects and respawns. Existing hidden preferences survive this update. Each component manages only its own tagged item. Editing permissions are checked, ordinary items are left intact, and a full inventory is never overwritten. Free a slot to show a missing item.
-
-### In-world editing
-
-Sneak + right-click the brush to open the Interact editor. Select a destination and a mode:
+Sneak and right-click with the brush to open the Interact editor, then choose a destination and mode:
 
 - **Bind:** right-click a sign or entity to link it.
-- **Portal:** left-click and right-click blocks to select two corners; open the editor and choose **Save new portal**.
-- **Inspect:** select an existing interaction for editing.
-- **Unbind:** remove the selected interaction without deleting its blocks or entity.
-- **Label Up / Label Down:** click a target to adjust its floating label by 0.25 blocks.
+- **Portal:** left-click and right-click blocks to mark two corners, then choose **Save new portal** in the editor.
+- **Inspect:** select an existing interaction to edit.
+- **Unbind:** remove a binding while keeping its blocks or entity.
+- **Label Up / Label Down:** click a target to move its floating label by 0.25 blocks.
 
-Use `/hpi portal create <name> <destination>` to start a named portal selection. Each editor has their own selection. Cross-world selections and duplicate names are rejected. Existing `/hpi portal pos1`, `pos2`, `save`, and `delete` commands remain available.
+You can also start a named portal with `/hpi portal create <name> <destination>`. Each player has their own selection. Both corners must be in the same world, and portal names must be unique. The existing `/hpi portal pos1`, `pos2`, `save`, and `delete` commands still work.
 
 ### Portal styles
 
-Use the editor's **Portal style** control or `/hpi portal type <name> <nether|end|water|invisible>`.
+Choose **Portal style** in the editor or use:
 
-Styles use portal-themed particle outlines around the selected region. Invisible regions have no particle outline. They do not replace blocks with real Nether portal, End portal, or water blocks. Existing portal regions keep the Nether particle style by default. Existing particle enable/period settings remain supported.
+`/hpi portal type <name> <nether|end|water|invisible>`
+
+Nether, End, and water styles draw particle outlines around the region. Invisible portals have no outline. These are visual styles; they don't place portal or water blocks.
+
+Existing regions use the Nether particle style by default. Your particle on/off and timing settings still apply.
 
 ### Floating destination names
 
-Text displays show the current destination label above bound signs, entities, and native NPCs. Existing bindings receive labels automatically. Entity labels follow their targets; portal labels use the horizontal center of the selected region, 1.5 blocks above its bottom. Label height can be adjusted with the brush. Labels refresh when destinations change and disappear when their bindings are removed. Labels are temporary, cleaned up on plugin shutdown, and do not force-load chunks.
+Bound signs, entities, and native NPCs get floating destination names, including bindings you've already created. Labels follow moving entities and refresh when destinations change. Portal labels sit in the horizontal center of the region, 1.5 blocks above its bottom. Use the brush to adjust their height.
 
-Set `destination-labels: false` in Interact's config to disable them; `/hpi reload` reloads configuration and bindings. Native NPC availability still depends on the server platform.
+Removing a binding removes its label. Labels are also cleaned up when the plugin shuts down and don't force chunks to load. Native NPC support depends on the server platform.
 
-### Validation
+To turn labels off, set `destination-labels: false` in Interact's config. Run `/hpi reload` to reload the config and bindings.
 
-The exact packaged Hub and Interact passed controlled Paper 1.21.10 simulation tests for portal persistence, legacy defaults, permission checks, inventory toggles, hidden-admin restoration, full inventories, brush corner selection and saving, centered labels, entity movement, duplicate prevention, and cleanup. The test framework required test-only display-style setters. Actual in-game appearance, client interaction and a complete live Paper startup remain to be field-tested; this remains a prerelease.
+## Other fixes
+
+- Hiding countdown text no longer mutes its sound or leaves a blank chat or action-bar line.
+- Countdown messages on the Paper hub keep your chosen colors instead of being forced to yellow.
+- Global and per-server message edits now get through the Hub-to-Core settings filter. Credentials, unknown fields, and unrelated settings are still rejected.
 
 ## Updating
 
-### September 3 automatic hub repair (version remains 1.0.2)
+Use the latest files attached to this prerelease. Some JARs were replaced while keeping the 1.0.2 version number, so use the included SHA-256 list to check which builds you have.
 
-Replace Core on Velocity with the repaired Core JAR and restart Velocity. Already running Hub 1.0.2 does not need replacement for this repair. Upgrading from 1.0.1 still requires the existing Hub 1.0.2 for Queue Update compatibility.
+- **Coming from 1.0.1:** update Core on Velocity and Hub on the Paper hub together. Update Interact too if you want the new brush, portal, and label features.
+- **Already using the September 3 Core repair:** keep that Core build. Replace Hub and Interact on the Paper hub for the newer Interact features. Any ongoing Core idle-shutdown test can continue.
+- **Only applying the Core shutdown repair:** replace Core and restart Velocity. An existing Hub 1.0.2 installation is sufficient for that repair.
 
-On startup and each successful configuration reload, Core matches `hub-server` against managed IDs and Velocity names, using existing 1.0.2 equivalent-name rules. It applies a protected role after all defaults and GUI overrides: idle minutes become zero, stop-after-failure becomes false, and stop-when-queue-empty becomes false. A final automatic-stop guard covers sessions holding pre-reload definitions. Discovery exclusion remains intact.
+Restart Velocity after replacing Core, and restart the Paper hub after replacing Hub or Interact.
 
-No manual configuration step is needed when `hub-server` correctly identifies the hub. The repair retains the managed entry and saved configuration instead of deleting or archiving it. Provider identity, startup preference, access settings, and unrelated servers remain intact. Changing the configured hub later restores the former hub's saved backend settings. Manual Stop Server is still intentional and available. The Hub editor may still display saved backend preferences; Core's protected role overrides them while that entry is the configured hub.
+Link has no functional changes; Link 1.0.1 remains compatible, and a matching 1.0.2 build is included. Interact was also unchanged in the original Queue Update, but the latest prerelease includes the new features described above.
 
-The original September 1 published Core only contained the discovery exclusion; it did not contain the later local idle-only guard. Use this build's checksum to verify the repaired download. This package remains a pre-release. Controlled packaged tests passed; live Velocity/Paper field testing is pending.
+### Existing settings
 
-### Original Queue Update upgrade
+Your configuration loads automatically. Existing flat entries in `messages/en_US.yml` from 1.0.1 still work; new installations get the event-based defaults. In-game message edits are saved with HubPilot's settings and sent to Core through `hubpilot:settings`.
 
-Update Core and Hub together:
+You can keep your server, provider, discovery, destination, layout, and telemetry files.
 
-- `HubPilot-Core-1.0.2.jar` on Velocity
-- `HubPilot-Hub-1.0.2.jar` on the Paper hub
+The 1.0.1 features remain available: per-server Always-On, manual start and stop, Crafty discovery, dynamic Velocity registration, duplicate discovery repair, and live Navigator refresh. The shared Admin/player layout, Admin left-click editing, and Paper `openInventory` fix are carried forward too.
 
-HubPilot Link and HubPilot Interact have no functional changes in this update. Their 1.0.1 builds remain compatible. Matching 1.0.2 builds are included so the installed suite can use one version number.
+## Testing so far
 
-Restart Velocity and the hub after replacing the JARs. Existing configuration is loaded automatically.
+The existing test reports record passes for Core message rendering, legacy message files, global and per-server visibility, and Hub message saving, reset, and inheritance. Message-key filtering, configured-hub shutdown protection, and packaged classes and metadata also passed their controlled checks.
 
-## Testing status
+The latest Hub and Interact JARs passed Paper 1.21.10 simulation tests covering:
 
-- exact packaged Core message rendering and inheritance: passed
-- legacy flat-message compatibility: passed
-- global and per-server show/hide behavior: passed
-- Hub message storage, persistence, reset, and inheritance: passed
-- trusted message-key filtering: passed
-- configured-hub idle-shutdown protection: passed
-- packaged class and metadata inspection: passed
-- Link and Interact version-only equivalence: passed
-- live Velocity and Paper field test: pending
+- Portal saving, legacy defaults, separate corner selections, and brush-based creation.
+- Permissions, tool toggles, hidden-admin restoration, and full inventories.
+- Label placement, moving entities, duplicate prevention, and cleanup.
+
+The simulation needed test-only setters for display styles. It does not establish how those displays look or respond in an actual client.
+
+**Live testing is still pending:** the message editor, queue positions with multiple players, hub shutdown protection, Interact's in-game appearance and controls, and a full Paper startup still need checks on a running Velocity/Paper network before this becomes a stable release.
