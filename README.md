@@ -30,6 +30,15 @@ The **1.0.2 prerelease** adds editable join and queue messages, queue positions,
 
 Backend game servers don't need HubPilot JARs for normal requests, routing, or provider power control.
 
+> [!IMPORTANT]
+> **Fabric server setup:** Every Fabric backend using Velocity modern forwarding with HubPilot needs [FabricProxy-Lite](https://github.com/OKTW-Network/FabricProxy-Lite). Install a build that supports the backend's Minecraft version, along with its required dependencies.
+>
+> Set `secret` in the backend's `config/FabricProxy-Lite.toml` to the contents of Velocity's forwarding secret file. The file is selected by `forwarding-secret-file` in `velocity.toml` and is usually named `forwarding.secret`. Velocity must use `player-info-forwarding-mode = "modern"`. An empty or mismatched secret will prevent players from joining.
+>
+> This requirement applies to Fabric. Other mod loaders need forwarding support appropriate to their loader and version; Paper has its own forwarding settings. Players do not need FabricProxy-Lite on their clients, but they still need any mods required by the backend's modpack. See [Velocity's forwarding guide](https://docs.papermc.io/velocity/player-information-forwarding/).
+>
+> I'm working on automating the secret transfer so owners won't have to copy it by hand. It's planned for the [next major update after the 1.0.2 prerelease](docs/ROADMAP.md#next-major-update-prepare-for-velocity) and is not available yet.
+
 ## Quick install
 
 These examples use stable **1.0.1**. For prerelease installs, follow the [1.0.2 update instructions](release/1.0.2/RELEASE-NOTES.md#which-files-to-replace).
@@ -61,7 +70,16 @@ Crafty Controller has live beta coverage. Pterodactyl and Generic HTTP have cont
 
 Always-On and live Navigator refresh passed live testing in 1.0.1. The full results are in the [1.0.1 notes](release/1.0.1/RELEASE-NOTES.md). **1.0.2 still has live tests pending.**
 
-[ViaVersion](https://github.com/ViaVersion/ViaVersion) handles protocol translation. HubPilot's strict version rules can still block a transfer. [LuckPerms](https://github.com/LuckPerms/LuckPerms) can grant permission nodes on the hub; it is optional.
+### Compatible plugins and mods
+
+| Project / repository | Use with HubPilot | Requirements and limits |
+| --- | --- | --- |
+| [ViaVersion](https://github.com/ViaVersion/ViaVersion) | Connect newer clients to older servers through protocol translation. | HubPilot's strict version rules can still block a transfer. |
+| [ViaBackwards](https://github.com/ViaVersion/ViaBackwards) | Let older clients join newer servers within its supported version range. | Requires ViaVersion. Newer blocks and items may appear as substitutes on older clients. |
+| [LuckPerms](https://github.com/LuckPerms/LuckPerms) | Grant HubPilot permission nodes on the Paper/Bukkit hub. | Optional. HubPilot's own roles work without it, and Owner is still assigned by HubPilot. |
+| [FabricProxy-Lite](https://github.com/OKTW-Network/FabricProxy-Lite) | Handle Velocity modern forwarding on Fabric backends. | Requires a compatible Minecraft build and the matching Velocity secret. See the setup notice above. |
+
+Use versions that support your server software. This list does not mean every plugin version or modpack has been tested. Protocol translation does not resolve missing mods or modpack handshake failures.
 
 ## Documentation
 
