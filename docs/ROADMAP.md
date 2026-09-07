@@ -12,7 +12,7 @@ The first release should:
 
 - Detect the backend's Minecraft and Fabric versions. Report missing or uncertain version information before choosing downloads.
 - Install compatible FabricProxy-Lite and required dependencies, checking what's already in the modpack first.
-- Configure the existing Velocity forwarding secret without showing it in chat, menus, or logs.
+- Transfer the existing Velocity forwarding secret to the Fabric backend and configure FabricProxy-Lite to use it, so owners do not have to copy it by hand. Keep the secret out of chat, menus, and logs.
 - Check the Crafty account's server access and file permissions, with instructions for anything the owner needs to grant.
 - Back up changed files, preserve unrelated settings, and apply changes while the backend is stopped.
 - Check the result and explain any remaining setup problems before the server is ready for players.
