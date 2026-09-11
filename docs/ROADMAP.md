@@ -59,6 +59,10 @@ Offer starting settings for small, medium, and large networks. Ask about provide
 
 Let an entry open another Navigator page. Small networks could organize servers into folders on one hub; multi-hub networks could use those folders within their profiles.
 
+### Per-server Navigator persistence
+
+Allow Navigator item persistence to be configured independently for each server. One server could stay visible at all times while another disappears when unavailable, instead of every entry sharing one global persistence toggle.
+
 ### Server operating modes
 
 **Always-On server shipped in 1.0.1.** It keeps provider startup and manual stop available while disabling automatic idle, failed-request, and queue-empty shutdown.
@@ -93,6 +97,24 @@ Keep records of starts, uptime, peak players, average startup time, failed start
 - Create, copy, assign, and edit Navigator profiles in-game once multi-hub support exists.
 - Build folders and server groups from the admin GUI, including slots, icons, titles, parent menus, and destinations.
 - Show what a setup preset will change before the owner accepts it.
+
+## Navigator companion plugin
+
+Explore moving the expanded player-facing Navigator experience into an optional companion plugin instead of growing Hub into one large plugin. Core and Hub would remain responsible for server state, routing, startup requests, and permissions. The Navigator companion would consume that information and handle presentation and player interaction.
+
+The goal is to support a more polished network-style experience while keeping the base HubPilot install lightweight. Planned ideas include:
+
+- **Persistent transfer countdowns:** optionally show a countdown before transferring even when the destination server is already online, rather than only showing startup or queue feedback.
+- **Per-server countdown behavior:** let each server choose whether transfer is immediate or delayed and configure its own countdown duration.
+- **Configurable countdown presentation:** titles, subtitles, action bar, boss bar, chat, sounds, and combinations of them.
+- **Per-server join presentation:** different messages, sounds, effects, and transition behavior for different destinations.
+- **Player cancellation:** allow a player to cancel a pending transfer countdown before it completes when the network owner enables that behavior.
+- **Richer Navigator items:** configurable lore, live status text, player counts, availability, maintenance state, version or loader information, and alternate icons based on server state.
+- **Player-facing customization:** where appropriate, allow network owners to expose bounded preferences such as reduced sounds or less intrusive countdown presentation without allowing players to bypass server rules.
+- **Profile-aware presentation:** let different hubs or Navigator profiles use different styles while sharing the same backend server definitions.
+- **Animations and feedback:** support slot animations, selection feedback, and other lightweight effects without tying server lifecycle logic to the GUI implementation.
+
+This plugin should be optional. Networks that only need HubPilot's existing Navigator and server-management features should not need to install it.
 
 ## Interact
 
