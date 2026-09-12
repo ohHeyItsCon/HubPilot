@@ -72,6 +72,21 @@ Possible next modes:
 - **On Demand:** a preset for startup, queues, and automatic shutdown.
 - **Custom:** owner-defined lifecycle settings.
 
+### Startup abuse protection
+
+Keep public hubs open to new players while preventing one player or a group of accounts from repeatedly starting unused servers.
+
+- Limit each player to one outstanding startup request. Keep cooldowns tied to the authenticated player UUID so reconnecting does not reset them.
+- Add configurable per-player limits for starting offline servers. A starting proposal is two starts per ten minutes; joining an already-running server would not consume that allowance.
+- Cap simultaneous starts across the network, with one or two as a starting proposal. Queue additional requests and count a shared server startup only once.
+- Cancel a queued start when its requester leaves or cancels, unless another player is still waiting for that server.
+- Check failed-request cleanup for servers that finish starting but nobody joins. Allow a configurable grace period before a normal shutdown, and preserve hub and Always-On exemptions. Do not stop a server that has players or other valid demand.
+- Show players why a request was limited and when they can try again. Let owners configure the limits and inspect which requests triggered starts or were blocked.
+
+Core should enforce these rules for every startup request, including requests from Navigator items, commands, Interact bindings, and a future Navigator companion. Hub would expose the settings and feedback.
+
+Verify reconnect attempts, repeated clicks, multiple accounts requesting different servers, shared requests, departures during startup, and hub/Always-On protection. These controls limit startup abuse; proxy bot verification and backend firewall rules remain separate protections.
+
 ### Queue controls
 
 The **1.0.2 prerelease** adds editable join and queue messages, visibility controls, formatted names, queue positions, cancellation feedback, previews, placeholders, and global/per-server settings.
