@@ -72,11 +72,16 @@ public final class TelemetryMenuBuilder {
       Material.COMPARATOR,
       Material.MAP,
       Material.ZOMBIE_HEAD,
-      Material.CHAIN,
+      chainIcon(),
       Material.BOOK,
       Material.BARRIER
    };
    private static final int[] SLOTS = new int[]{10, 11, 12, 13, 14, 15, 16, 19, 20, 21, 22, 23, 24, 25, 28, 29, 30, 31, 32, 33};
+
+   private static Material chainIcon() {
+      Material modern = Material.getMaterial("IRON_CHAIN");
+      return modern != null ? modern : Material.valueOf("CHAIN");
+   }
 
    private TelemetryMenuBuilder() {
    }
