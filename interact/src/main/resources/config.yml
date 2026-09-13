@@ -1,0 +1,30 @@
+# ============================================================
+#                    HUBPILOT INTERACT
+# ============================================================
+#
+# Controls entity, sign, portal, and NPC interaction behavior.
+# Native mannequin NPCs are enabled automatically when the server platform
+# exposes the required Minecraft/Bukkit capability (1.21.9+ behavior).
+# Entity/sign/portal triggers remain available without mannequins.
+#
+
+# Draw particles around configured portal regions.
+# Available: true, false
+# Default: true
+portal-particles: true
+
+# How often portal particles are refreshed, in server ticks.
+# 20 ticks is approximately 1 second at normal TPS.
+# Recommended: 5-100
+# Default: 20
+particle-period-ticks: 20
+
+# Prevent one player from repeatedly firing the same portal trigger.
+# Value is milliseconds.
+#   1000 = 1 second
+#   3000 = 3 seconds
+# Default: 3000
+portal-cooldown-ms: 3000
+
+# Floating destination names above bound signs, entities, and portals.
+destination-labels: true

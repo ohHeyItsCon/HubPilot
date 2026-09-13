@@ -1,0 +1,712 @@
+[
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/PublicCommandLayer.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "0167a9b1c45a796c220c4a15df220fc4cf9fe4ea25374c738493a584ab34f4ff"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/DirectAuthHandler.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "364c4030d8358c9187b593a756ed8251557a1233232e6ed1b542f5eba288336d"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/ProviderMessages.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "550ec1454b2d37d766a2124ee81537aa67885d7cec460fbde7cf509de7dd2c03"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/ProviderCredentialSupport.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "290483dab53e5dd9464c44215115015700159f67f604a337573e9e6739ec6a33"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/HubProtection.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "d233a87aafd520dae409c20bcd240f4d4c1193bc3bf10a75170f2676d29a19e2"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/QueueMessages.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "5315f7022ba60fb0023d10773c047951c59b61780bd119a341c8605348754fca"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/ClaimTimeout.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "70e1ed2e4cfef13394c8f111ad7839bd7b21d092271fddb6e6d36930b203ec13"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/PublicBootstrap.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "69aca43950e10ce4336817097cf25a9ad33cff868e944a6c4107a1579d64b577"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/ProviderRegistry.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "32ff3388466b4dcce529a3edc5f0912c149be3827dff451a8ab866d1d5e73219"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/AccessManager.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "972ef736ec57e37a0274a56c835625a5b27c1f7e6205613c694a802e36aac480"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/ClaimTimeout$1.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "bb1c54e01526ee54518838d001c36c434a5a1274034ce5b6e6ee0ec088baf11b"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/HubPilotCommands.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "52d8e4a4efeae54fa99e0cef494e072cbb27ae59a70e397682540af5ffee8292"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/StatusStore.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "e0c213fda881f6712f656e0e02b7c090e032757713b40e025a2878b38c0fe011"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/OperatingModeRules.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "5ea5fc0989ff7827f56ebf747c51e6ba99eaf7a0317cf4ec38890e5f6000b52a"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/PublicGuiRouter.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "0538cea69d08380323758d764cd8bcc4ad3312c19c2845ae1670b95206c0b28a"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/CraftyProvider$1.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "b124fc02782e7bec225e4649e5911ded9ef0880d7d0d9f601a013288f9ae5ad3"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/ClaimTransport.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "b59e42c41b961692c48a6fee924f4a980c3fab2830727ad9c8795c48d346cbab"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/DynamicServerRegistry.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "39bd552f98a3bd3f8efc4ef1781ff7e48e6fea8f07cdb0cbc58add4439d9018f"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/UnifiedCommandFacade.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "dfc99835f567fa7d0094444c8539b4e97cdd591f0ece518d35ccc51abcfdf575"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/LifecycleManager.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "af74980aa3b8b25346d8f5b1030da1f4426ea5b90041f6fb05c7d1c5232c2e60"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/AuthEventGate.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "fbca808ab5b82c387cfc2e652c545fb2b754c69596fd05accee72d2b86759d78"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/ManagedServer.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "dbe2a7b0c5a16201bf679b6fe1e1c9564e772cb2cd9cbfa6668a189ce7832091"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/SettingsSyncHook.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "2cd2f419fc9d33f8accac96c6694e6d19cf79f6d74eb101bd07434ed7736334e"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/PublicDefaults.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "47c046c7523613b420490ecc953396c741a4bbec49f3700009f3f70df3df3131"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/CraftyProvider.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "02cb94fe54bb3308a0370595aae7b94053ba9b5713f4565364d673736e2a09bc"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/TelemetryBridge.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "fd004ec575c8be8a5862842df9b52685dc7cef004ac9469b3dc0d1571c95af72"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/HubPilotConfig.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "87fc470cd53c9db197e4a65723470f8aa99793d726392ac7c1a0be67c88b149c"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/ProviderAliases.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "31f4ab745ba4830f802293ffbd242c70cb5e350de5651ddd0ce9ab1002ef5f27"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/HubPilotCorePlugin.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "58ab55d1d42ee231456597a5bc396b8182b9e050c5cd6f3df0a2848641475c9e"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/Reflect.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "8331c38b7399539aec2c5a81c8a4bf0929c92582ee2773c296c4ba99122c9780"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/StatsStore.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "8ac0892c083b15ed36de996d9476bec3e0b91d7fa7065b5bd9e7d97014e198b5"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/PublicDefaultsRepair.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "37a743df3cd9a165b8060c0540683a8ca4d4d5c493671a099b1cfaebccbe0968"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/TelemetryStore.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "575640c8b600c9990c79e83dad24a5e0c83a357d3c0873ded0f98db364c6b43b"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/CraftyDiscoverySupport.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "1760263f21c25bd106d363415fdaeee6456676decee0515b255cdbf3be61534f"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/DiscoveryCommand.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "3bdbee385af34fe9afb403c73a24a2a5cf54a76722db545c566ee75a86046a7f"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/ProviderHttpSupport.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "eaceed2eb23fc437727f63e507e21912169f58ffd5ffa7dd4ed2c8bb499bdb67"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/StatusSyncHook.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "6122bceb0bde1caf14d83e3a44f6e8794a343bb0bc688ea47c4a31939d439f96"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/DirectOpenTransport.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "711559e20fbbb0179c211c04baef5aa185e0ed5ec1f8d270ab8c6b68ad9117ab"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/TelemetryBootstrap.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "da9895b97d29a02e30ca8328efd328a4ebe6b548e3496e1bbbfce981beee38ba"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/DiscoveryNavigatorBridge.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "a1f2d4c04d041c4c58b7572ddf2a2228b8dc165704f9ffac67ddfa2a59363bf9"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/HubPilotReflect.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "65b4ada74a1f0d77706ae32ce11b997de51965fffac9c8ae1d63bd6a1e2ad0d8"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/PublicControlGate.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "fda7628144bb38c9bcfee92b891ef76185cc1a35bd0731867c20485fef933c54"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/ServerAdminBridge.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "1c034d7dfd6525029db3fefb7cf9ff2973b77e0c84db09be1b517c594ac68ab2"
+  },
+  {
+    "path": "core/src/main/java/dev/hubpilot/core/DiscoveryAliases.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 core",
+    "initial_sha256": "0abab49d546d33368ca906b24d9be7db40863b96030927ab9dc3208480967d6f"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/HubPilotHubPlugin.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "1b7e2593d740f0f2b2e12819f1d21976115ef070ba11bb0d2776311fb3d88928"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/bridge/MessagePromptManager.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "3f77b4568693cd1e6f3df4e21eff5e4f78877c8f9d11519b64bed3aca88a5378"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/bridge/HubPilotTelemetryListener.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "503ee196918c5d5d437bc0adcafd420792d70adefebf92df285abbccdf47bf8f"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/bridge/SettingKey.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "bc6e2b4a6a7097810b656c2e2e3319fc8a42ef649f2e7dbc9775f2b14db36e96"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/bridge/HubPilotFeedbackListener.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "62cabd3967d48df5c24ff59471b9b10b656fcf257144748cf1a91bda43200a2a"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/bridge/MessageMenuBuilder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "51ab7c78b6a341cfedbe2b2afeca02e7d7a7c99991d6cb56c54f4e6272d3c628"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/bridge/HubPilotStore.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "79a43bd3a6cfd4536ea5e49a00cde4aaa52364a1239f8dc8685ccf29bdeb0ba3"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/bridge/HubPilotMenuListener.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "aa6fbf7506b1d608ddfcc0d3e705930c0cdd00a11b11ff03ab359105a20cb101"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/bridge/HubPilotRequestSender.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "a058d42929898b18815b15c411d81cddabb0217adbf33b969487ef7bd506ce18"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/bridge/MessageEvent.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "eeb52d73333d983f382f312aeeb58a82c7064458c162011b5cfb50fc7e63440d"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/bridge/HubPilotPromptManager.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "991ef4ebe9274bf456227b1b923f0a8c6f89df01c5de6e9f4c25f3e5bb267a18"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/bridge/MessageMenuHolder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "619e0324cc2e399ed281f030ee74e1e1700a97e67ebdd8887fcc64df7d3a715b"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/bridge/HubPilotMenuBuilder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "ddf172e7838b9b615a82ff8e53ef6bb172cd085cb18621cc4a0a370654f80afe"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/bridge/MessageMenuListener.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "7b5374c27f9eb53757fb5a24a2d78cf7a05f78d2d1adc6c56693ba0b69397481"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/bridge/SettingsSyncSender.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "7840adad3876eeae1e54af44ba5b6da7ebc401072c22a7963d6840fa597a757a"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/bridge/HubPilotMenuHolder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "3bea5f420bdc2e8bdc39c1f37699f95e49cff71f86c3470345f72bd3a041bbdb"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/command/HubPilotGuiCommand.java",
+    "origin": "development/1.0.2/hub-src/dev/hubpilot/hub/command/HubPilotGuiCommand.java",
+    "initial_sha256": "8f1683c2d493aa324ff95b0cf0e4c124c1801f1c023fa6140c5ea3c5374c3e5a"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/util/MenuItems.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "3d4684ab13b49a277ebebf7e2c54e988e031e5b8df0b3adb42e8a6a82058fa77"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/util/IconMaterials.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "1491e43e1bcf80a98bc3fbfbee7880a850fe33ba72d381a3999365a1bb73b190"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/messaging/RequestSender.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "6e4cbe5f62cecd8bf1c4efe095198895e7195f7fd24787c6740e2382ff97a569"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/telemetry/RichTelemetryStore.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "e3132a8622450e418e00e5b74c8f80794095dbb156b6bc9527a4c8ee852c844a"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/AdminSettingsStore.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "5dc9c9118755d1d7c91d202cfc7498a9b0d53e9b53cc2a8ecf4813eda4f75935"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/NavigatorProtectionListener.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "698cc260dea1d969ec5aecc286f4c1a913797a7442156b280d75b5d64842ab2e"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/HubPilotAdminRuntime.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "705777e36685216cded194d8ab02a50378d60cf28502267c7deebb7512891106"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/HelpMenuBuilder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "5c80e15a6222c4738200131fe3a3089aefcb71aa508f2d8afa4adeb647ef8be5"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/NavigatorMenuBuilder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "d7fc540f6c18f773620d0b6248e2c89dc375a156292f0b9d3656582f36cdb06e"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/UiPromptManager.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "02765be79b47ec5fdaf51e938d7a1f081ffcfc319a9a1a0195c9fd4fda94d4f7"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/ThemeMenuListener.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "8dbe42b30b234a0fd60c2c876e4b055bc776d3cc832b614c1620aa4b9b23139f"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/AdminHomeBuilder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "0a7e4cb76b8e74f4f0288dd82c00760b743b27882b31531e3850f9c50c5b4da1"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/HelpMenuHolder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "77212f0d72cbd32512fddba0f6238220aeeeab1c940b90d361bdc4de87b8188d"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/AdminHomeLayoutEditorHolder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "7cebcf2dbc227ead8e53551f0cc672397677371a60857ec6b45ea094f44eee08"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/NavigatorMenuListener.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "e77313535722935788e672891c74f4bd4fea3b17046fe750d21aeb80b8334a4b"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/ThemeMenuBuilder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "b11d7071799f6ae18c1228739312f636f90094c727048949980a69fd62fb4d6f"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/DiagnosticsMenuHolder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "b50cbd1a52e85698503e050ab234f81c043b1a831fe209ff7b0ad14b9ca80caa"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/DiagnosticsMenuListener.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "e55ce48cf7ab4303d56c9bf2046024c6a0e09119c4680c8983f3d1644981b5cf"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/AdminHomeListener.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "8df8ce7f6a77778621fb94f870f7d3888fab7c2973e22d6b8a3b2f2f1918427f"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/TelemetryMenuBuilder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "19d17d1410b81bc365bdcaa51116cb07dc61802833e598bcbb3cd367652dbce5"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/DiagnosticsMenuBuilder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "6043cf6fcf2c1ea431bb5ca9b31088c28f4162652cd3a4673b43ee9932d0af81"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/TelemetryMenuHolder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "41c1d860ce2685259fdab9191b098ff67aee0ee436fdb35fe144cbcb4445d113"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/AdminHomeLayout.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "957c41c6fd674fd44f0a29e854326c59ac873b807feddc83662c5ad023a56d57"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/AdminNavigation.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "bdf11c02c54c86e8bf0abb70b04e1e32455f76d7a1a4212b211ba613ad870439"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/NavigatorMenuHolder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "3dc7de3aad815aa9345a2ba7936f71ecc5fa152322e745b8d30d40d22d96f731"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/TelemetryMenuListener.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "2d88622b3c85ad7ba55468dd2020a085dd7e3b11d717f13bd02ed2f7e3a31a76"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/NavigatorManager.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "452eff9e5e9e749eff29bf62532216d2ccbe7c5fc5174070bbf5521055077493"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/AdminHomeHolder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "99a583d4e6ffe9055f2638ff582657c78096c1abf56edbccd9fbdcdcfc820273"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/HelpMenuListener.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "48b0574824cc87c110cf4745e886fdf4167a2dd58654c4384993401357a96896"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/ThemeMenuHolder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "184402a3f5298a8a89bd9b3611534a7107f6784c9df0d0f6ad38b88e459c4593"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/adminui/AdminHomeLayoutEditorBuilder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "4c3a359e27ae0ad4e3f33c9b7db3a915746dcd9723551be6311b0e106dafad95"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/config/Destination.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "74490baa57f8c3960e5cb389f5a93ce8362200581c3d0e2f162162670abd9710"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/config/DestinationStore.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "de9e13ab23f99c5f6b76243ed2e42a0645c34f0ec71b96f22167c8b9c5818c03"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/config/MenuConfig.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "645f508641f192b9ef47662a13c7e85c4e7abbce7e6773649250a4cf55d46edc"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/status/StatusStore.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "762817205529319ed1b09fd49d42674e0e8fad1e77b47009441cae5673f049b9"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/status/TimeFormat.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "4beb890a9d9abe922346b33fa59401be984c780d517c80f595e957971d701025"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/status/ServerStatus.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "4e7d28c3cbee26410a40d872ebe08886179ae19084df6e7ae0f8397b529ce7b0"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/publicapi/PublicHubCommands.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "678d658a47b950ae4eda7952250d1a267253d7e3d34f5d75542bd96c429bb41b"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/publicapi/ServerControlUi.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "bd4d54c5f0ccc38dc6c733624f1cb094464d4d3136a9691536ba78aaf200a901"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/publicapi/UnifiedGuiBridge.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "01239e11e3b8a24d9fe5ba93a581bc32752baa92a51960b03af738ffa69a7942"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/publicapi/DiscoverySyncBridge.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "99317c7ae5b3fcb360fe283ba4304644c21bb5683db64a5e22ada5d9fcc9e7b0"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/publicapi/PublicHubBootstrap.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "58911021d6671263f5baa95d540b45b00981506704744b0c2f6ac672f9add84a"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/publicapi/ServerControlBridge.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "489b11059c4539e7ab7699f9ae317047b04b1e68f94ef4d235ee570c0059258c"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/publicapi/SetupItemManager.java",
+    "origin": "development/1.0.2/hub-src/dev/hubpilot/hub/publicapi/SetupItemManager.java",
+    "initial_sha256": "76c3abe747ddf7df1b7593bfaa3740d0af2ac9604216d88f5f8b34acd02bb31e"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/publicapi/AdminItemManager.java",
+    "origin": "development/1.0.2/hub-src/dev/hubpilot/hub/publicapi/AdminItemManager.java",
+    "initial_sha256": "507ef0ef7e756ae3b58072406b795e74b1f82c32a50fe9e6387a111496156bf7"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/publicapi/PublicGuiEnhancer.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "01e1bc20c1683f3f84410e521fea040d1402c54d0a6ab3bfecb7631661aa4d86"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/publicapi/ServerControlTarget.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "5097fb02e7c3ab682b263471f066b350c35834f7825688111aa6ae7edb6f02b5"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/listener/DestinationMenuListener.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "9bf1a4452b6e5f9a7c1883209cb716453e1477020c25c9ce7da206f4e51d80fc"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/listener/AdminMenuListener.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "4a5d7496f2dd1c7179a47dff00acaf24e462c288fa82aa75bc9b70db5b8397bc"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/listener/ProtectedItemListener.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "4081d7293cea93a10ccad64296fea243095c1dd278bf13b31bdbd29bf2e50448"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/listener/AdminEntryListener.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "3a2905ed648471c4b451a2e7f169424ef365ca09df2c3a6d9d9b70275c55f0c2"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/listener/ItemInteractListener.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "5b393213021dd882fb497c689192cb8ba04b99294929fe6d5081796683bc9463"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/gui/LayoutEditorHolder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "c500ad944951f1e20d11742ea4208a2d6a21f6c52d5ad94138db0a8decb535d0"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/gui/DestinationMenuHolder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "1491b0eedbb375f6bf88878f070fed97b15660f3bee8f5053061b168893180f7"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/gui/MenuSlots.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "a8ccc71b41d8a0be8495861823507d9339d2d8cbf0c3a24743806fe75d85a7a9"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/gui/LegacyDestinationMenuBuilder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "87029dcbdaa850914a31f1eb527d3b8034127233ab0e31ec452b3a4ed80f0b03"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/gui/IconPickerHolder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "f52a4157b743d3745c78c7434fc75c1ce33138214462229e829dff1e3c6a70b4"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/gui/LayoutEditorBuilder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "b9d6eccaa67bfbe6d52aa471ffa6a38019663a173b8f82863b6df1d439098af4"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/gui/AdminEntryHolder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "b71ad4fcee5bd47b2884adeabe96f59577896e01e83dd06b938ef79aa1258392"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/gui/AdminMenuBuilder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "15dabd2e905065f9ed8b8018e10174a52bcfe0ea0bff3dbadf4b10a164c118a7"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/gui/AdminEntryBuilder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "65a0d97b94374f51709e80cac7caae910dc339e45dd4a01a4fd08e3eb00f46a2"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/gui/DestinationMenuBuilder$1.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "9a6e6bba2e17ef78804ad3c93fd3410438dbe94bf0d2b07be173e9c9fa2a767c"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/gui/IconPickerBuilder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "fc9da2f5a45343145febbff319923762c83f1ce4ceb6cbe502fbafe9b5ea45dc"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/gui/NavigatorLiveRefresh.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "bcb602141ca7fb2023feb7548f056d5a664ada9ad8f0ba4ecd5363aedb810174"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/gui/AdminMenuHolder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "b52a3a43cb502213c77fc2a8f6bbf56c6290e7a78556f63b2842fe1e7fb9e765"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/gui/GuiCommon.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "bf6a4fc64fbf7be3e0f0738c722795eded8f28d66b84042d731aec2c91e3b548"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/gui/DestinationMenuBuilder.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "147888373f91fb8d29f3d870b75c64592c7f3a4b0366b59f5543219361826ec4"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/layout/NavigatorLayoutStore.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "2d78bfd20090ea7aa90de2e1c90141bac7f2e13637d59ed59a01a54bac3e7ca9"
+  },
+  {
+    "path": "hub/src/main/java/dev/hubpilot/hub/admin/PromptManager.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 hub",
+    "initial_sha256": "f2060886fd97c9d862b7043f80acbd3d75ca85d397feaa40e8501c652bdc259c"
+  },
+  {
+    "path": "link/src/main/java/dev/hubpilot/link/bukkit/PublicLinkCommand.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 link",
+    "initial_sha256": "c0efa416ea10928438419076710c6d52bfe6e4e55d2a2fc8253c84bdf37556bc"
+  },
+  {
+    "path": "link/src/main/java/dev/hubpilot/link/bukkit/PublicLinkBootstrap.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 link",
+    "initial_sha256": "6e9b9e7151c8585741e070d9e579ff3d3219df89bfd1bc775c7b83139f054084"
+  },
+  {
+    "path": "link/src/main/java/dev/hubpilot/link/bukkit/HubPilotLinkBukkit.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 link",
+    "initial_sha256": "e1228caf90789fc2019e9009721f78183eac8dfb62f0c61a8809fc4b19001fce"
+  },
+  {
+    "path": "interact/src/main/java/dev/hubpilot/interact/PublicInteractGate.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 interact",
+    "initial_sha256": "94ff7d02dbce24eb2da321a2179e4c3f8a369826ea46641b2040d16671454c3d"
+  },
+  {
+    "path": "interact/src/main/java/dev/hubpilot/interact/InteractionStore.java",
+    "origin": "development/1.0.2/src/dev/hubpilot/interact/InteractionStore.java",
+    "initial_sha256": "dce446caa01f75dd8554ec8a3d1f9260be8782a3707294f931eb2bdce6e0c289"
+  },
+  {
+    "path": "interact/src/main/java/dev/hubpilot/interact/DestinationLabels.java",
+    "origin": "development/1.0.2/src/dev/hubpilot/interact/DestinationLabels.java",
+    "initial_sha256": "2e318ce88102e366aebb58363de6b0534f30fdc5a02de36cbfe59083a8b334d4"
+  },
+  {
+    "path": "interact/src/main/java/dev/hubpilot/interact/InteractionEditor.java",
+    "origin": "development/1.0.2/src/dev/hubpilot/interact/InteractionEditor.java",
+    "initial_sha256": "8fb5bae2d19b069ba2d2db4fa4441fa51c94dcb6f395e445d947bbab941b03af"
+  },
+  {
+    "path": "interact/src/main/java/dev/hubpilot/interact/InteractionListener.java",
+    "origin": "development/1.0.2/src/dev/hubpilot/interact/InteractionListener.java",
+    "initial_sha256": "9a69e1db3a441b216105fadadfb1390eff0ec7b9b5607442e1f96e0c8d028374"
+  },
+  {
+    "path": "interact/src/main/java/dev/hubpilot/interact/NpcCommand.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 interact",
+    "initial_sha256": "73eb57029750c5194e62dd50c7aee7181a896f25b957445b00ce5c1accd0d203"
+  },
+  {
+    "path": "interact/src/main/java/dev/hubpilot/interact/InteractCommand.java",
+    "origin": "Vineflower 1.11.1 from pinned public 1.0.2 interact",
+    "initial_sha256": "77a212d9759888dd81fab368e4b5d4fb171bb6566acf683ac6ec408baccb9e8b"
+  },
+  {
+    "path": "interact/src/main/java/dev/hubpilot/interact/HubPilotInteractPlugin.java",
+    "origin": "development/1.0.2/src/dev/hubpilot/interact/HubPilotInteractPlugin.java",
+    "initial_sha256": "49b024cdaa6574887a1de8b1c52460b4a72bbcb2342d280c460d951af0c5c1c8"
+  },
+  {
+    "path": "interact/src/main/java/dev/hubpilot/interact/UnifiedInteractCommand.java",
+    "origin": "development/1.0.2/src/dev/hubpilot/interact/UnifiedInteractCommand.java",
+    "initial_sha256": "01eacd06f2ca89433719a6cc520818972acd60ffc4173dab6d76d0710189797a"
+  }
+]

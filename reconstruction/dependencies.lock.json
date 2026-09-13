@@ -1,0 +1,156 @@
+[
+  {
+    "coordinate": "io.papermc.paper:paper-api:1.21.8-R0.1-20250906.215025-55",
+    "name": "paper-api-1.21.8-R0.1-20250906.215025-55.jar",
+    "url": "https://repo.papermc.io/repository/maven-public/io/papermc/paper/paper-api/1.21.8-R0.1-SNAPSHOT/paper-api-1.21.8-R0.1-20250906.215025-55.jar",
+    "sha256": "aab18363ca5a1aaadd4e2716ee0de50bc26f352901af962177d86484baff7478",
+    "scope": "compile/test; provided. Preserves baseline CHAIN field; not claimed original historical dependency."
+  },
+  {
+    "coordinate": "com.velocitypowered:velocity-api:3.4.0-20260121.190037-118",
+    "name": "velocity-api-3.4.0-20260121.190037-118.jar",
+    "url": "https://repo.papermc.io/repository/maven-public/com/velocitypowered/velocity-api/3.4.0-SNAPSHOT/velocity-api-3.4.0-20260121.190037-118.jar",
+    "sha256": "4c6317e73f8194383c77313e7eb4ae27941681718680ceb77b3c092b0b6713d4",
+    "scope": "compile/test; provided except Core SnakeYAML"
+  },
+  {
+    "coordinate": "net.kyori:adventure-api:4.25.0",
+    "name": "adventure-api-4.25.0.jar",
+    "url": "https://repo.maven.apache.org/maven2/net/kyori/adventure-api/4.25.0/adventure-api-4.25.0.jar",
+    "sha256": "8e281bf1357ff91af9783a6c24276b483d8154a7b3cab5b04e909e6bf5e72c9d",
+    "scope": "compile/test; provided except Core SnakeYAML"
+  },
+  {
+    "coordinate": "net.kyori:adventure-key:4.25.0",
+    "name": "adventure-key-4.25.0.jar",
+    "url": "https://repo.maven.apache.org/maven2/net/kyori/adventure-key/4.25.0/adventure-key-4.25.0.jar",
+    "sha256": "cec8f0abf642df0e627bf5a9fff6f17cbb620ea6fe05f2162b96cad1564d8857",
+    "scope": "compile/test; provided except Core SnakeYAML"
+  },
+  {
+    "coordinate": "net.kyori:adventure-text-serializer-legacy:4.25.0",
+    "name": "adventure-text-serializer-legacy-4.25.0.jar",
+    "url": "https://repo.maven.apache.org/maven2/net/kyori/adventure-text-serializer-legacy/4.25.0/adventure-text-serializer-legacy-4.25.0.jar",
+    "sha256": "06f1525ebf17fb4f34c34f1b5262ade672705c1163f6a48b68a4e0314dfa6a13",
+    "scope": "compile/test; provided except Core SnakeYAML"
+  },
+  {
+    "coordinate": "net.kyori:adventure-text-serializer-plain:4.25.0",
+    "name": "adventure-text-serializer-plain-4.25.0.jar",
+    "url": "https://repo.maven.apache.org/maven2/net/kyori/adventure-text-serializer-plain/4.25.0/adventure-text-serializer-plain-4.25.0.jar",
+    "sha256": "9453757a0a6c0dd9e4b5fcd254e82a7ea867f4cbe40377167f440c41ec6052ee",
+    "scope": "compile/test; provided except Core SnakeYAML"
+  },
+  {
+    "coordinate": "net.kyori:adventure-text-minimessage:4.25.0",
+    "name": "adventure-text-minimessage-4.25.0.jar",
+    "url": "https://repo.maven.apache.org/maven2/net/kyori/adventure-text-minimessage/4.25.0/adventure-text-minimessage-4.25.0.jar",
+    "sha256": "198f27c6f91e5e3271640650869fefdd6816d7b310b48cfa529b5f58e4a929a4",
+    "scope": "compile/test; provided except Core SnakeYAML"
+  },
+  {
+    "coordinate": "net.kyori:examination-api:1.3.0",
+    "name": "examination-api-1.3.0.jar",
+    "url": "https://repo.maven.apache.org/maven2/net/kyori/examination-api/1.3.0/examination-api-1.3.0.jar",
+    "sha256": "c9237ffecb05428f6eff86216246ac70ce0b47b04c08ea7ca35020fde57f8492",
+    "scope": "compile/test; provided except Core SnakeYAML"
+  },
+  {
+    "coordinate": "net.kyori:examination-string:1.3.0",
+    "name": "examination-string-1.3.0.jar",
+    "url": "https://repo.maven.apache.org/maven2/net/kyori/examination-string/1.3.0/examination-string-1.3.0.jar",
+    "sha256": "7d01fc25a4bb3af0e1662685455f4541fbf4626216ea5846e455c1491e156b8c",
+    "scope": "compile/test; provided except Core SnakeYAML"
+  },
+  {
+    "coordinate": "org.slf4j:slf4j-api:2.0.17",
+    "name": "slf4j-api-2.0.17.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/slf4j/slf4j-api/2.0.17/slf4j-api-2.0.17.jar",
+    "sha256": "7b751d952061954d5abfed7181c1f645d336091b679891591d63329c622eb832",
+    "scope": "compile/test; provided except Core SnakeYAML"
+  },
+  {
+    "coordinate": "org.yaml:snakeyaml:2.1",
+    "name": "snakeyaml-2.1.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/yaml/snakeyaml/2.1/snakeyaml-2.1.jar",
+    "sha256": "69a4537045ddbcaed4c68eef074462eb12d324d7953f62c5ecd35df645e8aec9",
+    "scope": "compile/test; provided except Core SnakeYAML"
+  },
+  {
+    "coordinate": "com.google.inject:guice:6.0.0",
+    "name": "guice-6.0.0.jar",
+    "url": "https://repo.maven.apache.org/maven2/com/google/inject/guice/6.0.0/guice-6.0.0.jar",
+    "sha256": "b4d4f7ec5e8fc17b4f98dee9d3f6cf6ae3ae13e2e5ed4b2f7bbf09bc4bb675d5",
+    "scope": "compile/test; provided except Core SnakeYAML"
+  },
+  {
+    "coordinate": "javax.inject:javax.inject:1",
+    "name": "javax.inject-1.jar",
+    "url": "https://repo.maven.apache.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar",
+    "sha256": "91c77044a50c481636c32d916fd89c9118a72195390452c81065080f957de7ff",
+    "scope": "compile/test; provided except Core SnakeYAML"
+  },
+  {
+    "coordinate": "jakarta.inject:jakarta.inject-api:2.0.1",
+    "name": "jakarta.inject-api-2.0.1.jar",
+    "url": "https://repo.maven.apache.org/maven2/jakarta/inject/jakarta.inject-api/2.0.1/jakarta.inject-api-2.0.1.jar",
+    "sha256": "f7dc98062fccf14126abb751b64fab12c312566e8cbdc8483598bffcea93af7c",
+    "scope": "compile/test; provided except Core SnakeYAML"
+  },
+  {
+    "coordinate": "com.google.guava:guava:33.3.1-jre",
+    "name": "guava-33.3.1-jre.jar",
+    "url": "https://repo.maven.apache.org/maven2/com/google/guava/guava/33.3.1-jre/guava-33.3.1-jre.jar",
+    "sha256": "4bf0e2c5af8e4525c96e8fde17a4f7307f97f8478f11c4c8e35a0e3298ae4e90",
+    "scope": "compile/test; provided except Core SnakeYAML"
+  },
+  {
+    "coordinate": "com.google.code.gson:gson:2.11.0",
+    "name": "gson-2.11.0.jar",
+    "url": "https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.11.0/gson-2.11.0.jar",
+    "sha256": "57928d6e5a6edeb2abd3770a8f95ba44dce45f3b23b7a9dc2b309c581552a78b",
+    "scope": "compile/test; provided except Core SnakeYAML"
+  },
+  {
+    "coordinate": "org.jetbrains:annotations:26.0.2",
+    "name": "annotations-26.0.2.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/annotations/26.0.2/annotations-26.0.2.jar",
+    "sha256": "2037be378980d3ba9333e97955f3b2cde392aa124d04ca73ce2eee6657199297",
+    "scope": "compile/test; provided except Core SnakeYAML"
+  },
+  {
+    "coordinate": "org.jspecify:jspecify:1.0.0",
+    "name": "jspecify-1.0.0.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/jspecify/jspecify/1.0.0/jspecify-1.0.0.jar",
+    "sha256": "1fad6e6be7557781e4d33729d49ae1cdc8fdda6fe477bb0cc68ce351eafdfbab",
+    "scope": "compile/test; provided except Core SnakeYAML"
+  },
+  {
+    "coordinate": "org.joml:joml:1.10.8",
+    "name": "joml-1.10.8.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/joml/joml/1.10.8/joml-1.10.8.jar",
+    "sha256": "bf19510145178df82cd3bd37edd514c13f411531ec5545299fd3abcbc98fe7c2",
+    "scope": "compile/test; provided except Core SnakeYAML"
+  },
+  {
+    "coordinate": "net.md-5:bungeecord-chat:1.21-R0.2-deprecated+build.21",
+    "name": "bungeecord-chat-1.21-R0.2-deprecated+build.21.jar",
+    "url": "https://repo.papermc.io/repository/maven-public/net/md-5/bungeecord-chat/1.21-R0.2-deprecated+build.21/bungeecord-chat-1.21-R0.2-deprecated+build.21.jar",
+    "sha256": "ce930b3ee048520a0ab538eb8d1627b301367fc1b300837235387aded6d89ba1",
+    "scope": "compile/test; provided except Core SnakeYAML"
+  },
+  {
+    "coordinate": "org.ow2.asm:asm:9.8",
+    "name": "asm-9.8.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/ow2/asm/asm/9.8/asm-9.8.jar",
+    "sha256": "876eab6a83daecad5ca67eb9fcabb063c97b5aeb8cf1fca7a989ecde17522051",
+    "scope": "test/bytecode inspection only; never packaged"
+  },
+  {
+    "coordinate": "org.ow2.asm:asm-tree:9.8",
+    "name": "asm-tree-9.8.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/ow2/asm/asm-tree/9.8/asm-tree-9.8.jar",
+    "sha256": "14b7880cb7c85eed101e2710432fc3ffb83275532a6a894dc4c4095d49ad59f1",
+    "scope": "test/bytecode inspection only; never packaged"
+  }
+]

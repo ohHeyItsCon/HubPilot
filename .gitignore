@@ -19,3 +19,9 @@ secrets.yml
 
 # Release binaries belong on GitHub Releases, not normal repository history
 *.jar
+
+# Reconstruction-only tooling/test caches and private material
+__pycache__/
+*.pyc
+.cache/
+private/

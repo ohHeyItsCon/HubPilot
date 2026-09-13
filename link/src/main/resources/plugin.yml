@@ -1,0 +1,11 @@
+name: HubPilotLink
+version: '1.0.2'
+main: dev.hubpilot.link.bukkit.HubPilotLinkBukkit
+api-version: '1.21'
+author: ohHeyItsCon
+description: Hub-side telemetry and component-presence bridge for HubPilot Core.
+commands:
+  hpl:
+    aliases: [hubpilotlink]
+    description: Show HubPilot Link information.
+    usage: /hpl

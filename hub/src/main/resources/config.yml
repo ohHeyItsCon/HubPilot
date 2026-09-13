@@ -1,0 +1,57 @@
+# ============================================================
+#                       HUBPILOT HUB
+# ============================================================
+#
+# Player-facing Navigator and hub-side settings.
+# This file is safe for server owners to edit.
+# After changing settings, use /hp gui reload after initial setup.
+#
+
+# Shared data folder used for Navigator destinations/layout when Core and Hub
+# can see the same mounted directory.
+# Default: shared
+shared-directory: shared
+
+# ------------------------------------------------------------
+# NAVIGATOR GUI
+# ------------------------------------------------------------
+# Title displayed above the server Navigator.
+# Minecraft color codes using '&' are supported.
+gui-title: "&8&lSelect a Destination"
+
+# Number of inventory slots in the Navigator.
+# Available values: 9, 18, 27, 36, 45, 54
+# Default: 54
+gui-slots: 54
+
+# Material placed in unused Navigator slots.
+# Examples: GRAY_STAINED_GLASS_PANE, BLACK_STAINED_GLASS_PANE, AIR
+filler-material: GRAY_STAINED_GLASS_PANE
+
+# ------------------------------------------------------------
+# NAVIGATOR ITEM
+# ------------------------------------------------------------
+compass:
+  # Item name shown to players.
+  name: "&b&lServer Menu"
+  # Lore lines shown below the item name.
+  lore:
+    - "&7Right-click to open the server menu"
+  # Resource-pack model id. Use 0 for no custom model.
+  custom-model-data: 0
+
+# ------------------------------------------------------------
+# ADMIN ITEM
+# ------------------------------------------------------------
+admin-item:
+  name: "&c&lHubPilot Editor"
+  lore:
+    - "&7Right-click to manage HubPilot servers"
+    - "&7Authorization is controlled by HubPilot roles/permissions"
+
+# ------------------------------------------------------------
+# LEGACY / MANUAL DESTINATION IMPORT
+# ------------------------------------------------------------
+# Most installations should use /hp discover and the admin GUI instead.
+# These entries are only imported when no shared destinations file exists.
+entries: []

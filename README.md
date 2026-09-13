@@ -102,3 +102,7 @@ Use versions that support your server software. This list does not mean every pl
 Created and maintained by `ohHeyItsCon`, HubPilot grew from [AutoServer](https://github.com/artificial-720/AutoServer) by Artificial-720. It uses the [MIT License](LICENSE), with the original notice kept in [Third-Party Notices](THIRD_PARTY_NOTICES.md) and the release JARs.
 
 AI tools have been used for coding, debugging, testing, review, and documentation. See [Project Transparency](TRANSPARENCY.md) for how the project was developed.
+
+## Public 1.0.2 source reconstruction
+
+The dedicated reconstruction branch contains a [documented four-component source build](reconstruction/README.md), pinned dependencies, preserved notices and differential characterization tests. These candidates are not approved release replacements or production updates.

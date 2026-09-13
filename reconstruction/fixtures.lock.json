@@ -1,0 +1,142 @@
+[
+  {
+    "coordinate": "org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.95.0",
+    "url": "https://repo.maven.apache.org/maven2/org/mockbukkit/mockbukkit/mockbukkit-v1.21/4.95.0/mockbukkit-v1.21-4.95.0.jar",
+    "name": "mockbukkit-v1.21-4.95.0.jar",
+    "sha256": "b97016e38f405cc6aa70f163d065c9a0dd097dc7bb4cdb4671f1b9f05cef7721",
+    "scope": "retained MockBukkit fixtures only"
+  },
+  {
+    "coordinate": "org.hamcrest:hamcrest:3.0",
+    "url": "https://repo.maven.apache.org/maven2/org/hamcrest/hamcrest/3.0/hamcrest-3.0.jar",
+    "name": "hamcrest-3.0.jar",
+    "sha256": "5d66b6a4a680755cb6ed7cb104fa7835ef644667586ff0737adeb977c39ecdbc",
+    "scope": "retained MockBukkit fixtures only"
+  },
+  {
+    "coordinate": "org.junit.jupiter:junit-jupiter-api:6.0.0",
+    "url": "https://repo.maven.apache.org/maven2/org/junit/jupiter/junit-jupiter-api/6.0.0/junit-jupiter-api-6.0.0.jar",
+    "name": "junit-jupiter-api-6.0.0.jar",
+    "sha256": "88d690d2d373cd66170770c317977196ce9e465f2388930f4bc9665e887385f6",
+    "scope": "retained MockBukkit fixtures only"
+  },
+  {
+    "coordinate": "org.junit.platform:junit-platform-commons:6.0.0",
+    "url": "https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-commons/6.0.0/junit-platform-commons-6.0.0.jar",
+    "name": "junit-platform-commons-6.0.0.jar",
+    "sha256": "86e8faf87f3151a3d545850852a0f2cc55ea8a2434eee9e08f83881c52d55992",
+    "scope": "retained MockBukkit fixtures only"
+  },
+  {
+    "coordinate": "org.opentest4j:opentest4j:1.3.0",
+    "url": "https://repo.maven.apache.org/maven2/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar",
+    "name": "opentest4j-1.3.0.jar",
+    "sha256": "48e2df636cab6563ced64dcdff8abb2355627cb236ef0bf37598682ddf742f1b",
+    "scope": "retained MockBukkit fixtures only"
+  },
+  {
+    "coordinate": "org.apiguardian:apiguardian-api:1.1.2",
+    "url": "https://repo.maven.apache.org/maven2/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar",
+    "name": "apiguardian-api-1.1.2.jar",
+    "sha256": "b509448ac506d607319f182537f0b35d71007582ec741832a1f111e5b5b70b38",
+    "scope": "retained MockBukkit fixtures only"
+  },
+  {
+    "coordinate": "net.kyori:adventure-platform-bungeecord:4.4.1",
+    "url": "https://repo.maven.apache.org/maven2/net/kyori/adventure-platform-bungeecord/4.4.1/adventure-platform-bungeecord-4.4.1.jar",
+    "name": "adventure-platform-bungeecord-4.4.1.jar",
+    "sha256": "853e024d373e564ed062a363484737d9ad28789a48a0251e6bed7dd8c3da355a",
+    "scope": "retained MockBukkit fixtures only"
+  },
+  {
+    "coordinate": "net.kyori:adventure-platform-api:4.4.1",
+    "url": "https://repo.maven.apache.org/maven2/net/kyori/adventure-platform-api/4.4.1/adventure-platform-api-4.4.1.jar",
+    "name": "adventure-platform-api-4.4.1.jar",
+    "sha256": "ec604628c2b7c165ea74c1fcb3a2d0f03359c2c77a14960e3a0bc2e379670ac2",
+    "scope": "retained MockBukkit fixtures only"
+  },
+  {
+    "coordinate": "net.kyori:adventure-text-serializer-bungeecord:4.4.1",
+    "url": "https://repo.maven.apache.org/maven2/net/kyori/adventure-text-serializer-bungeecord/4.4.1/adventure-text-serializer-bungeecord-4.4.1.jar",
+    "name": "adventure-text-serializer-bungeecord-4.4.1.jar",
+    "sha256": "e1bc376c6dc7a2100016015735ce4ccc534d2b26bf5ab82aac751c5032056c39",
+    "scope": "retained MockBukkit fixtures only"
+  },
+  {
+    "coordinate": "net.kyori:adventure-text-serializer-json:4.25.0",
+    "url": "https://repo.maven.apache.org/maven2/net/kyori/adventure-text-serializer-json/4.25.0/adventure-text-serializer-json-4.25.0.jar",
+    "name": "adventure-text-serializer-json-4.25.0.jar",
+    "sha256": "482b4aa218d7c879fcf57e5d0f9cc04db4b4d4b5679eb99b727f6104ed7fb982",
+    "scope": "retained MockBukkit fixtures only"
+  },
+  {
+    "coordinate": "net.kyori:adventure-text-serializer-gson:4.25.0",
+    "url": "https://repo.maven.apache.org/maven2/net/kyori/adventure-text-serializer-gson/4.25.0/adventure-text-serializer-gson-4.25.0.jar",
+    "name": "adventure-text-serializer-gson-4.25.0.jar",
+    "sha256": "931f67959d46e0fe55b64ab9164e31b578b79235787f69d472b62865f97b7245",
+    "scope": "retained MockBukkit fixtures only"
+  },
+  {
+    "coordinate": "net.kyori:option:1.1.0",
+    "url": "https://repo.maven.apache.org/maven2/net/kyori/option/1.1.0/option-1.1.0.jar",
+    "name": "option-1.1.0.jar",
+    "sha256": "97b69b4b17dfe02217c9131ad342564cbc9aebd04c75eb689639b5f78fd4b11c",
+    "scope": "retained MockBukkit fixtures only"
+  },
+  {
+    "coordinate": "net.bytebuddy:byte-buddy:1.17.8",
+    "url": "https://repo.maven.apache.org/maven2/net/bytebuddy/byte-buddy/1.17.8/byte-buddy-1.17.8.jar",
+    "name": "byte-buddy-1.17.8.jar",
+    "sha256": "2b5ddc8c1f4234bdb7cb45338a8e10a13e0e3ca473e91d5d821d681127ea8ba1",
+    "scope": "retained MockBukkit fixtures only"
+  },
+  {
+    "coordinate": "it.unimi.dsi:fastutil:8.5.15",
+    "url": "https://repo.maven.apache.org/maven2/it/unimi/dsi/fastutil/8.5.15/fastutil-8.5.15.jar",
+    "name": "fastutil-8.5.15.jar",
+    "sha256": "cffeb6673bdf1e6e4377d684df2f55ac359cf5cf6df613e05e62deeea500936a",
+    "scope": "retained MockBukkit fixtures only"
+  },
+  {
+    "coordinate": "com.google.guava:failureaccess:1.0.2",
+    "url": "https://repo.maven.apache.org/maven2/com/google/guava/failureaccess/1.0.2/failureaccess-1.0.2.jar",
+    "name": "failureaccess-1.0.2.jar",
+    "sha256": "8a8f81cf9b359e3f6dfa691a1e776985c061ef2f223c9b2c80753e1b458e8064",
+    "scope": "retained MockBukkit fixtures only"
+  },
+  {
+    "coordinate": "org.yaml:snakeyaml:2.2",
+    "url": "https://repo.maven.apache.org/maven2/org/yaml/snakeyaml/2.2/snakeyaml-2.2.jar",
+    "name": "snakeyaml-2.2.jar",
+    "sha256": "1467931448a0817696ae2805b7b8b20bfb082652bf9c4efaed528930dc49389b",
+    "scope": "retained MockBukkit fixtures only"
+  },
+  {
+    "coordinate": "io.papermc.paper:paper-api:1.21.10-R0.1-20260104.211118-51",
+    "url": "https://repo.papermc.io/repository/maven-public/io/papermc/paper/paper-api/1.21.10-R0.1-SNAPSHOT/paper-api-1.21.10-R0.1-20260104.211118-51.jar",
+    "name": "paper-api-1.21.10-R0.1-20260104.211118-51.jar",
+    "sha256": "fec4c4ad2784df735e5f9399545a20aa792f775dca718b49c59156ee7b35ef1c",
+    "scope": "retained fixtures runtime API; compile API intentionally separate"
+  },
+  {
+    "coordinate": "com.mojang:brigadier:1.3.10",
+    "name": "brigadier-1.3.10.jar",
+    "url": "https://libraries.minecraft.net/com/mojang/brigadier/1.3.10/brigadier-1.3.10.jar",
+    "sha256": "c8ee4136e474ac7723ca2b432ec8d1a2bc88ef7d1ec57c314ba9e33cdc83dd75",
+    "scope": "retained fixtures; Paper 1.21.10 POM dependency"
+  },
+  {
+    "coordinate": "net.kyori:adventure-text-logger-slf4j:4.25.0",
+    "name": "adventure-text-logger-slf4j-4.25.0.jar",
+    "url": "https://repo.maven.apache.org/maven2/net/kyori/adventure-text-logger-slf4j/4.25.0/adventure-text-logger-slf4j-4.25.0.jar",
+    "sha256": "bb1e9711df89fc94d1272cc97ddcad9c11084a4ded041a8e6c9ef6ae2a1a15cc",
+    "scope": "retained fixtures; Paper 1.21.10 POM dependency"
+  },
+  {
+    "coordinate": "org.apache.logging.log4j:log4j-api:2.24.1",
+    "name": "log4j-api-2.24.1.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-api/2.24.1/log4j-api-2.24.1.jar",
+    "sha256": "6e77bb229fc8dcaf09038beeb5e9030b22e9e01b51b458b0183ce669ebcc92ef",
+    "scope": "retained fixtures; Paper 1.21.10 POM dependency"
+  }
+]

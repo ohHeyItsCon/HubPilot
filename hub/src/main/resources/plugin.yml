@@ -1,0 +1,25 @@
+name: HubPilot
+version: '1.0.2'
+main: dev.hubpilot.hub.HubPilotHubPlugin
+api-version: '1.21'
+author: ohHeyItsCon
+description: Hub GUI, first-time setup, staff authorization bridge, and Navigator for HubPilot Core.
+permissions:
+  hubpilot.admin:
+    description: Grants day-to-day HubPilot administration from the hub.
+    default: op
+  hubpilot.claimowner:
+    description: Allows claiming an unowned HubPilot installation. OPs have this by default.
+    default: op
+  hubpilot.role.admin:
+    description: Reports the Admin role to HubPilot Core through the trusted hub bridge.
+    default: false
+  hubpilot.role.moderator:
+    description: Reports the Moderator role to HubPilot Core through the trusted hub bridge.
+    default: false
+  hubpilot.role.helper:
+    description: Reports the Helper role to HubPilot Core through the trusted hub bridge.
+    default: false
+  hubpilot.navigator:
+    description: Optional permission for receiving the forced Navigator item when permission enforcement is enabled.
+    default: true

@@ -1,0 +1,9 @@
+{
+  "id": "hubpilot-core",
+  "name": "HubPilot Core",
+  "version": "1.0.2",
+  "description": "Velocity routing, lifecycle automation, status/settings sync, telemetry, statistics, setup, and unified HubPilot commands.",
+  "authors": ["ohHeyItsCon"],
+  "dependencies": [],
+  "main": "dev.hubpilot.core.HubPilotCorePlugin"
+}

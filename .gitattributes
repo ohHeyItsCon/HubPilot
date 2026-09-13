@@ -1,0 +1,12 @@
+# Preserve exact public resource bytes and the nine historical replacement sources.
+# Whitespace exceptions apply only to byte-preserved inputs, not reconstructed code.
+*/src/main/resources/** -text -whitespace
+hub/src/main/java/dev/hubpilot/hub/command/HubPilotGuiCommand.java -text -whitespace
+hub/src/main/java/dev/hubpilot/hub/publicapi/SetupItemManager.java -text -whitespace
+hub/src/main/java/dev/hubpilot/hub/publicapi/AdminItemManager.java -text -whitespace
+interact/src/main/java/dev/hubpilot/interact/InteractionStore.java -text -whitespace
+interact/src/main/java/dev/hubpilot/interact/DestinationLabels.java -text -whitespace
+interact/src/main/java/dev/hubpilot/interact/InteractionEditor.java -text -whitespace
+interact/src/main/java/dev/hubpilot/interact/InteractionListener.java -text -whitespace
+interact/src/main/java/dev/hubpilot/interact/HubPilotInteractPlugin.java -text -whitespace
+interact/src/main/java/dev/hubpilot/interact/UnifiedInteractCommand.java -text -whitespace
