@@ -9,7 +9,13 @@
 - JVM `-Xverify:all` class loading and member reflection: **PASS** for all 201 own classes on both public baseline and reconstructed candidates. No plugin initialization.
 - SnakeYAML normalized executable comparison: **PASS** for all 229 classes; candidate bundles upstream locked 2.1, with historical packaging-byte differences explained.
 - Core differential characterization: **17/17 PASS on public baseline and 17/17 PASS on reconstruction**, identical observations. Includes eight simultaneous shared requesters, control dispatch, auth-header switches, cancellation, delayed retries, stale maintenance/Always-On, competing demand, idle/connected/configured-hub protection and outstanding provider start.
-- Two fresh-output builds in the pinned environment: **byte-identical for all four JARs**. Clean-source export validation and retained fixture final results are being recorded separately before the final checkpoint.
+- Two fresh-output builds in the pinned environment: **byte-identical for all four JARs**. A clean Git export of implementation checkpoint `e4aca13` with an empty dependency cache and no baseline JARs also produced exactly the same four artifacts.
+
+- Retained `InteractValidation`: **PASS on baseline and candidate**, unchanged source; portal persistence/styles, brush/editor flow, permissions/item safety and label lifecycle.
+- Retained `HubToggleValidation`: **PASS on baseline and candidate**, unchanged source, Interact absent; Core-message-to-Hub route, admin-item toggling/persistence, guest denial and inventory safety.
+- These retained fixtures use a newly locked MockBukkit 4.95.0/Paper 1.21.10 dependency environment, not a claimed recovered historical lock. Mocked display styling and partial plugin setup retain the fixtures’ original limitations.
+
+Actual commands completed: `verify.py --jdk <pinned-jdk> --offline`, `fixtures.py --jdk <pinned-jdk>`, and `build.py --jdk <pinned-jdk>` from a clean committed-source export with fresh dependency downloads. The documented `--fixtures` option composes the same retained-fixture runner into the full verifier.
 
 ## Candidate identities
 

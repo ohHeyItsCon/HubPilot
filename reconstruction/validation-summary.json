@@ -1,0 +1,64 @@
+{
+  "implementation_checkpoint": "e4aca13",
+  "scope": "public-source reconstruction; no deployment",
+  "source_files": 142,
+  "own_classes": 201,
+  "snake_yaml_normalized_classes": 229,
+  "lifecycle_scenarios": [
+    "shared-start-dedup-and-cancel-preserves-other-demand",
+    "concurrent-shared-start-coalesces-eight-requesters",
+    "control-dispatch-bytecode-true-success-path",
+    "provider-auth-reconstructed-switches-match-baseline",
+    "existing-behavior-cancel-before-ping-does-not-invalidate-callback",
+    "online-join-bypasses-countdown-and-start",
+    "countdown-fanout-does-not-serialize-admission",
+    "existing-behavior-delayed-retry-survives-cancel-and-new-destination",
+    "existing-behavior-retry-does-not-revalidate-current-maintenance",
+    "existing-behavior-failed-online-join-can-stop-competing-startup-demand",
+    "configured-hub-final-guard-rechecks-current-mapping",
+    "connected-player-final-stop-guard",
+    "idle-guard-preserves-queued-and-pending-demand",
+    "ordinary-idle-backend-can-stop",
+    "existing-behavior-empty-queue-stop-does-not-cancel-provider-start",
+    "existing-behavior-one-UUID-can-queue-multiple-backends",
+    "existing-behavior-stale-nonhub-definition-bypasses-new-always-on-flags"
+  ],
+  "baseline_and_candidate_scenarios_equal": true,
+  "retained_fixtures": {
+    "baseline InteractValidation": [
+      "PASS portal persistence, brush-only toggle, Hub item isolation, permissions, deduplication and inventory safety",
+      "PASS brush corner selection and editor inventory Save portal workflow",
+      "PASS TextDisplay labels: all binding types, centered portal placement, movement, offsets, deduplication, removal and cleanup"
+    ],
+    "baseline HubToggleValidation": [
+      "PASS Hub alone: Core message -> Hub command -> show/hide; persistent hiding, permissions and full inventory safety; Interact absent"
+    ],
+    "candidate InteractValidation": [
+      "PASS portal persistence, brush-only toggle, Hub item isolation, permissions, deduplication and inventory safety",
+      "PASS brush corner selection and editor inventory Save portal workflow",
+      "PASS TextDisplay labels: all binding types, centered portal placement, movement, offsets, deduplication, removal and cleanup"
+    ],
+    "candidate HubToggleValidation": [
+      "PASS Hub alone: Core message -> Hub command -> show/hide; persistent hiding, permissions and full inventory safety; Interact absent"
+    ]
+  },
+  "reproducibility": {
+    "source_commit": "e4aca13c50b93d691a39c04dedfaa0f78826fcef",
+    "empty_dependency_cache_at_start": true,
+    "no_baseline_artifacts_in_export": true,
+    "exact_match": true,
+    "hashes": {
+      "HubPilot-Core-1.0.2-reconstructed.jar": "11782743ad875cbcea81f195f0af0874e50e61ff14deeab2f251f3320a04c848",
+      "HubPilot-Hub-1.0.2-reconstructed.jar": "2457d2e845fe7fa6482b0ab6c5c65906016d697b07531b5af0686e94b3686bfb",
+      "HubPilot-Interact-1.0.2-reconstructed.jar": "f5ba407f3bfd175b2e40210a72dcc38897a557d9aa8073d77bd98e902eb05c96",
+      "HubPilot-Link-1.0.2-reconstructed.jar": "bc4e25c64192df4b112832bacb69f6ec569aabedd867b4ed0c7c89799b0359b9"
+    }
+  },
+  "limitations": [
+    "Not byte-identical to original releases",
+    "Not a live Minecraft or provider acceptance test",
+    "Compiler/synthetic reflection metadata differences documented",
+    "Baseline Paper CHAIN compatibility remains",
+    "Undesirable baseline lifecycle behaviors preserved; fixes proposed separately"
+  ]
+}
