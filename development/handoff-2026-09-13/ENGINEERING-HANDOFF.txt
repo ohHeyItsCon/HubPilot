@@ -1,0 +1,1012 @@
+HUBPILOT PLUGIN SUITE: ENGINEERING HANDOFF TO MORROW
+Audit date: 2026-09-13 UTC
+Repository: https://github.com/ohHeyItsCon/HubPilot
+Audited main: 1640ab09460bd0f34c86533bc229de3283689b1a
+Scope: Core, Hub, Link and Interact. This is NOT HubPilot Controller.
+
+READ THIS FIRST
+
+There is no complete, independently buildable source distribution in the public
+repository trees and reachable path history inspected for this handoff. The current
+release JARs are recoverable. Nine replacement implementation files and two test
+fixtures survive under development/1.0.2. They are not a complete suite build.
+
+The original execution/build workspace is not available in this session. The task
+scratch directory did not contain HubPilot build inputs before this audit's clone
+and downloads. That establishes unavailability here, not that every possible old
+archive has been destroyed. No original full-source archive, Core patch program,
+Core queue/protection harness or complete dependency lock was recovered.
+
+This handoff adds a NEW public-release recovery/inspection tool and pinned asset
+manifest. It does not recreate missing original build scripts by assertion. The
+public release ZIP contains four JARs and release documents, not a source project.
+
+Public boundary: only public repository/release evidence and analysis of those
+public bytes are included here. Do not publish recovered private workspaces,
+pre-public HubPilot inputs, personal deployment files or credentials. The owner
+explicitly required that pre-public material remain outside GitHub. Nothing in
+this handoff authorizes restoring those materials to the public repository.
+
+Evidence labels used throughout:
+IMPLEMENTED: seen in the pinned public artifact or surviving source; not a live PASS.
+TESTED-NOW: a check performed during this audit, with its scope stated.
+TESTED-HISTORICAL: a published validation record reports it; not rerun here.
+PLANNED: approved roadmap behavior, not shipped.
+HISTORICAL: prior artifact or implementation history.
+UNCERTAIN: evidence missing, ambiguous, or an untested failure hypothesis.
+
+Source references below are repository-relative at the audited commit. Binary
+references use class and method names in the pinned 1.0.2 JARs. Run the supplied
+recovery tool to materialize inspection-only Java and the packaged resources.
+Decompiled Java is evidence navigation, not original source or reliable compilable
+code. Where it conflicts with bytecode, the bytecode wins.
+
+1. REVIEW OF MORROW'S PLAIN-ENGLISH EXPLANATION
+
+Morrow's overall division of responsibility is right: Core coordinates the network
+on Velocity; Hub provides the Paper interface; Interact supplies optional world
+entry points; a provider runs the backend process. Ordinary backends do not need
+HubPilot plugins just for requests or power control. They still require their
+platform's forwarding support. Core is not a Minecraft process host.
+
+The explanation needs these qualifications:
+
+IMPLEMENTED: Core's normal join admission checks maintenance, the configured
+server permission and optional strict client version. Those checks use the actual
+Velocity player. A display name, managed ID, Velocity name, provider definition ID
+and provider server ID are distinct identifiers. A WORLD request opcode does not
+prove Core can switch arbitrary worlds inside one Minecraft process: the inspected
+request handler resolves its target through the managed-server lifecycle.
+
+IMPLEMENTED: queues are per-server startup waiting lists, not a network-wide
+scheduler or a backend-full admission queue. One StartSession is shared per managed
+server ID, using putIfAbsent. A LinkedHashSet preserves insertion order and avoids
+repeating the same UUID in that one queue. There is no general one-outstanding-
+request-per-player rule across servers in LifecycleManager.
+
+IMPLEMENTED: online destinations bypass startup countdown. When cached status is
+online, Core connects immediately. Otherwise it performs a Minecraft status ping;
+a successful ping also leads directly to connection. Only the queued startup path
+enters its STARTING -> COUNTDOWN sequence. Queue positions do not mean one player
+is admitted at a time: the countdown completion iterates the waiting players and
+issues connection requests for them.
+
+IMPLEMENTED: provider acceptance and readiness differ. A successful start HTTP
+response sets startAccepted, but tickSession advances based on StatusStore.online().
+The inspected transition does not require startAccepted to be true. Readiness is
+successful Minecraft status reachability, not a successful authenticated player
+login, mod handshake, forwarding-secret check or proof that a particular game mode
+has finished initialization. Link's ready telemetry is not the lifecycle gate.
+
+IMPLEMENTED: cancellation removes a UUID from startup/countdown queues. It does
+not cancel an already issued provider request, every in-flight initial ping, or
+scheduled connection retries. Reconnect-resistant cooldowns and request-generation
+cancellation are not implemented here. A successful ServerPostConnect event removes
+the player from all queues, even when the connection is to another destination.
+
+IMPLEMENTED: startup timeout, connection retry delay and countdown are separate.
+The default retry count of three means an initial connection attempt plus up to
+three retries. It is not three provider-start retries. There is no inspected
+application-level HTTP retry loop in the provider action transport.
+
+IMPLEMENTED / UNCERTAIN: automatic stopping has useful safeguards, but describing
+it as complete demand accounting would overstate the code. Idle shutdown checks
+queue size and pending transfers. The final automatic stopServer guard checks
+configured-hub identity, players connected through this Velocity instance, and a
+controllable provider. It does not universally recheck all current queues,
+pending transfers, request generations, or the latest Always-On setting.
+
+IMPLEMENTED: configured-hub protection is stronger than ordinary Always-On
+protection against stale session definitions: the final automatic dispatcher checks
+the current config as well as the passed definition. Always-On ordinarily works
+by turning off shutdown flags in the effective ManagedServer. A stale non-hub
+session is a separate risk, not evidence that the hub repair is missing.
+
+IMPLEMENTED: Link supplies telemetry and component presence. The detailed OP,
+permission and role report used by Core comes from Hub's PublicHubBootstrap AUTH
+messages. Do not describe Link as the sole authorization bridge.
+
+IMPLEMENTED / DOCUMENTATION DISCREPANCY: the September 3 automatic hub repair does
+not change manual provider power methods. However, ServerAdminBridge's SERVER_STOP
+GUI path explicitly refuses to stop the configured hub from the hub, and rejects
+connected players. Thus the docs' broad statement that manual hub stop remains
+available must not be translated into a promise that this GUI action allows it.
+Inspect the actual chosen manual route; panel-side manual power remains outside
+Core's automatic-stop guard. This audit did not live-test manual hub shutdown.
+
+2. SOURCE, BUILD INPUTS AND WHAT ACTUALLY SURVIVED
+
+IMPLEMENTED / TESTED-NOW: main remains the commit above when the audit began.
+The other visible branch is feature/1.0.2-queue-update. Tags are v1.0.0, v1.0.1 and
+v1.0.2. No newer complete-source tree or GitHub Actions workflow was found in the
+fetched branches/tags. Checking reachable historical filenames also found no full
+Maven/Gradle build or complete plugin implementation tree.
+
+The source tag v1.0.2 points to:
+  a0bda484ba80d086b3a1a59dcddf2dd29aeb91e4
+  authored 2026-09-01T17:13:24-05:00 (2026-09-01T22:13:24Z)
+  subject: Fix configured hub discovery in 1.0.2
+That precedes the later Core repair and Hub/Interact replacements. GitHub's
+Source code ZIP/tarball is an archive of that tree, not the exact current JAR
+inputs. Stable remains 1.0.1; the API still marks 1.0.2 as prerelease.
+
+Surviving source paths:
+  development/1.0.2/src/dev/hubpilot/interact/HubPilotInteractPlugin.java
+  development/1.0.2/src/dev/hubpilot/interact/InteractionStore.java
+  development/1.0.2/src/dev/hubpilot/interact/InteractionListener.java
+  development/1.0.2/src/dev/hubpilot/interact/InteractionEditor.java
+  development/1.0.2/src/dev/hubpilot/interact/UnifiedInteractCommand.java
+  development/1.0.2/src/dev/hubpilot/interact/DestinationLabels.java
+  development/1.0.2/hub-src/dev/hubpilot/hub/publicapi/SetupItemManager.java
+  development/1.0.2/hub-src/dev/hubpilot/hub/publicapi/AdminItemManager.java
+  development/1.0.2/hub-src/dev/hubpilot/hub/command/HubPilotGuiCommand.java
+  development/1.0.2/resources/plugin.yml
+  development/1.0.2/resources/config.yml
+  development/1.0.2/InteractValidation.java
+  development/1.0.2/HubToggleValidation.java
+  development/1.0.2/BUILD.md
+
+The BUILD.md explicitly says original classes were reconstructed from existing
+release implementation where sources were missing. These are replacement classes,
+not proof of an original-source lineage. Core and Link implementation source is
+absent from that source directory. Hub is overwhelmingly binary-only there.
+
+TESTED-NOW: 1.0.2 packaged HubPilot class counts (including nested classes):
+  Core 77; Hub 105; Interact 16; Link 3.
+Core also contains unrelocated org.yaml.snakeyaml classes. Its embedded Maven
+metadata identifies org.yaml:snakeyaml:2.1, with license and NOTICE files.
+Core and Hub contain mixed class-file majors 61 and 65 (Java 17 and Java 21).
+Interact and Link have major 65. Use Java 21 or newer for the suite; Java 17 alone
+cannot load all of it. This inspection session used Java 17 only to run CFR, not
+to execute the Java 21 plugin classes.
+
+Documented compilation inputs for the surviving overlays:
+  JDK 21; javac with annotation processing disabled (-proc:none).
+  HubPilot-Hub-1.0.2.jar and HubPilot-Interact-1.0.2.jar as base classpath inputs.
+  io.papermc.paper:paper-api, Minecraft/API line 1.21.10.
+  net.kyori:adventure-api and net.kyori:adventure-key.
+  net.kyori:examination-api and net.kyori:examination-string.
+  org.slf4j:slf4j-api.
+  net.md-5:bungeecord-chat.
+  MockBukkit 4.95.0 for InteractValidation, with Paper API 1.21.10.
+
+UNCERTAIN: the exact resolved Paper snapshot, the ancillary dependency versions,
+MockBukkit artifact coordinates/resolved transitives, original JDK vendor/build,
+complete original Velocity API coordinate/version, compiler flags and annotation
+processor/resource-generation steps are not locked in the surviving BUILD.md.
+Names above identify API families, not a tested dependency lock. Do not silently
+substitute current releases and call the original build reproduced.
+
+Known packaging procedure, from BUILD.md:
+  Compile src and hub-src together against the base JARs and dependencies.
+  Overlay only dev/hubpilot/interact classes into the Interact base.
+  Overlay SetupItemManager*.class, AdminItemManager.class and
+  HubPilotGuiCommand.class at their exact package paths into the Hub base.
+  Include Interact's two resource files. Preserve all other required base entries.
+  Do not package Paper, MockBukkit, test fixtures or unrelated generated classes.
+  Preserve both original authors' notices and dependency notices.
+Core is already the September 3 protected base and is not rebuilt by that recipe.
+
+UNCERTAIN: the precise pre-overlay Hub/Interact base bytes for every intermediate
+repair, their hashes, all original resource generators, ASM/overlay scripts and
+archive ordering/timestamps were not recovered. The current final JARs are usable
+inspection/classpath bases. Using a final JAR as its own overlay base does not
+establish independent source reproducibility. There is no verified one-command
+full suite build supplied here.
+
+Recovered original tools: a historical scripts/check-release.sh exists in reachable
+Git history and was removed by efa34e3f13dae050db027005ab0e806ffcb7be04. Its introduction
+commit is e8fe8203927b86ea750fe702fa5feaf596592025. It is not in current main. This
+handoff does not restore that early material, execute it, or claim it is the missing
+later Core harness. No queue/protection harness path was found in the current tree
+or the reachable historical filename list. The two current Java fixtures are the
+only surviving test source files found by that audit.
+
+New files supplied with this handoff:
+  public-artifacts.json: exact public 1.0.1/1.0.2 assets, URLs, hashes and API dates.
+  recover_public_release.py: downloads pinned public assets; validates archives,
+    notices, entrypoints, class majors, bundle equality and checksums; optionally
+    runs pinned CFR and creates an inspection-only Java/resources ZIP locally.
+  BYTECODE-EVIDENCE.txt: selected directly disassembled methods from current Core.
+  AUDIT-RESULTS.txt: checks actually performed now, with clear limits.
+These are newly written maintenance aids, not recovered original build scripts.
+No pre-public archive is included or restored to GitHub.
+
+3. IMPLEMENTATION MAP AND LIFECYCLE DETAILS
+
+Core entrypoint:
+  dev.hubpilot.core.HubPilotCorePlugin
+  onInitialize: PublicDefaults + PublicDefaultsRepair; config initialize;
+    PublicBootstrap.prepare; statistics load; provider/status/lifecycle creation;
+    TelemetryBootstrap and PublicBootstrap attach; channel/command registration.
+  onPreConnect (FIRST): lifecycle interception when enabled.
+  onPostConnect, onDisconnect: lifecycle queue/activity cleanup.
+  onPluginMessage: control/auth dispatch then trusted request/control handling.
+  onShutdown: cancel registered periodic tasks, save statistics, clear maps.
+
+Other Core landmarks:
+  HubPilotCommands, PublicCommandLayer, UnifiedCommandFacade: command gates/routes.
+  PublicBootstrap, PublicGuiRouter, DirectOpenTransport: public integration hooks.
+  AccessManager, DirectAuthHandler, PublicControlGate: roles/auth/setup actions.
+  HubPilotConfig, ManagedServer, OperatingModeRules, HubProtection: effective rules.
+  LifecycleManager: requests, shared starts, countdown, retry, automatic shutdown.
+  StatusStore, StatsStore, TelemetryStore/Bridge: status, counters, rich metrics.
+  CraftyProvider: historical name retained for a generic ProviderRegistry adapter.
+  ProviderRegistry, ProviderHttpSupport: actual provider definitions and HTTP calls.
+  DiscoveryCommand, CraftyDiscoverySupport, DynamicServerRegistry,
+    DiscoveryNavigatorBridge, DiscoveryAliases: discovery, persistence and repair.
+  SettingsSyncHook, StatusSyncHook: transport synchronization.
+  ServerAdminBridge: permission-checked manual stop action.
+Reflective helper classes are runtime dependencies. Do not omit them because they
+look like old patch scaffolding; exact method names/descriptors matter.
+
+Hub entrypoint:
+  dev.hubpilot.hub.HubPilotHubPlugin (Bukkit plugin name HubPilot).
+  RequestSender.requestJoin sends player destinations to Core.
+  DestinationMenuListener and Navigator components handle player menus.
+  bridge.HubPilotRequestSender polls status/telemetry and sends settings snapshots.
+  bridge.HubPilotFeedbackListener applies status/countdown messages.
+  gui.NavigatorLiveRefresh.refreshOpen updates open DestinationMenuHolder windows.
+  publicapi.PublicHubBootstrap sends AUTH/COMPONENT/ACTION and receives STATE.
+  publicapi.PublicHubBootstrap.canAdmin/allowInteractCommand gate local UI features.
+  HubPilotStore/SettingKey and adminui stores persist settings and presentation.
+  publicapi.SetupItemManager/AdminItemManager and protected-item listeners manage
+    protected setup/admin items; they are separate from Interact's editing brush.
+
+Link entrypoint:
+  dev.hubpilot.link.bukkit.HubPilotLinkBukkit.
+  heartbeatSafe/encode: metrics over a connected player's plugin-message carrier.
+  PublicLinkBootstrap records component presence; PublicLinkCommand supplies /hpl.
+
+Interact entrypoint:
+  dev.hubpilot.interact.HubPilotInteractPlugin.
+  InteractionStore persists bindings and editing preferences.
+  InteractionListener resolves triggers into Hub destinations/requests.
+  InteractionEditor and UnifiedInteractCommand provide management.
+  DestinationLabels manages display labels and cleanup.
+  Hub is a hard dependency in plugin.yml. There is no separate lifecycle here.
+
+LifecycleManager storage and identity:
+  sessions: ConcurrentHashMap<String,StartSession>, keyed by managed server ID.
+  transferPermits: ConcurrentHashMap<UUID,TransferPermit>.
+  lastActivity: ConcurrentHashMap<String,Long>.
+  pendingTransfers: ConcurrentHashMap<String,Set<UUID>>.
+  StartSession captures one ManagedServer object and startedAt. It has a synchronized
+    LinkedHashSet<UUID> queue and position map; phase/timing flags are volatile.
+  Session phases are STARTING and COUNTDOWN; separately, StatusStore states are
+    UNKNOWN, OFFLINE, STARTING, ONLINE, STOPPING and MAINTENANCE.
+  There is no durable queue or
+    persisted request/session ledger, request nonce or distributed lock.
+  Session identity uses object identity/conditional map removal, not a generation
+    carried through all asynchronous callbacks.
+
+Normal request algorithm (IMPLEMENTED):
+  1. Reject null/inactive player, unknown ID/Velocity name, maintenance, missing
+     configured server permission or strict protocol mismatch; report already there.
+  2. Increment request counter. If cached online, connect immediately.
+  3. Require Velocity registration. Ping with the server's ping timeout.
+  4. On successful ping set online and connect. On failed ping, queueAndStart.
+     Callback checks player active, but not a cancellation generation/current target.
+  5. Require autostart and a managed enabled provider. putIfAbsent shares a server
+     session. First requester sets STARTING, queues, records messages/counters and
+     submits provider start. Later requesters join the same session.
+  6. tick runs each second. It ignores a session replaced/removed from sessions.
+     An empty queue with stopWhenQueueEmpty removes/stops it. STARTING timeout is
+     elapsed wall time since session creation, not since provider acknowledgement.
+  7. Once status.online is true, record startup success and enter COUNTDOWN.
+     Zero seconds finishes immediately. Otherwise calculate remaining seconds from
+     the deadline, send feedback and eventually finishCountdown.
+  8. finishCountdown conditionally removes the session, clears queue count, and
+     starts connections for active queued players. No per-player capacity pacing.
+  9. connect records pending demand and a 10-second UUID/Velocity-target permit.
+     The permit permits the matching internal preconnect once, preventing recursion.
+     It is not a durable authorization token or a cryptographic network credential.
+  10. Successful transfer records counters/activity and removes pending demand.
+      Failure schedules retry while active until the configured retry count is
+      exhausted, then optionally requests failed-connection cleanup.
+
+Admission convergence and exceptions:
+  Navigator/Interact use Hub's normal destination request sender, which ends at
+    Core LifecycleManager.request after transport trust validation.
+  /hp request uses LifecycleManager.request after the command layer's gates.
+  intercepted direct Velocity requests validate admission and queue an offline
+    managed target through request; online/always-online cases can pass directly.
+  testStart is a separate administrative power test; it does not implement the
+    complete player admission/countdown lifecycle.
+  manual server stop is also a separate administrative provider path.
+  lifecycle interception can be disabled. The inspected request method itself
+    does not contain the command layer's complete setup/role gating.
+Do not claim that every entrypoint already executes one identical authorization
+function. Tests must compare command, plugin-message, direct-connect and admin paths.
+
+Cancellation, retries and concurrency limits:
+  cancel removes queue membership across sessions and reports whether it found any.
+  disconnect removes queues with empty-queue cleanup enabled.
+  postconnect updates current backend activity and removes queues with that immediate
+    cleanup flag disabled; a later tick may still clean an empty startup session.
+  There are no retained retry ScheduledTask handles to cancel here. The retry lambda
+    checks isActive(), then reconnects to its captured target/definition.
+  pendingTransfers is a UUID set, not a count of all simultaneous attempts; overlapping
+    attempts for the same player/target can collapse into one set membership.
+  shutdown clears maps but does not visibly cancel every already-issued HTTP/ping/
+    connect future. Verify late callbacks during proxy shutdown in a runtime harness.
+  Reload replaces config snapshots; existing sessions/retries retain captured rules.
+  A configured hub is rechecked at the final automatic stop boundary using current
+    config. Ordinary maintenance/permissions/Always-On are not uniformly refreshed
+    immediately before each connection/stop.
+
+Safe automatic stopping, current scope:
+  tickIdleShutdown skips configured hub, unmanaged provider, disabled idle timeout,
+    offline/unregistered targets; queue, pending demand or proxy players refresh
+    lastActivity. Crossing idle threshold calls stopServer.
+  failStart conditionally removes its session and may call stopServer.
+  stopAndRemove conditionally removes an empty session and calls stopServer.
+  exhausted connect attempts may call stopServer after pending/player checks.
+  stopServer rejects configured hub, then connected Velocity players, then unmanaged
+    providers. It sets STOPPING and submits provider stop. Success sets OFFLINE and
+    increments stops; failed HTTP logs an error. Polling is needed to observe reality.
+
+Important limitations, IMPLEMENTED observations / UNCERTAIN operational impact:
+  The final guard does not prove the server was started by this particular request.
+  An already-running backend's failed join can reach failed-request cleanup.
+  It does not check players arriving directly or via another proxy; the proxy's
+    connected-player collection is not a network-wide population oracle.
+  Queue-empty stop can race an outstanding provider start acknowledgement.
+  Removing a session can race a fresh request that starts a replacement session.
+  Countdown removal occurs before all pending transfer entries are inserted.
+  Current player demand is not atomically locked with the external stop action.
+  The final guard has no universal current-session/pending-demand check and no
+    universal fresh Always-On check for stale non-hub definitions.
+These are concrete test targets found by inspection, not newly reproduced player
+incidents. Preserve hub protection while addressing them.
+
+4. PROTOCOL, TRUST, AUTHORIZATION AND DATA OWNERSHIP
+
+Wire convention (IMPLEMENTED): Java DataInputStream/DataOutputStream framing.
+U below means Java modified UTF-8 writeUTF/readUTF, with an unsigned 16-bit encoded
+byte length; I=int32, L=int64, D=double64, F=float32, B=boolean. These are ordered
+binary fields, not JSON, newline text, standard UTF-8 strings or VarInts. Character
+count limits do not guarantee modified-UTF byte limits for non-ASCII text.
+
+hubpilot:request, Hub -> Core:
+  U type, U target, optional U statusTarget.
+  accepted type values case-insensitively: SERVER, WORLD, REQUEST, JOIN.
+  target regex [A-Za-z0-9_-]{1,64}.
+  Core reads/discards the optional third field for this path; it does not accept an
+    arbitrary caller-supplied player UUID. Player identity is the carrier connection.
+  REQUEST_CHANNEL and LEGACY_REQUEST_CHANNEL resolve to the same channel in 1.0.2.
+
+hubpilot:control, bidirectional multiplexed messages:
+  AUTH: U opcode, U carrierUUID, U username, B op, B admin, B moderator,
+    B helper, B claimPermission. Hub sends it; Core binds UUID to the carrier.
+  COMPONENT: U opcode, U carrierUUID, U componentName, U componentVersion.
+    Name/version have 32-character checks; component presence is not authorization.
+  ACTION: U opcode, U carrierUUID, U action, action-specific U fields.
+    CLAIM_OWNER: username, op-as-text, claimPermission-as-text.
+    STAFF_SET: targetUUID, username, role.
+    OWNER_ADD: targetUUID, username. OWNER_REMOVE: targetUUID.
+    PROVIDER_TYPE / PROVIDER_URL / PROVIDER_SECRET: one value.
+    PROVIDER_TEST / PROVIDER_SKIP / SETUP_COMPLETE: no extra argument.
+    SERVER_STOP: managed/recognized target identifier.
+  STATE: U opcode, U carrierUUID, U setupState, U role, U providerType,
+    U configuredBoolean, U lastTestSummary. This is state feedback, not a durable ACK.
+  FEEDBACK: U opcode, U carrierUUID, U message.
+  OPEN: U opcode, U page/action (e.g. SETUP, STAFF, CLAIM_OWNER).
+  TEST_START: U opcode, U destinationID, U statusTarget; Core's legacy handler uses
+    the third field as its target after administrative authorization.
+  COUNTDOWN_FEEDBACK: U opcode, U message, B playSound, U sound, F volume, F pitch.
+  DISCOVERY_ADD: U opcode, I count, repeated U Velocity target, U destination ID,
+    U status target. Hub accepts count 0..500 and adds missing destination IDs.
+  GUI command routing uses OPEN with U "GUI:" + command arguments joined by U+001F.
+    UnifiedGuiBridge splits that field and calls HubPilotGuiCommand.onCommandLegacy;
+    PublicGuiRouter/DirectOpenTransport supply the matching send path.
+
+hubpilot:status:
+  Hub -> Core: U STATUS_SYNC_REQUEST.
+  Core -> Hub: U STATUS_ROW, U managedID, U state, L onlineSince, L lastStarted,
+    L lastChecked, I playersOnline, I playersMax, L backendPingMs, I queueSize,
+    L startRequestedAt, I expectedStartupSeconds, U lastError (truncated to 512).
+  Core -> Hub: U STATUS_SYNC_END.
+  Hub's END handler refreshes an open Navigator. Rows have no transaction ID,
+    generation or negotiated schema version. An END is not proof of an atomic
+    cross-store snapshot or an acknowledged committed settings change.
+
+hubpilot:settings:
+  Hub -> Core: U SETTINGS_SNAPSHOT, U Java-properties text.
+  Core rejects empty payloads / payloads >65535 bytes, text >50000 characters;
+    accepts only known keys and values <=1024 characters; writes format-version=2.
+  Key families are global.<allowed-setting>, server.<normalized-id>.<allowed-setting>
+    and permitted message keys. See SettingsSyncHook.validKey / ALLOWED and
+    OperatingModeRules.addAllowed for the exact allowlist; do not replace it with
+    an unrestricted file/config write endpoint.
+  The accepted set REPLACES the synchronized properties snapshot, not an optimistic
+    per-key merge. Equal snapshots avoid a write. Temp-file/atomic-move fallback is
+    used. Core reload applies the effective result.
+  There is no explicit per-update acknowledgement, revision conflict protocol or
+    replay nonce. Server trust is checked; this hook is not a per-user owner check.
+    Hub sends settings when requesting status, using any connected player's carrier.
+    Therefore carrier identity alone is not the authority for settings editing.
+    Local Hub editing/file access is part of this trust boundary.
+
+hubpilot:telemetry, protocol 1:
+  Link -> Core LINK_HEARTBEAT: U opcode, I protocol=1, U platform, U minecraftVersion,
+    U linkVersion, D tps, D mspt, L memoryUsedMb, L memoryMaxMb, D cpuPercent,
+    I loadedChunks, I entities, I players, B ready.
+  Hub -> Core: U TELEMETRY_SYNC_REQUEST.
+  Core -> Hub TELEMETRY_ROW: U opcode, I protocol=1, U managedID, L backendPingMs,
+    I queueSize, I startupProgress, L averageStartupSeconds, L requests,
+    L successfulJoins, L failedJoins, U lastError, L carrierPlayerPingMs,
+    B linkPresent, L heartbeatReceivedAt, U platform, U minecraftVersion,
+    U linkVersion, D tps, D mspt, L memoryUsedMb, L memoryMaxMb, D cpuPercent,
+    I loadedChunks, I entities, I players, B ready.
+  Core -> Hub: U TELEMETRY_SYNC_END, I protocol=1.
+  Core bounds telemetry strings/numbers and identifies the reporting backend from
+    ServerConnection. Snapshot requests require trusted hub/request-server status;
+    heartbeats are not treated as owner privileges.
+
+hubpilot:auth is registered by Core; active AUTH/COMPONENT/ACTION handling inspected
+here is on hubpilot:control. Do not invent a second authenticated wire protocol just
+because the registered channel name exists.
+
+Trust and replay scope:
+  Core handles relevant messages instead of forwarding them to clients, requires
+    a server-side connection for normal requests/auth, and rejects client-origin
+    traffic on these paths. Request sources must be trusted-request-servers.
+  AUTH/ACTION require the configured hub and a payload UUID matching the carrier.
+  Hub checks UUID equality on STATE/FEEDBACK before applying them to a player.
+  Settings/status hooks trust configured backend identities, not a message signature.
+  AUTH freshness is 15 seconds in AccessManager; this is not replay protection for
+    arbitrary actions. No general nonce, sequence, HMAC or idempotency ledger was
+    found for request/settings/action traffic.
+  A compromised trusted hub remains a powerful trust boundary. Correct forwarding,
+    proxy-only backend access and control over installed plugins are prerequisites.
+  No full malicious-payload or replay campaign was run during this audit. Do not
+    label this protocol security-audited based only on the checks above.
+
+Roles on both sides:
+  Core stores owners and staff by UUID in staff.yml. Owners are explicit; OP or a
+    LuckPerms group does not silently become owner. First claim requires an unowned
+    install plus recent configured-hub auth with OP or hubpilot.claimowner.
+  AccessManager.role prefers owner, then stored staff role, then fresh Hub direct
+    admin/moderator/helper report, then configured OP fallback, else player.
+    op-default-role supports none/helper/moderator/admin. Default admin is not owner.
+  Core role permissions/inheritance live in permissions.yml. Owner-only provider
+    credential/setup/owner operations explicitly check owner; SERVER_STOP checks
+    hubpilot.servers.stop; command gates use role checks and some platform nodes.
+  Hub reads Bukkit/LuckPerms nodes and OP, reports them in AUTH and gates local UI
+    actions. Built-in roles returned in STATE also drive local access.
+  Interact edit permission is separate from general Core ownership. Its editor
+    recognizes its nodes and Hub role support; validate every edit/command path.
+  A configured destination's join permission is checked with Velocity
+    player.hasPermission, not automatically with Hub's role permission list.
+    Do not assume every arbitrary Bukkit-only permission is propagated to Velocity.
+  Built-in roles and native platform permissions overlap but are not one universal
+    permission service. Do not replace Core checks with trusting a visible GUI item.
+
+Refresh timing (defaults / inspected scheduling):
+  Core lifecycle tick 1 second; status polling default 5 seconds; config reload
+    default 3 seconds; statistics save every 60 seconds plus shutdown.
+  Core status-file write is scheduled roughly 1 second after refresh dispatch; it
+    does not await a single aggregate future for all pings.
+  Hub status/telemetry request every 20 ticks with a carrier; AUTH heartbeat every
+    20 ticks; local store reload timer 40 ticks; Navigator item repair 100 ticks.
+  Link heartbeat every 20 ticks, only while at least one player is connected.
+  These Bukkit tick intervals stretch under server lag. No carrier means no plugin
+    message delivery; absence of Link data is not proof of a stopped server.
+    TelemetryStore marks linkPresent=false after 10 seconds but retains prior values;
+    consumers must consider age/presence rather than displaying stale metrics as live.
+  The Core polling schedules are created during startup; changing interval values
+    in a hot-reloaded config does not visibly recreate those tasks.
+
+Authoritative files and derived data:
+  Core data dir (Velocity @DataDirectory, resolve actual runtime path):
+    config.yml: global hub/trusted-source/module/path/timing settings.
+    defaults.yml: per-server YAML fallbacks.
+    servers/*.yml: managed identities, provider mappings and server overrides.
+    providers.yml: provider definitions/primary choice; secrets.yml: secret references
+      and values (PRIVATE; never put actual values in this handoff or repository).
+    permissions.yml: roles/nodes; staff.yml: owners/staff; setup.yml: setup state.
+    messages/en_US.yml or messages-file target: queue/join wording.
+    dynamic-servers.properties: persisted discovered Velocity endpoints.
+    navigator-sync.properties: discovery-to-Hub synchronization cache.
+    data/statistics.properties: persisted counters, not a durable request queue.
+    backups/: generated backups; retain separately for recovery.
+    providers/crafty.yml and MIGRATED_FROM_LEGACY.txt: legacy compatibility/migration
+      inputs/marker where present; do not assume all installations still use them.
+  Configured shared directory:
+    hubpilot.properties: GUI/global/per-server settings synchronized from Hub.
+    destinations.properties: Hub destination definitions.
+    status.properties / telemetry.properties: generated status/counter views.
+  Hub plugin data dir:
+    config.yml: local Hub/menu/path defaults.
+    navigator-layout.properties: shared Admin/player Navigator layout choices.
+    admin-ui.properties: admin presentation settings.
+    shared/: fallback storage when configured shared directory is unavailable.
+  Interact plugin data dir:
+    config.yml and interactions.properties: settings and persistent bindings/editing
+      state. Labels/entities themselves also involve world/entity persistence.
+  Link has no comparable authoritative lifecycle database in the inspected code.
+  Runtime Velocity config/forwarding secret, Paper forwarding config, Fabric forwarding
+    config, panel database and worlds are external authoritative inputs, not shipped
+    public example files. Inventory and back them up privately.
+
+File precedence and synchronization:
+  PublicDefaults seeds shared-directory: shared. Older fallback literals still name
+    /shared/hubpilot; inspect the actual generated config and resolved process working
+    directory. A relative path is not automatically the same mount in both processes.
+  Defaults documented for lifecycle are expected startup 60s, startup timeout 120s,
+    ping timeout 3s, three retries delayed 15s, idle timeout 30min, countdown 5s,
+    strict-version=false, stop-after-failure=true, stop-when-queue-empty=true.
+    Server/YAML/property overrides and hub/Always-On protection can change them.
+  Core constructs YAML server values from defaults.yml plus servers/<id>.yml, then
+    applies global/per-server hubpilot.properties overrides for supported fields.
+    Per-server property beats global property; absent property falls back to YAML.
+    Always-On then forces effective automatic-stop flags off (and autostart on).
+    Configured-hub repair runs after those settings and preserves startup preference.
+  Message file defaults/legacy strings and permitted GUI message overrides feed
+    QueueMessages. Invalid/unknown synchronized keys must remain filtered.
+  Effective configured-hub repair occurs in memory; it does not require destructive
+    rewriting of saved YAML preferences. A GUI may show a stored value that differs
+    from the enforced hub rule. Changing hub identity lets the old hub use its saved
+    ordinary rules on the next effective reload.
+  Successful config reload publishes a replacement snapshot; failed Core config
+    reload logs rejection and retains the previous snapshot. Duplicate managed IDs
+    reject reload. Provider/access managers also reload their own files by mtime.
+    This is not one atomic transaction across all stores/managers.
+  Identical absolute paths in two containers/machines do not by themselves share
+    files. A real common mount can share the directory; otherwise plugin-message
+    settings/status/discovery paths supply selected synchronization, not a full
+    distributed filesystem. Hub also has a writable local fallback.
+  Do not promise shared storage is mandatory for every transport feature, or that
+    every file is mirrored without it. Keep one authoritative Hub settings writer;
+    multiple writers or stale snapshots can overwrite each other with no revision
+    arbitration. Multi-hub editing is not a solved current feature.
+
+5. PROVIDERS AND DISCOVERY
+
+IMPLEMENTED: CraftyProvider.start/stop adapts ProviderRegistry.action to ActionResult.
+Despite the class name/log wording, provider definitions can select Crafty,
+Pterodactyl, Generic HTTP or Always-On. ProviderRegistry.Definition contains id,
+type, enabled, baseUrl, secretKey, insecure, timeout and values. Result contains
+success, statusCode and error. action uses CompletableFuture.supplyAsync and the
+implementation performs blocking HTTP within that asynchronous task.
+
+Crafty:
+  GET <base>/api/v2/servers for inventory/test.
+  POST <base>/api/v2/servers/<url-encoded-panel-UUID>/action/start_server
+  POST <base>/api/v2/servers/<url-encoded-panel-UUID>/action/stop_server
+  Bearer token; base URL should be panel root, not already suffixed /api/v2.
+  Panel server UUID is not its friendly name or Velocity ID. Account visibility and
+    server permissions determine inventory/control. docs/PROVIDERS.md records a
+    permissions problem with a COMMANDS-only test and successful fuller access;
+    reproduce needed scope on the installed Crafty version, not a universal owner-
+    credential requirement. Never put real credentials into tests or GitHub.
+
+Pterodactyl:
+  Client API credential, not Application API credential.
+  POST <base>/api/client/servers/<encoded-identifier>/power
+  JSON body {"signal":"start"} or {"signal":"stop"}; Bearer authentication.
+  Provider test uses /api/client. An HTTP test PASS does not prove a specific server's
+    power permission or successful player connectivity.
+
+Generic HTTP:
+  Configurable start-url/stop-url, methods (default POST) and bodies.
+  {server} in URLs is encoded; substitution in bodies is raw providerServerId.
+    It is not an automatic JSON-escaping/template validation layer.
+  status-url is optional and used by provider test; it is not a full normalized
+    backend readiness implementation replacing Velocity ping.
+  Auth types: none, bearer, x-api-key, basic; custom header.* values supported.
+  Without status-url, test() returns a synthetic successful 204 without an HTTP
+    request. The same shortcut exists for Always-On. A displayed Connected/204 is
+    therefore not necessarily an observed response from a remote server.
+
+Always-On provider:
+  No controllable process; power requests fail rather than starting offline servers.
+  Keep this separate from Always-On server flag on a controllable provider.
+
+Credential/TLS behavior:
+  Provider definitions resolve secret-key through secrets.yml; whole-value ${ENV}
+    substitution is supported. Do not assume arbitrary embedded interpolation.
+  Legacy migration can resolve older Crafty token-file configuration. Describe that
+    reference only; do not publish token file contents.
+  Writing secrets attempts owner-read/write POSIX permissions where supported.
+  ProviderHttpSupport is the active send path. Normal HTTPS uses certificate and
+    hostname validation. Explicit allow-insecure-tls uses a per-connection
+    HttpsURLConnection trust-all certificate manager and hostname verifier.
+    Redirect following is disabled there; normal HttpClient also does not opt into
+    redirect following. Do not make insecure TLS a public default.
+  Request and connect timeout use provider timeout, default 10 seconds in docs;
+    insecure transport sets connect/read timeouts. Provider responses accept 2xx,
+    treat other HTTP statuses as failure and compact the returned body for errors.
+  No application-level exponential backoff, Retry-After policy, idempotency key or
+    durable command ledger is implemented in this action transport. A timeout can
+    be an unknown outcome after the panel accepted an action; blindly retrying may
+    issue it twice. Lifecycle connection retries are a different mechanism.
+  Success means HTTP acceptance, not process readiness or completed shutdown.
+  HTTP response bodies are collected before compaction, not bounded by a small
+    streaming response cap in the inspected transport. Error-body redaction is not
+    proven comprehensive; do not paste unreviewed panel errors into public reports.
+
+Discovery identity/persistence:
+  CraftyDiscoverySupport reads aliases for ID/name/host/port in returned inventory.
+  Name canonicalization lowercases and removes non-alphanumerics for matching;
+    Velocity names use a sanitized hyphen form. Existing managed IDs, Velocity names,
+    labels and panel IDs are considered in matching/repair paths. Colliding friendly
+    names must be tested; a display label is not a unique identity.
+  Wildcard/loopback/missing panel-reported hosts can fall back to panel URL host.
+    That can be wrong across NAT, separate container networks or port mappings.
+    An API-visible port alone does not establish proxy reachability.
+  DynamicServerRegistry registers missing Velocity names and persists endpoints in
+    dynamic-servers.properties; restore runs during public bootstrap.
+  Existing registered Velocity names are not replaced by register(). A changed
+    address may be saved in discovery persistence while current registration remains
+    old. Do not assume rediscovery live-updates all endpoints or prunes deleted ones.
+  HubPilotConfig handles managed mapping/duplicate repair and backups;
+    DiscoveryNavigatorBridge/DiscoveryAliases coordinate Navigator cleanup/cache.
+    Preserve original managed identity and user customization when testing migration.
+  Configured-hub exclusion and protection use normalized ID/Velocity name, not
+    arbitrary substring matching on labels. HubProtection removes punctuation/case,
+    with optional 'the'/'main' prefixes and 'server' suffix equivalence. Test unusual
+    collisions; do not broaden the guard to every server containing 'hub'.
+
+Provider evidence:
+  TESTED-HISTORICAL: Crafty has real maintainer-network beta coverage and documented
+    controlled HTTP/discovery tests. See release/1.0.1/VALIDATION.txt and 1.0.2 record.
+  TESTED-HISTORICAL: Pterodactyl and Generic HTTP have controlled implementation
+    validation, not equivalent real-network certification in these records.
+  UNCERTAIN: exact panel versions, every response/error case and current production
+    credentials/scopes are not recorded sufficiently for a full compatibility matrix.
+  TESTED-NOW: no provider endpoint or production server was contacted by this audit.
+
+6. RELEASE PROVENANCE AND REUSED FILENAMES
+
+TESTED-NOW: downloaded four current 1.0.2 JARs and matched SHA-256 to current public
+release records. The full URLs/dates/sizes and 1.0.1 rollback hashes are in
+public-artifacts.json. Current 1.0.2 artifact identities:
+
+Core     503deebfd9f925017a0fcf675cc9a839f5346480d359e6a9941e79e50411cb9f
+Hub      856bd4b99ab65f8c9ef84a5f547d55b1cc926e88901e0488544d6ed12801e3b1
+Interact a4f8b269b3da6b1d0ac2241206eab2ce4951ebaf3dbf9a7233e5131fb9e28f47
+Link     516c56a6edffc3fe5aa2e9bdf9b8bbb2f03e3114737332ca870e75c1cc7cdf50
+ZIP      d95b7192aa7ec78cdf1dc263d15cf55f030ab21f0791e787ea8db84512313b8b
+
+The GitHub API reports:
+  v1.0.2 published 2026-09-01T22:14:13Z, prerelease=true.
+  Current Core asset updated 2026-09-03T23:39:01Z.
+  Current Hub, Interact, bundle and checksum assets updated 2026-09-04T01:08:32Z.
+  Link asset updated 2026-09-01T22:14:12Z.
+The September 4 UTC timestamps overlap September 3 evening in US Central time;
+that is not necessarily a conflicting release chronology. Asset updated_at is
+metadata evidence, not proof of a compiler invocation timestamp.
+
+HISTORICAL mappings recorded in Git/public validation:
+  a0bda484...: source tag/discovery exclusion, before existing-hub repair.
+  6749852: documentation/provenance of configured-hub automatic-stop repair.
+  bb669f3: Interact editing/portal/label expansion and replacement source.
+  fe2a00d: separate Hub admin-item visibility from Interact brush controls.
+  Original September 1 Core hash, from release/1.0.2/VALIDATION.txt:
+    c46c406e6bc2794f5b64c1692e8062bd1042d848f2b49a0551876e79dc1327b2
+  Current September 3 Core hash: 503deeb... above.
+  Record mentions an intermediate local idle-only repair that was NOT published.
+    Do not reconstruct a full unknown hash from an abbreviated identifier or deploy it.
+  September 3 record says changed Core scope was HubPilotConfig,
+    LifecycleManager/nested classes and new HubProtection; discovery unchanged.
+  Later Hub/Interact update retained the repaired Core unchanged; Link is unchanged
+    by that repair. Reused plugin version/filename does not identify its bytes.
+
+UNCERTAIN: no complete source/base-JAR/patch-command chain was found for all final
+artifacts. Current Git commits document/source selected changes but do not contain
+all binary inputs. Exact overwritten older Hub/Interact assets and the original
+September 1 Core are not separate current release assets. Retaining a hash is not
+recovering the old file. No claim is made that an uncommitted workspace was clean,
+that all patch steps were committed, or that a source tag generated these bytes.
+
+HISTORICAL: 1.0.1 also had replacements, including corrected Navigator refresh and
+Paper API linkage. Its validation hashes identify the final combined build;
+public API asset timestamps show later replacement on August 26. Do not identify
+an installed artifact from only its '1.0.1' version string.
+
+Resource/license obligations:
+  Keep ohHeyItsCon's HubPilot MIT notice and Artificial-720's AutoServer MIT notice.
+  Preserve the repository THIRD_PARTY_NOTICES.md and packaged notices.
+  Core bundles SnakeYAML 2.1; preserve its license and NOTICE and audit any update.
+  Do not remove upstream credit, claim decompiled work is original source, or
+    describe this new recovery tool as the original author's historical build system.
+  No dependency relocation map or original shading plugin configuration was found.
+
+7. ACTUAL COMMANDS, TEST GATES AND RECOVERY WORKFLOW
+
+Run from a fresh clone of this repository. The following are actual commands for
+NEW recovery/inspection tooling, not historical full-source build commands:
+
+  python3 development/handoff-2026-09-13/recover_public_release.py \
+    --release v1.0.2 --output /tmp/hubpilot-public-1.0.2 --decompile
+
+  python3 development/handoff-2026-09-13/recover_public_release.py \
+    --release v1.0.1 --output /tmp/hubpilot-public-1.0.1
+
+Requirements: Python 3.10+ standard library; HTTPS access to GitHub release assets
+and Maven Central; Java to run CFR if --decompile is requested. CFR version/hash is
+pinned in the manifest. The first command creates verified JARs/resources,
+verification.json and reconstructed-inspection-only.zip locally. Existing mismatched
+files cause failure rather than silent overwrite. It does not start Minecraft,
+install plugins, change production settings or upload reconstructed Java.
+
+For authoritative disassembly, use JDK 21+ javap (not just a Java runtime):
+
+  javap -classpath /tmp/hubpilot-public-1.0.2/HubPilot-Core-1.0.2.jar \
+    -p -c -s dev.hubpilot.core.LifecycleManager
+  javap -classpath /tmp/hubpilot-public-1.0.2/HubPilot-Core-1.0.2.jar \
+    -p -c -s dev.hubpilot.core.PublicControlGate
+
+Known decompiler trap, TESTED-NOW:
+  CFR 0.152 prints a finally-return-false construction for PublicControlGate.dispatch.
+  Direct class-file disassembly shows successful dispatch followed by iconst_1 at
+    offset 249 and ireturn at 250, with exception paths returning false separately.
+  Do NOT report duplicate dispatch or 'always false' as a verified runtime defect
+    from that decompiled method. Similar invalid variables/casts and exception
+    reconstruction appear elsewhere. Read bytecode for material conclusions.
+
+Documented overlay compilation shape, NOT YET REPRODUCED:
+  javac --release 21 -proc:none -cp "$OVERLAY_CP" -d "$OVERLAY_CLASSES" @sources.txt
+Here sources.txt must list the nine tracked implementation files; OVERLAY_CP must
+contain the exact base JARs and resolved dependencies described in section 2.
+These are placeholders for missing verified inputs, not a runnable complete build.
+Only after compiling should an audited archive tool replace the allowlisted class
+entries/resources. Compare every ZIP entry against the pinned base and explain
+any unexpected difference. Keep untouched entries and notices, avoid duplicate
+class entries, inspect main classes/descriptors, then hash the actual final JARs.
+
+The surviving fixtures contain main methods; their historical Java 21 -Xverify:all
+runs require the recorded MockBukkit/Paper environment and packaged JARs. This audit
+did not guess a dependency classpath and mark them PASS. Recover/lock that environment
+or create a new one with explicit differences before relying on those fixtures.
+
+There is no surviving full source-build/release command to provide truthfully.
+Before a future release: produce an isolated candidate directory; run archive/hash/
+entrypoint checks, actual JVM linkage tests, provider and lifecycle regressions,
+and a real Velocity/Paper/player acceptance test. Record exact JDK, dependencies,
+source commit, base hashes, changed-entry manifest, commands, logs and outputs.
+Publish a new uniquely identified build/release instead of overwriting another
+same-name artifact without a provenance record. Do not move historical tags to
+pretend they always represented the current repaired binaries.
+
+8. VALIDATION, REGRESSION TRAPS AND OPEN QUESTIONS
+
+TESTED-NOW during this audit:
+  Public Git clone/tree/history inventory; API release/tag metadata inspection.
+  Current public artifact hashes; JAR CRC/entrypoint/notices/class-major checks;
+    release-bundle byte equality; current checksum-file comparison.
+  Public JAR decompilation for inspection, with direct bytecode spot checks.
+  No Minecraft plugin execution, production writes, live login, provider power
+    operation, network stress test or penetration test was performed.
+See AUDIT-RESULTS.txt for exact current-run results.
+
+TESTED-HISTORICAL, 1.0.1 record (release/1.0.1/VALIDATION.txt):
+  Final artifact hashes in that record match the current public 1.0.1 downloads.
+  Real maintainer-network Always-On idle protection and manual stop were reported.
+  Final combined Velocity + Paper field test reports open-Navigator telemetry
+    refresh, startup/countdown/transfer, discovery duplicate repair, matching Admin/
+    player layouts and corrected Admin left-click editing.
+  Lab tests executed packaged status-END -> Navigator refresh and settings round trip.
+  Original refreshed-GUI claim failed live because the refresh class/hook was absent
+    from the packaged JAR. Only adding source is insufficient: verify the actual ZIP
+    entry and callsite. A Paper openInventory descriptor mismatch was also corrected.
+  Exact archived player logs, panel versions and complete harness source are not
+    included, so do not invent those details or claim this was rerun now.
+
+TESTED-HISTORICAL, 1.0.2 September 3 Core repair record:
+  Actual packaged config -> lifecycle -> provider code, loopback HTTP, simulated
+    Velocity environment. Existing imported hub; mismatched managed ID/Velocity hub
+    name; defaults/menu overrides; reload; missing shared properties; idempotence;
+    preservation; former-hub reassignment; false-positive labels; automatic stop
+    dispatch including stale session definitions; ordinary backend control tested.
+  Queue/message/inheritance/allowlist regressions are recorded.
+  This is not the same as real Velocity + Paper + Crafty + player acceptance of the
+    current Core. KNOWN_BUGS.md still says live testing is pending.
+  The later full automatic-stop repair superseded the narrower idle-only approach.
+    Do not regress to merely skipping idle checks or excluding future discoveries.
+
+TESTED-HISTORICAL, current Interact/Hub additions:
+  InteractValidation: Java 21 verification and MockBukkit 4.95.0/Paper 1.21.10 using
+    actual packaged classes; persistence, portal style handling, permissions, item
+    safety, inventory clicks, editing flow, labels and cleanup.
+  The fixture uses test-only display styling accommodations because MockBukkit does
+    not implement those methods, and avoids full plugin startup. It does not prove
+    live visual placement, real chunk unload/reload behavior or multiplayer behavior.
+  HubToggleValidation: Hub without Interact; existing Core GUI command route;
+    independent admin-item toggle and item safety. It does not certify all Core UI.
+  Public 1.0.2 records leave live field checks pending. A broad historical suite PASS
+    cannot be carried forward automatically to replaced current classes.
+
+Compatibility matrix, bounded by evidence:
+  Core: Velocity plugin only, all current classes require a Java 21-capable runtime.
+  Hub: Paper/Bukkit-side 1.21 API metadata; recorded patch tests target Paper 1.21.10.
+  Interact: depends on Hub; current native mannequin/API behavior is version-sensitive.
+  Link: Paper-side metrics via Bukkit/Paper/reflection, not a Fabric forwarding mod.
+  Core + Hub: match suite release, per documentation. For 1.0.1 specifically the
+    public record explicitly permits 1.0.0 Link/Interact (no functional changes then).
+    Do not generalize a numeric version-gap rule into guaranteed compatibility.
+  Crafty: live historical coverage; Pterodactyl/Generic HTTP: controlled only.
+  ViaVersion/ViaBackwards: Core can route where that proxy/backend/client combination
+    actually works; strict HubPilot rules may intentionally reject it. HubPilot
+    does not restore unavailable block types on older clients.
+  Fabric: requires compatible forwarding support/secret for modern Velocity use;
+    FabricProxy-Lite is server-side. Forge/NeoForge need their own supported route;
+    do not prescribe a Fabric mod for every modded server family.
+  Mod-specific client/server handshakes remain mod-specific. A successful status
+    ping does not certify mod compatibility. No exhaustive version matrix was run.
+
+Priority regressions to reproduce before lifecycle changes:
+  A cancel arriving before initial ping failure still permits that callback to queue.
+  A delayed retry can pull a still-active player away from a later chosen destination.
+  One UUID can queue different offline servers; repeated clicks can launch overlap
+    outside a single shared StartSession; pending demand is not attempt-counted.
+  An empty queue removes its session while start HTTP is in flight; a later accepted
+    start can outlive that demand. Cross-request stop/start races need generation tests.
+  Fresh demand can arrive after an old cleanup check and before provider stop.
+  Non-hub Always-On/maintenance/permission changes while sessions/retries are active
+    may not affect captured settings. Test current-config revalidation explicitly.
+  Failed joins to an already-running backend may trigger stopAfterFailure without
+    proof that this request owned its startup; stopping must not affect unrelated use.
+  Direct/other-proxy players are not included in the final proxy-player guard.
+  Settings snapshots have no revision arbitration; stale Hub edits may overwrite
+    Core-side changes or another writer's settings. Test carrier loss and reconnect.
+  Existing dynamic registration may retain a stale endpoint after rediscovery.
+  These are UNCERTAIN failure outcomes derived from concrete code paths, not a list
+    of confirmed production incidents. Keep failing tests separate from hypotheses.
+
+Performance/scale observations:
+  No measured supported player count, backend count, p95 latency or large-network
+    capacity result survives in public records. Do not invent a capacity claim.
+  Static scaling considerations: periodic ping per managed server; status/telemetry
+    rows per server; frequent whole settings snapshots; asynchronous blocking provider
+    calls on the common executor; Link visits loaded chunks/entities every heartbeat;
+    Interact labels/particles require live-world work. Measure on a representative
+    network before claiming medium/large deployment readiness.
+  The transport's 500-row discovery limit is not a certified 500-server capacity.
+  Startup progress based on expected seconds is an estimate, not percent of actual
+    Minecraft initialization steps; distinguish counters/timestamps from process truth.
+
+9. OPERATIONS, PRODUCTION STATE AND ROLLBACK
+
+UNCERTAIN: no authenticated production access was available for this audit. Installed
+Core/Hub/Link/Interact hashes, exact Velocity/Paper/Crafty versions, mount locations,
+network rules, active configs, backups and rollback readiness are not freshly known.
+Public release hashes are NOT production-installed hashes. Historical private chat
+hostnames, ports and container names are not published here or assumed current.
+
+Supported public topology:
+  Players enter Velocity with Core. The Paper hub has Hub and Link, optionally
+    Interact. Crafty/Pterodactyl/Generic HTTP runs eligible backends. Backends have
+    their own forwarding configuration. Config/storage paths are resolved inside
+    each process/container; panel access and routable game endpoints are separate.
+This explains the architecture, not a verified inventory of the owner's network.
+
+Before production maintenance, capture privately:
+  running process/container identities and image digests; java -version;
+  Velocity/Paper/panel versions; sha256sum of the INSTALLED four plugin JARs;
+  plugin/config/shared-directory mount mapping; owner/staff and provider mapping;
+  secret references only in reports; private secured config copies for rollback;
+  forwarding mode and credential reference; no forwarding-secret value in reports;
+  reachability from Velocity to each backend; panel account visibility and scopes;
+  active queues/players; known-good stopped backup and restore check.
+Do not request that the owner paste secrets into chat or a public issue.
+
+Suggested controlled restart/update procedure (OPERATIONAL PLAN, not completed):
+  1. Announce maintenance and stop accepting fresh requests; drain/cancel activity.
+     Do not trust cancellation alone to quiesce every async operation. Stop the
+     relevant processes for a consistent binary/config backup and planned change.
+  2. Back up current installed JARs with hashes, complete Core/Hub/Interact data,
+     shared files, Velocity forwarding config/reference, panel mapping and affected
+     world data where editing/labels require it. Protect secrets and player records.
+  3. Replace only intended plugins. Ensure one active JAR per component. Match
+     Core/Hub compatibility and keep the configured hub identity correct.
+  4. For a coordinated cold start, bring up required storage/provider services and
+     hub backend, then Velocity/Core; establish a player carrier and confirm
+     component/auth/status sync. A Core-only repair requires a Velocity restart;
+     a simultaneous full network restart is not always necessary.
+  5. Check startup errors/linkage, effective configuration, configured-hub exemption,
+     provider test, ping and one real queued join/countdown/transfer. Test an
+     ordinary backend automatic stop and continued hub availability separately.
+  6. Record exact installed hashes and results. Reopen admission after acceptance.
+Do not run Bukkit /reload or hot-swap arbitrary classes as a substitute for restart.
+
+Rollback:
+  Stop/quiesce the changed components, restore the matching backed-up JAR AND config/
+    shared-data generation, then restart and repeat acceptance. Do not restore only
+    a binary over unknown newer data and call rollback verified.
+  Restore dynamic-servers.properties and managed mappings consistently; preserve
+    staff/owner identity and custom Navigator/Interact state.
+  Falling back to stable 1.0.1 reintroduces the known configured-hub discovery/auto-
+    shutdown issue. Its documented mitigation is to avoid managing/importing the
+    hub as an ordinary backend and ensure Always-On/automatic-stop settings protect
+    an already imported hub. Verify effective behavior before routing players.
+  Do not run old and new controllers/proxies against the same writable state during
+    recovery. No tested production restore command or backup path can be supplied
+    without the private runtime inventory.
+
+Health and logs:
+  Core initialized/enabled log; config reload rejection; provider acceptance/errors;
+    lifecycle request/start/stop/retry logs; discovery registration/mapping warnings.
+  Hub shared-directory fallback warnings; message decode errors; plugin linkage;
+    open-Navigator refresh; Link heartbeat presence and age.
+  /hp status, /hp doctor and setup/provider commands in docs/COMMANDS.md help inspect
+    state. They do not replace real player login or make a panel 'Running' label a
+    readiness proof. Review provider error text for secrets before sharing it.
+
+10. PRODUCT DECISIONS AND FUTURE CONTROLLER BOUNDARY
+
+PLANNED / COMMITTED NEXT MAJOR: Prepare for Velocity, after current 1.0.2 prerelease;
+version number unassigned. docs/ROADMAP.md is authoritative for public scope.
+Crafty first, owner-triggered action in Hub; Core performs provider file/config work.
+Detect Minecraft/Fabric versions and uncertainty; choose compatible FabricProxy-Lite
+and dependencies; inspect existing pack contents; transfer the existing Velocity
+forwarding secret privately; check permissions; back up changes; preserve unrelated
+settings; apply while stopped; explain failures and validate the actual login path.
+Test missing permissions, existing mods, interrupted preparation and restoration.
+Do not treat a downloaded mod or copied secret alone as acceptance.
+
+This still installs the forwarding mod on the Fabric backend. It does not eliminate
+forwarding requirements, put the secret in client plugins, or make Fabric mods
+universal Forge support. Optional auto-preparation on discovery follows a verified
+owner-triggered path; other providers require separate file-management capability.
+The actual file-transfer implementation and end-to-end Crafty -> Fabric login tests
+are not shipped by virtue of that roadmap text.
+
+PLANNED startup-abuse controls:
+  One outstanding UUID request; reconnect-resistant cooldown/accounting; configurable
+    per-player offline-start limits (two/ten minutes is a proposal, not shipped).
+  Network-wide simultaneous-start cap (one/two is a proposal), shared-start counting,
+    queue cancellation preserving other requesters, no charge for online joins.
+  Failed-request grace cleanup that preserves connected players, other valid demand,
+    configured hubs and Always-On servers; clear feedback and owner visibility.
+  Enforce at Core for Navigator/commands/Interact/future companion alike. This is
+    separate from proxy bot verification and network firewalling.
+
+PLANNED multi-hub/profiles:
+  Guided hub selection; dedicated multi-hub setup; hub groups/health/default routing;
+    Hub Manager; profiles, folders, load balancing/failover and lifecycle rules.
+  Multiple physical hubs sharing a profile are goals, not a current synchronized
+    multi-writer settings service. Hierarchical game hubs do not yet imply a shipped
+    world/session allocation or large minigame orchestration system.
+
+PLANNED optional Navigator companion:
+  Richer layout/presentation, persistent and per-server transfer countdowns, sounds/
+    titles/actionbars/bossbars, cancellation preferences, profiles, folders, richer
+    status items and effects. Keep Core's lifecycle/authorization authoritative and
+    the base install lightweight. Existing basic Navigator remains in Hub.
+
+Separate HubPilot Controller:
+  No native Controller integration is established by the public plugin implementation
+    reviewed here. Its own image/process hosting/UI/users/imports/built-in proxy are
+    a different project's work, not features of these four release JARs.
+  Intended boundary: Controller hosts/manages processes; Core retains network request,
+    authorization, demand and routing decisions. Future native integration needs a
+    documented authenticated provider contract, identities, readiness semantics,
+    lifecycle ownership, failure recovery and compatibility tests.
+  Bundling Core with a future built-in Velocity does not remove Velocity's role,
+    automatically solve forwarding, merge Controller users with Minecraft UUID owners,
+    or justify two independent automatic-stop authorities.
+  Existing Crafty/Pterodactyl/Generic HTTP users must not require the new Controller.
+  Detailed private Controller implementation decisions are intentionally not copied
+    into this public plugin handoff.
+
+11. SMALLEST CONCRETE SAFE-HANDOVER CHECKLIST
+
+1. Recover the missing full-source/dependency/build/patch inputs and Core harnesses,
+   or explicitly accept a reconstruction project. Keep all pre-public/private inputs
+   out of GitHub. Pin every recovered base by hash; label what remains missing.
+2. Capture a PRIVATE actual production inventory, installed hashes, configs/mounts,
+   secret references and a tested restore. Public release identity is insufficient.
+3. Establish one isolated candidate build/overlay with a dependency lock, changed-
+   entry manifest and real JVM linkage checks. Preserve authorship/notices. Do not
+   call decompiled output a reproducible suite until an independent build proves it.
+4. Run the missing current-1.0.2 live acceptance and lifecycle race/demand tests,
+   especially cancellation/retries, shared starts, stale settings and hub protection.
+   Record exact artifacts and separate observed failures from inspection hypotheses.
+5. Agree on immutable build identification and the scope of the first maintained
+   release. Preserve Prepare for Velocity as the next major product commitment;
+   keep reconstruction/safety work and separate Controller integration explicit.
+
+END OF PUBLIC HANDOFF

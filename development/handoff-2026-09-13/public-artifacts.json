@@ -1,0 +1,119 @@
+{
+  "audit_date_utc": "2026-09-13",
+  "repository": "ohHeyItsCon/HubPilot",
+  "audited_commit": "1640ab09460bd0f34c86533bc229de3283689b1a",
+  "source_tag_commit": "a0bda484ba80d086b3a1a59dcddf2dd29aeb91e4",
+  "scope": "Public 1.0.1 and 1.0.2 releases only. No private or pre-public recovery inputs.",
+  "releases": [
+    {
+      "tag_name": "v1.0.2",
+      "published_at": "2026-09-01T22:14:13Z",
+      "prerelease": true,
+      "html_url": "https://github.com/ohHeyItsCon/HubPilot/releases/tag/v1.0.2",
+      "assets": [
+        {
+          "name": "CHECKSUMS-SHA256.txt",
+          "size": 367,
+          "updated_at": "2026-09-04T01:08:32Z",
+          "browser_download_url": "https://github.com/ohHeyItsCon/HubPilot/releases/download/v1.0.2/CHECKSUMS-SHA256.txt",
+          "sha256": "6e5856bb76c28687feda01433593cf50625be2cb28b3e8392e83a627dbb3ab84",
+          "hash_evidence": "GitHub API digest"
+        },
+        {
+          "name": "HubPilot-1.0.2-pre-release.zip",
+          "size": 772026,
+          "updated_at": "2026-09-04T01:08:32Z",
+          "browser_download_url": "https://github.com/ohHeyItsCon/HubPilot/releases/download/v1.0.2/HubPilot-1.0.2-pre-release.zip",
+          "sha256": "d95b7192aa7ec78cdf1dc263d15cf55f030ab21f0791e787ea8db84512313b8b",
+          "hash_evidence": "downloaded bytes"
+        },
+        {
+          "name": "HubPilot-Core-1.0.2.jar",
+          "size": 558127,
+          "updated_at": "2026-09-03T23:39:01Z",
+          "browser_download_url": "https://github.com/ohHeyItsCon/HubPilot/releases/download/v1.0.2/HubPilot-Core-1.0.2.jar",
+          "sha256": "503deebfd9f925017a0fcf675cc9a839f5346480d359e6a9941e79e50411cb9f",
+          "hash_evidence": "downloaded bytes"
+        },
+        {
+          "name": "HubPilot-Hub-1.0.2.jar",
+          "size": 212362,
+          "updated_at": "2026-09-04T01:08:32Z",
+          "browser_download_url": "https://github.com/ohHeyItsCon/HubPilot/releases/download/v1.0.2/HubPilot-Hub-1.0.2.jar",
+          "sha256": "856bd4b99ab65f8c9ef84a5f547d55b1cc926e88901e0488544d6ed12801e3b1",
+          "hash_evidence": "downloaded bytes"
+        },
+        {
+          "name": "HubPilot-Interact-1.0.2.jar",
+          "size": 48400,
+          "updated_at": "2026-09-04T01:08:32Z",
+          "browser_download_url": "https://github.com/ohHeyItsCon/HubPilot/releases/download/v1.0.2/HubPilot-Interact-1.0.2.jar",
+          "sha256": "a4f8b269b3da6b1d0ac2241206eab2ce4951ebaf3dbf9a7233e5131fb9e28f47",
+          "hash_evidence": "downloaded bytes"
+        },
+        {
+          "name": "HubPilot-Link-1.0.2.jar",
+          "size": 9454,
+          "updated_at": "2026-09-01T22:14:12Z",
+          "browser_download_url": "https://github.com/ohHeyItsCon/HubPilot/releases/download/v1.0.2/HubPilot-Link-1.0.2.jar",
+          "sha256": "516c56a6edffc3fe5aa2e9bdf9b8bbb2f03e3114737332ca870e75c1cc7cdf50",
+          "hash_evidence": "downloaded bytes"
+        }
+      ]
+    },
+    {
+      "tag_name": "v1.0.1",
+      "published_at": "2026-08-24T19:43:52Z",
+      "prerelease": false,
+      "html_url": "https://github.com/ohHeyItsCon/HubPilot/releases/tag/v1.0.1",
+      "assets": [
+        {
+          "name": "HubPilot-1.0.1.zip",
+          "size": 731235,
+          "updated_at": "2026-08-26T23:08:00Z",
+          "browser_download_url": "https://github.com/ohHeyItsCon/HubPilot/releases/download/v1.0.1/HubPilot-1.0.1.zip",
+          "sha256": "d7f1a51a8def902d43ee729b766820c10abc2d83b36e89f1fd615bf6fb807f23",
+          "hash_evidence": "downloaded bytes"
+        },
+        {
+          "name": "HubPilot-Core-1.0.1.jar",
+          "size": 557065,
+          "updated_at": "2026-08-26T23:07:58Z",
+          "browser_download_url": "https://github.com/ohHeyItsCon/HubPilot/releases/download/v1.0.1/HubPilot-Core-1.0.1.jar",
+          "sha256": "2757c7c872a3015ff683c5c084e76611e9d1e3dbcc51435d8b4a20c605e1a8bd",
+          "hash_evidence": "downloaded bytes"
+        },
+        {
+          "name": "HubPilot-Hub-1.0.1.jar",
+          "size": 200459,
+          "updated_at": "2026-08-26T23:07:59Z",
+          "browser_download_url": "https://github.com/ohHeyItsCon/HubPilot/releases/download/v1.0.1/HubPilot-Hub-1.0.1.jar",
+          "sha256": "e7b4f70d6a35f4282f0f5eb83137d4369120de9d0a4fac11d203bbe690913815",
+          "hash_evidence": "downloaded bytes"
+        },
+        {
+          "name": "HubPilot-Interact-1.0.1.jar",
+          "size": 30153,
+          "updated_at": "2026-08-24T19:42:57Z",
+          "browser_download_url": "https://github.com/ohHeyItsCon/HubPilot/releases/download/v1.0.1/HubPilot-Interact-1.0.1.jar",
+          "sha256": "c19a6a25d3d2e6c3f4803a97d9950b8a4d5ad3403bff8313717c93e4eb27ed4f",
+          "hash_evidence": "downloaded bytes"
+        },
+        {
+          "name": "HubPilot-Link-1.0.1.jar",
+          "size": 9440,
+          "updated_at": "2026-08-24T19:42:31Z",
+          "browser_download_url": "https://github.com/ohHeyItsCon/HubPilot/releases/download/v1.0.1/HubPilot-Link-1.0.1.jar",
+          "sha256": "5fc5b10ada5fa7f3b6ce5bacf81c4d6ee3b80516446f768db9883d240d91fc26",
+          "hash_evidence": "downloaded bytes"
+        }
+      ]
+    }
+  ],
+  "decompiler": {
+    "name": "CFR",
+    "version": "0.152",
+    "url": "https://repo.maven.apache.org/maven2/org/benf/cfr/0.152/cfr-0.152.jar",
+    "sha256": "f686e8f3ded377d7bc87d216a90e9e9512df4156e75b06c655a16648ae8765b2"
+  }
+}

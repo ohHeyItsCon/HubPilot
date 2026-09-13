@@ -1,0 +1,734 @@
+DIRECT BYTECODE EVIDENCE: PUBLIC CORE 1.0.2
+Audit date: 2026-09-13 UTC
+JAR SHA-256: 503deebfd9f925017a0fcf675cc9a839f5346480d359e6a9941e79e50411cb9f
+Static disassembly using jawa 2.2.0. This did not execute the plugin.
+Offsets are bytecode offsets within each method, not source lines.
+Selected methods document dispatch, cancellation, retry/demand and automatic-stop guards.
+For an independent JDK view use javap -p -c -s with the pinned Core JAR.
+
+CLASS dev/hubpilot/core/PublicControlGate
+Class SHA-256: d0114099ed346187dd3a423286896750481fcfea33dadef1ced5b8a5f5a167b7
+
+METHOD dispatch(Ljava/lang/Object;)Z
+    0 aload_0                
+    1 ifnonnull              ->6
+    4 iconst_0               
+    5 ireturn                
+    6 ldc                    #7 'com.velocitypowered.api.event.connection.PluginMessageEvent'
+    8 invokestatic           #9 java/lang/Class.forName(Ljava/lang/String;)Ljava/lang/Class;
+   11 astore_1               
+   12 aload_1                
+   13 aload_0                
+   14 invokevirtual          #15 java/lang/Class.isInstance(Ljava/lang/Object;)Z
+   17 ifne                   ->22
+   20 iconst_0               
+   21 ireturn                
+   22 aload_1                
+   23 ldc                    #19 'getIdentifier'
+   25 iconst_0               
+   26 anewarray              10
+   29 invokevirtual          #21 java/lang/Class.getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
+   32 aload_0                
+   33 iconst_0               
+   34 anewarray              2
+   37 invokevirtual          #25 java/lang/reflect/Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
+   40 astore_2               
+   41 aload_2                
+   42 ifnonnull              ->47
+   45 iconst_0               
+   46 ireturn                
+   47 ldc                    #31 'com.velocitypowered.api.proxy.messages.ChannelIdentifier'
+   49 invokestatic           #9 java/lang/Class.forName(Ljava/lang/String;)Ljava/lang/Class;
+   52 astore_3               
+   53 aload_3                
+   54 ldc                    #33 'getId'
+   56 iconst_0               
+   57 anewarray              10
+   60 invokevirtual          #21 java/lang/Class.getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
+   63 aload_2                
+   64 iconst_0               
+   65 anewarray              2
+   68 invokevirtual          #25 java/lang/reflect/Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
+   71 invokestatic           #35 java/lang/String.valueOf(Ljava/lang/Object;)Ljava/lang/String;
+   74 astore                 4
+   76 ldc                    #41 'hubpilot:control'
+   78 aload                  4
+   80 invokevirtual          #43 java/lang/String.equalsIgnoreCase(Ljava/lang/String;)Z
+   83 ifne                   ->88
+   86 iconst_0               
+   87 ireturn                
+   88 aload_1                
+   89 ldc                    #47 'getData'
+   91 iconst_0               
+   92 anewarray              10
+   95 invokevirtual          #21 java/lang/Class.getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
+   98 aload_0                
+   99 iconst_0               
+  100 anewarray              2
+  103 invokevirtual          #25 java/lang/reflect/Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
+  106 checkcast              #49 [B
+  109 astore                 5
+  111 aload                  5
+  113 ifnull                 ->122
+  116 aload                  5
+  118 arraylength            
+  119 ifne                   ->124
+  122 iconst_0               
+  123 ireturn                
+  124 new                    #51 java/io/DataInputStream
+  127 dup                    
+  128 new                    #53 java/io/ByteArrayInputStream
+  131 dup                    
+  132 aload                  5
+  134 invokespecial          #55 java/io/ByteArrayInputStream.<init>([B)V
+  137 invokespecial          #58 java/io/DataInputStream.<init>(Ljava/io/InputStream;)V
+  140 astore                 7
+  142 aload                  7
+  144 invokevirtual          #61 java/io/DataInputStream.readUTF()Ljava/lang/String;
+  147 astore                 6
+  149 aload                  7
+  151 invokevirtual          #65 java/io/DataInputStream.close()V
+  154 goto                   ->179
+  157 astore                 8
+  159 aload                  7
+  161 invokevirtual          #65 java/io/DataInputStream.close()V
+  164 goto                   ->176
+  167 astore                 9
+  169 aload                  8
+  171 aload                  9
+  173 invokevirtual          #70 java/lang/Throwable.addSuppressed(Ljava/lang/Throwable;)V
+  176 aload                  8
+  178 athrow                 
+  179 ldc                    #74 'AUTH'
+  181 aload                  6
+  183 invokevirtual          #76 java/lang/String.equals(Ljava/lang/Object;)Z
+  186 ifne                   ->211
+  189 ldc                    #79 'COMPONENT'
+  191 aload                  6
+  193 invokevirtual          #76 java/lang/String.equals(Ljava/lang/Object;)Z
+  196 ifne                   ->211
+  199 ldc                    #81 'ACTION'
+  201 aload                  6
+  203 invokevirtual          #76 java/lang/String.equals(Ljava/lang/Object;)Z
+  206 ifne                   ->211
+  209 iconst_0               
+  210 ireturn                
+  211 ldc                    #83 dev/hubpilot/core/DirectAuthHandler
+  213 ldc                    #85 'dispatch'
+  215 iconst_1               
+  216 anewarray              10
+  219 dup                    
+  220 iconst_0               
+  221 aload_1                
+  222 aastore                
+  223 invokevirtual          #87 java/lang/Class.getDeclaredMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
+  226 astore                 7
+  228 aload                  7
+  230 iconst_1               
+  231 invokevirtual          #90 java/lang/reflect/Method.setAccessible(Z)V
+  234 aload                  7
+  236 aconst_null            
+  237 iconst_1               
+  238 anewarray              2
+  241 dup                    
+  242 iconst_0               
+  243 aload_0                
+  244 aastore                
+  245 invokevirtual          #25 java/lang/reflect/Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
+  248 pop                    
+  249 iconst_1               
+  250 ireturn                
+  251 astore_1               
+  252 iconst_0               
+  253 ireturn                
+  254 astore_1               
+  255 iconst_0               
+  256 ireturn                
+Exception table: [CodeException(start_pc=142, end_pc=149, handler_pc=157, catch_type=68), CodeException(start_pc=159, end_pc=164, handler_pc=167, catch_type=68), CodeException(start_pc=6, end_pc=21, handler_pc=251, catch_type=94), CodeException(start_pc=22, end_pc=46, handler_pc=251, catch_type=94), CodeException(start_pc=47, end_pc=87, handler_pc=251, catch_type=94), CodeException(start_pc=88, end_pc=123, handler_pc=251, catch_type=94), CodeException(start_pc=124, end_pc=210, handler_pc=251, catch_type=94), CodeException(start_pc=211, end_pc=250, handler_pc=251, catch_type=94), CodeException(start_pc=6, end_pc=21, handler_pc=254, catch_type=68), CodeException(start_pc=22, end_pc=46, handler_pc=254, catch_type=68), CodeException(start_pc=47, end_pc=87, handler_pc=254, catch_type=68), CodeException(start_pc=88, end_pc=123, handler_pc=254, catch_type=68), CodeException(start_pc=124, end_pc=210, handler_pc=254, catch_type=68), CodeException(start_pc=211, end_pc=250, handler_pc=254, catch_type=68)]
+CLASS dev/hubpilot/core/LifecycleManager
+Class SHA-256: 5ee2c9ea55256ff265e46d20e0fa138bcf1157124b657e0fa46f7e4db3f7312d
+
+METHOD request(Lcom/velocitypowered/api/proxy/Player;Ljava/lang/String;Ljava/lang/String;)V
+    0 aload_1                
+    1 ifnull                 ->13
+    4 aload_1                
+    5 invokeinterface        #53 com/velocitypowered/api/proxy/Player.isActive()Z, 1, 0
+   10 ifne                   ->14
+   13 return                 
+   14 aload_0                
+   15 aload_2                
+   16 invokevirtual          #59 dev/hubpilot/core/LifecycleManager.findServer(Ljava/lang/String;)Ldev/hubpilot/core/ManagedServer;
+   19 astore                 4
+   21 aload                  4
+   23 ifnonnull              ->39
+   26 aload_1                
+   27 aload_2                
+   28 invokedynamic          #63 makeConcatWithConstants(Ljava/lang/String;)Ljava/lang/String;, 0, 0
+   33 invokeinterface        #67 com/velocitypowered/api/proxy/Player.sendPlainMessage(Ljava/lang/String;)V, 2, 0
+   38 return                 
+   39 aload_0                
+   40 aload_1                
+   41 aload                  4
+   43 invokevirtual          #71 dev/hubpilot/core/LifecycleManager.validateAccess(Lcom/velocitypowered/api/proxy/Player;Ldev/hubpilot/core/ManagedServer;)Z
+   46 ifne                   ->50
+   49 return                 
+   50 aload_1                
+   51 aload                  4
+   53 invokevirtual          #75 dev/hubpilot/core/ManagedServer.velocityServer()Ljava/lang/String;
+   56 invokestatic           #81 dev/hubpilot/core/LifecycleManager.isCurrentServer(Lcom/velocitypowered/api/proxy/Player;Ljava/lang/String;)Z
+   59 ifeq                   ->78
+   62 aload_0                
+   63 aload_1                
+   64 ldc                    #85 'already-connected'
+   66 ldc                    #87 '&7You are already connected to {server}&7.'
+   68 aload                  4
+   70 invokestatic           #89 java/util/Map.of()Ljava/util/Map;
+   73 invokevirtual          #95 dev/hubpilot/core/LifecycleManager.send(Lcom/velocitypowered/api/proxy/Player;Ljava/lang/String;Ljava/lang/String;Ldev/hubpilot/core/ManagedServer;Ljava/util/Map;)Z
+   76 pop                    
+   77 return                 
+   78 aload_0                
+   79 getfield               #49 dev/hubpilot/core/LifecycleManager.statsLdev/hubpilot/core/StatsStore;
+   82 aload                  4
+   84 invokevirtual          #99 dev/hubpilot/core/ManagedServer.id()Ljava/lang/String;
+   87 ldc                    #102 'requests'
+   89 invokevirtual          #104 dev/hubpilot/core/StatsStore.increment(Ljava/lang/String;Ljava/lang/String;)J
+   92 pop2                   
+   93 aload_0                
+   94 getfield               #33 dev/hubpilot/core/LifecycleManager.loggerLorg/slf4j/Logger;
+   97 ldc                    #110 'HubPilot request: player={}, server={}, source={}'
+   99 iconst_3               
+  100 anewarray              2
+  103 dup                    
+  104 iconst_0               
+  105 aload_1                
+  106 invokeinterface        #112 com/velocitypowered/api/proxy/Player.getUsername()Ljava/lang/String;, 1, 0
+  111 aastore                
+  112 dup                    
+  113 iconst_1               
+  114 aload                  4
+  116 invokevirtual          #99 dev/hubpilot/core/ManagedServer.id()Ljava/lang/String;
+  119 aastore                
+  120 dup                    
+  121 iconst_2               
+  122 aload_3                
+  123 aastore                
+  124 invokeinterface        #115 org/slf4j/Logger.info(Ljava/lang/String;[Ljava/lang/Object;)V, 3, 0
+  129 aload_0                
+  130 getfield               #45 dev/hubpilot/core/LifecycleManager.statusLdev/hubpilot/core/StatusStore;
+  133 aload                  4
+  135 invokevirtual          #99 dev/hubpilot/core/ManagedServer.id()Ljava/lang/String;
+  138 invokevirtual          #121 dev/hubpilot/core/StatusStore.get(Ljava/lang/String;)Ldev/hubpilot/core/StatusStore$ServerStatus;
+  141 astore                 5
+  143 aload                  5
+  145 invokevirtual          #127 dev/hubpilot/core/StatusStore$ServerStatus.online()Z
+  148 ifeq                   ->175
+  151 aload_0                
+  152 aload_1                
+  153 ldc                    #132 'joining'
+  155 ldc                    #134 '&7Joining {server}&7...'
+  157 aload                  4
+  159 invokestatic           #89 java/util/Map.of()Ljava/util/Map;
+  162 invokevirtual          #95 dev/hubpilot/core/LifecycleManager.send(Lcom/velocitypowered/api/proxy/Player;Ljava/lang/String;Ljava/lang/String;Ldev/hubpilot/core/ManagedServer;Ljava/util/Map;)Z
+  165 pop                    
+  166 aload_0                
+  167 aload_1                
+  168 aload                  4
+  170 iconst_0               
+  171 invokevirtual          #136 dev/hubpilot/core/LifecycleManager.connect(Lcom/velocitypowered/api/proxy/Player;Ldev/hubpilot/core/ManagedServer;I)V
+  174 return                 
+  175 aload_0                
+  176 getfield               #29 dev/hubpilot/core/LifecycleManager.proxyLcom/velocitypowered/api/proxy/ProxyServer;
+  179 aload                  4
+  181 invokevirtual          #75 dev/hubpilot/core/ManagedServer.velocityServer()Ljava/lang/String;
+  184 invokeinterface        #140 com/velocitypowered/api/proxy/ProxyServer.getServer(Ljava/lang/String;)Ljava/util/Optional;, 2, 0
+  189 astore                 6
+  191 aload                  6
+  193 invokevirtual          #146 java/util/Optional.isEmpty()Z
+  196 ifeq                   ->215
+  199 aload_0                
+  200 aload_1                
+  201 ldc                    #151 'unavailable'
+  203 ldc                    #153 '&c{server}&c is not registered on Velocity.'
+  205 aload                  4
+  207 invokestatic           #89 java/util/Map.of()Ljava/util/Map;
+  210 invokevirtual          #95 dev/hubpilot/core/LifecycleManager.send(Lcom/velocitypowered/api/proxy/Player;Ljava/lang/String;Ljava/lang/String;Ldev/hubpilot/core/ManagedServer;Ljava/util/Map;)Z
+  213 pop                    
+  214 return                 
+  215 aload                  6
+  217 invokevirtual          #155 java/util/Optional.get()Ljava/lang/Object;
+  220 checkcast              #158 com/velocitypowered/api/proxy/server/RegisteredServer
+  223 invokeinterface        #160 com/velocitypowered/api/proxy/server/RegisteredServer.ping()Ljava/util/concurrent/CompletableFuture;, 1, 0
+  228 aload                  4
+  230 invokevirtual          #164 dev/hubpilot/core/ManagedServer.pingTimeoutSeconds()I
+  233 i2l                    
+  234 getstatic              #168 java/util/concurrent/TimeUnit.SECONDSLjava/util/concurrent/TimeUnit;
+  237 invokevirtual          #174 java/util/concurrent/CompletableFuture.orTimeout(JLjava/util/concurrent/TimeUnit;)Ljava/util/concurrent/CompletableFuture;
+  240 aload_0                
+  241 aload_1                
+  242 aload                  4
+  244 invokedynamic          #180 accept(Ldev/hubpilot/core/LifecycleManager;Lcom/velocitypowered/api/proxy/Player;Ldev/hubpilot/core/ManagedServer;)Ljava/util/function/BiConsumer;, 0, 0
+  249 invokevirtual          #184 java/util/concurrent/CompletableFuture.whenComplete(Ljava/util/function/BiConsumer;)Ljava/util/concurrent/CompletableFuture;
+  252 pop                    
+  253 return                 
+Exception table: []
+
+METHOD cancel(Lcom/velocitypowered/api/proxy/Player;)V
+    0 aload_0                
+    1 aload_1                
+    2 invokeinterface        #222 com/velocitypowered/api/proxy/Player.getUniqueId()Ljava/util/UUID;, 1, 0
+    7 iconst_1               
+    8 invokevirtual          #303 dev/hubpilot/core/LifecycleManager.removeFromQueues(Ljava/util/UUID;Z)Z
+   11 istore_2               
+   12 aload_0                
+   13 aload_1                
+   14 iload_2                
+   15 ifeq                   ->24
+   18 ldc_w                  #436 'request-cancelled'
+   21 goto                   ->27
+   24 ldc_w                  #438 'no-pending-request'
+   27 iload_2                
+   28 ifeq                   ->37
+   31 ldc_w                  #440 '&eYour pending HubPilot request was cancelled.'
+   34 goto                   ->40
+   37 ldc_w                  #442 '&7You do not have a pending HubPilot request.'
+   40 aconst_null            
+   41 invokestatic           #89 java/util/Map.of()Ljava/util/Map;
+   44 invokevirtual          #95 dev/hubpilot/core/LifecycleManager.send(Lcom/velocitypowered/api/proxy/Player;Ljava/lang/String;Ljava/lang/String;Ldev/hubpilot/core/ManagedServer;Ljava/util/Map;)Z
+   47 pop                    
+   48 return                 
+Exception table: []
+
+METHOD finishCountdown(Ldev/hubpilot/core/LifecycleManager$StartSession;)V
+    0 aload_0                
+    1 getfield               #10 dev/hubpilot/core/LifecycleManager.sessionsLjava/util/concurrent/ConcurrentHashMap;
+    4 aload_1                
+    5 getfield               #510 dev/hubpilot/core/LifecycleManager$StartSession.serverLdev/hubpilot/core/ManagedServer;
+    8 invokevirtual          #99 dev/hubpilot/core/ManagedServer.id()Ljava/lang/String;
+   11 aload_1                
+   12 invokevirtual          #250 java/util/concurrent/ConcurrentHashMap.remove(Ljava/lang/Object;Ljava/lang/Object;)Z
+   15 ifeq                   ->93
+   18 aload_0                
+   19 getfield               #45 dev/hubpilot/core/LifecycleManager.statusLdev/hubpilot/core/StatusStore;
+   22 aload_1                
+   23 getfield               #510 dev/hubpilot/core/LifecycleManager$StartSession.serverLdev/hubpilot/core/ManagedServer;
+   26 invokevirtual          #99 dev/hubpilot/core/ManagedServer.id()Ljava/lang/String;
+   29 iconst_0               
+   30 invokevirtual          #469 dev/hubpilot/core/StatusStore.setQueue(Ljava/lang/String;I)V
+   33 aload_1                
+   34 invokevirtual          #648 dev/hubpilot/core/LifecycleManager$StartSession.playerIds()Ljava/util/List;
+   37 invokeinterface        #652 java/util/List.iterator()Ljava/util/Iterator;, 1, 0
+   42 astore_2               
+   43 aload_2                
+   44 invokeinterface        #365 java/util/Iterator.hasNext()Z, 1, 0
+   49 ifeq                   ->93
+   52 aload_2                
+   53 invokeinterface        #370 java/util/Iterator.next()Ljava/lang/Object;, 1, 0
+   58 checkcast              #655 java/util/UUID
+   61 astore_3               
+   62 aload_0                
+   63 getfield               #29 dev/hubpilot/core/LifecycleManager.proxyLcom/velocitypowered/api/proxy/ProxyServer;
+   66 aload_3                
+   67 invokeinterface        #657 com/velocitypowered/api/proxy/ProxyServer.getPlayer(Ljava/util/UUID;)Ljava/util/Optional;, 2, 0
+   72 invokedynamic          #660 test()Ljava/util/function/Predicate;, 0, 0
+   77 invokevirtual          #663 java/util/Optional.filter(Ljava/util/function/Predicate;)Ljava/util/Optional;
+   80 aload_0                
+   81 aload_1                
+   82 invokedynamic          #767 accept(Ldev/hubpilot/core/LifecycleManager;Ldev/hubpilot/core/LifecycleManager$StartSession;)Ljava/util/function/Consumer;, 0, 0
+   87 invokevirtual          #299 java/util/Optional.ifPresent(Ljava/util/function/Consumer;)V
+   90 goto                   ->43
+   93 return                 
+Exception table: []
+
+METHOD connect(Lcom/velocitypowered/api/proxy/Player;Ldev/hubpilot/core/ManagedServer;I)V
+    0 aload_0                
+    1 getfield               #22 dev/hubpilot/core/LifecycleManager.pendingTransfersLjava/util/concurrent/ConcurrentHashMap;
+    4 aload_2                
+    5 invokevirtual          #99 dev/hubpilot/core/ManagedServer.id()Ljava/lang/String;
+    8 invokedynamic          #770 apply()Ljava/util/function/Function;, 0, 0
+   13 invokevirtual          #774 java/util/concurrent/ConcurrentHashMap.computeIfAbsent(Ljava/lang/Object;Ljava/util/function/Function;)Ljava/lang/Object;
+   16 checkcast              #347 java/util/Set
+   19 aload_1                
+   20 invokeinterface        #222 com/velocitypowered/api/proxy/Player.getUniqueId()Ljava/util/UUID;, 1, 0
+   25 invokeinterface        #778 java/util/Set.add(Ljava/lang/Object;)Z, 2, 0
+   30 pop                    
+   31 aload_0                
+   32 getfield               #29 dev/hubpilot/core/LifecycleManager.proxyLcom/velocitypowered/api/proxy/ProxyServer;
+   35 aload_2                
+   36 invokevirtual          #75 dev/hubpilot/core/ManagedServer.velocityServer()Ljava/lang/String;
+   39 invokeinterface        #140 com/velocitypowered/api/proxy/ProxyServer.getServer(Ljava/lang/String;)Ljava/util/Optional;, 2, 0
+   44 astore                 4
+   46 aload                  4
+   48 invokevirtual          #146 java/util/Optional.isEmpty()Z
+   51 ifeq                   ->98
+   54 aload_0                
+   55 aload_1                
+   56 ldc                    #151 'unavailable'
+   58 ldc                    #153 '&c{server}&c is not registered on Velocity.'
+   60 aload_2                
+   61 invokestatic           #89 java/util/Map.of()Ljava/util/Map;
+   64 invokevirtual          #95 dev/hubpilot/core/LifecycleManager.send(Lcom/velocitypowered/api/proxy/Player;Ljava/lang/String;Ljava/lang/String;Ldev/hubpilot/core/ManagedServer;Ljava/util/Map;)Z
+   67 pop                    
+   68 aload_0                
+   69 getfield               #49 dev/hubpilot/core/LifecycleManager.statsLdev/hubpilot/core/StatsStore;
+   72 aload_2                
+   73 invokevirtual          #99 dev/hubpilot/core/ManagedServer.id()Ljava/lang/String;
+   76 ldc_w                  #780 'joins.failed'
+   79 invokevirtual          #104 dev/hubpilot/core/StatsStore.increment(Ljava/lang/String;Ljava/lang/String;)J
+   82 pop2                   
+   83 aload_0                
+   84 aload_2                
+   85 invokevirtual          #99 dev/hubpilot/core/ManagedServer.id()Ljava/lang/String;
+   88 aload_1                
+   89 invokeinterface        #222 com/velocitypowered/api/proxy/Player.getUniqueId()Ljava/util/UUID;, 1, 0
+   94 invokevirtual          #782 dev/hubpilot/core/LifecycleManager.finishPendingTransfer(Ljava/lang/String;Ljava/util/UUID;)V
+   97 return                 
+   98 aload_0                
+   99 getfield               #16 dev/hubpilot/core/LifecycleManager.transferPermitsLjava/util/concurrent/ConcurrentHashMap;
+  102 aload_1                
+  103 invokeinterface        #222 com/velocitypowered/api/proxy/Player.getUniqueId()Ljava/util/UUID;, 1, 0
+  108 new                    #229 dev/hubpilot/core/LifecycleManager$TransferPermit
+  111 dup                    
+  112 aload_2                
+  113 invokevirtual          #75 dev/hubpilot/core/ManagedServer.velocityServer()Ljava/lang/String;
+  116 invokestatic           #235 java/lang/System.currentTimeMillis()J
+  119 ldc2_w                 #786 Long(index=786, value=10000)
+  122 ladd                   
+  123 invokespecial          #788 dev/hubpilot/core/LifecycleManager$TransferPermit.<init>(Ljava/lang/String;J)V
+  126 invokevirtual          #791 java/util/concurrent/ConcurrentHashMap.put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+  129 pop                    
+  130 aload_1                
+  131 aload                  4
+  133 invokevirtual          #155 java/util/Optional.get()Ljava/lang/Object;
+  136 checkcast              #158 com/velocitypowered/api/proxy/server/RegisteredServer
+  139 invokeinterface        #794 com/velocitypowered/api/proxy/Player.createConnectionRequest(Lcom/velocitypowered/api/proxy/server/RegisteredServer;)Lcom/velocitypowered/api/proxy/ConnectionRequestBuilder;, 2, 0
+  144 invokeinterface        #798 com/velocitypowered/api/proxy/ConnectionRequestBuilder.connect()Ljava/util/concurrent/CompletableFuture;, 1, 0
+  149 aload_0                
+  150 aload_2                
+  151 aload_1                
+  152 iload_3                
+  153 aload                  4
+  155 invokedynamic          #802 accept(Ldev/hubpilot/core/LifecycleManager;Ldev/hubpilot/core/ManagedServer;Lcom/velocitypowered/api/proxy/Player;ILjava/util/Optional;)Ljava/util/function/BiConsumer;, 0, 0
+  160 invokevirtual          #184 java/util/concurrent/CompletableFuture.whenComplete(Ljava/util/function/BiConsumer;)Ljava/util/concurrent/CompletableFuture;
+  163 pop                    
+  164 return                 
+Exception table: []
+
+METHOD isConfiguredHub(Ldev/hubpilot/core/ManagedServer;)Z
+    0 aload_0                
+    1 getfield               #37 dev/hubpilot/core/LifecycleManager.configLdev/hubpilot/core/HubPilotConfig;
+    4 invokevirtual          #192 dev/hubpilot/core/HubPilotConfig.snapshot()Ldev/hubpilot/core/HubPilotConfig$Snapshot;
+    7 astore_2               
+    8 aload_1                
+    9 aload_2                
+   10 invokevirtual          #864 dev/hubpilot/core/HubPilotConfig$Snapshot.hubServer()Ljava/lang/String;
+   13 invokestatic           #867 dev/hubpilot/core/HubProtection.matches(Ldev/hubpilot/core/ManagedServer;Ljava/lang/String;)Z
+   16 ifeq                   ->21
+   19 iconst_1               
+   20 ireturn                
+   21 aload_2                
+   22 invokevirtual          #834 dev/hubpilot/core/HubPilotConfig$Snapshot.servers()Ljava/util/Map;
+   25 aload_1                
+   26 invokevirtual          #99 dev/hubpilot/core/ManagedServer.id()Ljava/lang/String;
+   29 getstatic              #392 java/util/Locale.ROOTLjava/util/Locale;
+   32 invokevirtual          #398 java/lang/String.toLowerCase(Ljava/util/Locale;)Ljava/lang/String;
+   35 invokeinterface        #873 java/util/Map.get(Ljava/lang/Object;)Ljava/lang/Object;, 2, 0
+   40 checkcast              #76 dev/hubpilot/core/ManagedServer
+   43 astore_3               
+   44 aload_3                
+   45 aload_2                
+   46 invokevirtual          #864 dev/hubpilot/core/HubPilotConfig$Snapshot.hubServer()Ljava/lang/String;
+   49 invokestatic           #867 dev/hubpilot/core/HubProtection.matches(Ldev/hubpilot/core/ManagedServer;Ljava/lang/String;)Z
+   52 ireturn                
+Exception table: []
+
+METHOD stopServer(Ldev/hubpilot/core/ManagedServer;Ljava/lang/String;)V
+    0 aload_0                
+    1 aload_1                
+    2 invokevirtual          #841 dev/hubpilot/core/LifecycleManager.isConfiguredHub(Ldev/hubpilot/core/ManagedServer;)Z
+    5 ifeq                   ->9
+    8 return                 
+    9 aload_0                
+   10 getfield               #29 dev/hubpilot/core/LifecycleManager.proxyLcom/velocitypowered/api/proxy/ProxyServer;
+   13 aload_1                
+   14 invokevirtual          #75 dev/hubpilot/core/ManagedServer.velocityServer()Ljava/lang/String;
+   17 invokeinterface        #140 com/velocitypowered/api/proxy/ProxyServer.getServer(Ljava/lang/String;)Ljava/util/Optional;, 2, 0
+   22 astore_3               
+   23 aload_3                
+   24 invokevirtual          #874 java/util/Optional.isPresent()Z
+   27 ifeq                   ->74
+   30 aload_3                
+   31 invokevirtual          #155 java/util/Optional.get()Ljava/lang/Object;
+   34 checkcast              #158 com/velocitypowered/api/proxy/server/RegisteredServer
+   37 invokeinterface        #848 com/velocitypowered/api/proxy/server/RegisteredServer.getPlayersConnected()Ljava/util/Collection;, 1, 0
+   42 invokeinterface        #851 java/util/Collection.isEmpty()Z, 1, 0
+   47 ifne                   ->74
+   50 aload_0                
+   51 getfield               #33 dev/hubpilot/core/LifecycleManager.loggerLorg/slf4j/Logger;
+   54 ldc_w                  #877 'Refusing to stop {} because players are connected'
+   57 iconst_1               
+   58 anewarray              2
+   61 dup                    
+   62 iconst_0               
+   63 aload_1                
+   64 invokevirtual          #99 dev/hubpilot/core/ManagedServer.id()Ljava/lang/String;
+   67 aastore                
+   68 invokeinterface        #115 org/slf4j/Logger.info(Ljava/lang/String;[Ljava/lang/Object;)V, 3, 0
+   73 return                 
+   74 aload_1                
+   75 invokevirtual          #264 dev/hubpilot/core/ManagedServer.provider()Ljava/lang/String;
+   78 invokestatic           #311 dev/hubpilot/core/ProviderRegistry.isManaged(Ljava/lang/String;)Z
+   81 ifne                   ->85
+   84 return                 
+   85 aload_0                
+   86 getfield               #45 dev/hubpilot/core/LifecycleManager.statusLdev/hubpilot/core/StatusStore;
+   89 aload_1                
+   90 invokevirtual          #99 dev/hubpilot/core/ManagedServer.id()Ljava/lang/String;
+   93 getstatic              #879 dev/hubpilot/core/StatusStore$State.STOPPINGLdev/hubpilot/core/StatusStore$State;
+   96 invokevirtual          #811 dev/hubpilot/core/StatusStore.setState(Ljava/lang/String;Ldev/hubpilot/core/StatusStore$State;)V
+   99 aload_0                
+  100 getfield               #33 dev/hubpilot/core/LifecycleManager.loggerLorg/slf4j/Logger;
+  103 ldc_w                  #882 'Stopping {} ({})'
+  106 iconst_2               
+  107 anewarray              2
+  110 dup                    
+  111 iconst_0               
+  112 aload_1                
+  113 invokevirtual          #99 dev/hubpilot/core/ManagedServer.id()Ljava/lang/String;
+  116 aastore                
+  117 dup                    
+  118 iconst_1               
+  119 aload_2                
+  120 aastore                
+  121 invokeinterface        #115 org/slf4j/Logger.info(Ljava/lang/String;[Ljava/lang/Object;)V, 3, 0
+  126 aload_0                
+  127 getfield               #41 dev/hubpilot/core/LifecycleManager.craftyLdev/hubpilot/core/CraftyProvider;
+  130 aload_1                
+  131 invokevirtual          #884 dev/hubpilot/core/CraftyProvider.stop(Ldev/hubpilot/core/ManagedServer;)Ljava/util/concurrent/CompletableFuture;
+  134 aload_0                
+  135 aload_1                
+  136 invokedynamic          #887 accept(Ldev/hubpilot/core/LifecycleManager;Ldev/hubpilot/core/ManagedServer;)Ljava/util/function/BiConsumer;, 0, 0
+  141 invokevirtual          #184 java/util/concurrent/CompletableFuture.whenComplete(Ljava/util/function/BiConsumer;)Ljava/util/concurrent/CompletableFuture;
+  144 pop                    
+  145 return                 
+Exception table: []
+
+METHOD removeFromQueues(Ljava/util/UUID;Z)Z
+    0 iconst_0               
+    1 istore_3               
+    2 new                    #352 java/util/ArrayList
+    5 dup                    
+    6 aload_0                
+    7 getfield               #10 dev/hubpilot/core/LifecycleManager.sessionsLjava/util/concurrent/ConcurrentHashMap;
+   10 invokevirtual          #354 java/util/concurrent/ConcurrentHashMap.values()Ljava/util/Collection;
+   13 invokespecial          #358 java/util/ArrayList.<init>(Ljava/util/Collection;)V
+   16 invokevirtual          #361 java/util/ArrayList.iterator()Ljava/util/Iterator;
+   19 astore                 4
+   21 aload                  4
+   23 invokeinterface        #365 java/util/Iterator.hasNext()Z, 1, 0
+   28 ifeq                   ->121
+   31 aload                  4
+   33 invokeinterface        #370 java/util/Iterator.next()Ljava/lang/Object;, 1, 0
+   38 checkcast              #373 dev/hubpilot/core/LifecycleManager$StartSession
+   41 astore                 5
+   43 aload                  5
+   45 aload_1                
+   46 invokevirtual          #943 dev/hubpilot/core/LifecycleManager$StartSession.remove(Ljava/util/UUID;)Z
+   49 ifne                   ->55
+   52 goto                   ->21
+   55 iconst_1               
+   56 istore_3               
+   57 aload_0                
+   58 getfield               #45 dev/hubpilot/core/LifecycleManager.statusLdev/hubpilot/core/StatusStore;
+   61 aload                  5
+   63 getfield               #510 dev/hubpilot/core/LifecycleManager$StartSession.serverLdev/hubpilot/core/ManagedServer;
+   66 invokevirtual          #99 dev/hubpilot/core/ManagedServer.id()Ljava/lang/String;
+   69 aload                  5
+   71 invokevirtual          #402 dev/hubpilot/core/LifecycleManager$StartSession.size()I
+   74 invokevirtual          #469 dev/hubpilot/core/StatusStore.setQueue(Ljava/lang/String;I)V
+   77 aload_0                
+   78 aload                  5
+   80 invokevirtual          #946 dev/hubpilot/core/LifecycleManager.notifyQueuePositions(Ldev/hubpilot/core/LifecycleManager$StartSession;)V
+   83 iload_2                
+   84 ifeq                   ->21
+   87 aload                  5
+   89 invokevirtual          #402 dev/hubpilot/core/LifecycleManager$StartSession.size()I
+   92 ifne                   ->21
+   95 aload                  5
+   97 getfield               #510 dev/hubpilot/core/LifecycleManager$StartSession.serverLdev/hubpilot/core/ManagedServer;
+  100 invokevirtual          #517 dev/hubpilot/core/ManagedServer.stopWhenQueueEmpty()Z
+  103 ifne                   ->109
+  106 goto                   ->21
+  109 aload_0                
+  110 aload                  5
+  112 ldc_w                  #949 'last queued player left'
+  115 invokevirtual          #522 dev/hubpilot/core/LifecycleManager.stopAndRemove(Ldev/hubpilot/core/LifecycleManager$StartSession;Ljava/lang/String;)V
+  118 goto                   ->21
+  121 iload_3                
+  122 ireturn                
+Exception table: []
+
+METHOD lambda$connect$10(Ldev/hubpilot/core/ManagedServer;Lcom/velocitypowered/api/proxy/Player;ILjava/util/Optional;Lcom/velocitypowered/api/proxy/ConnectionRequestBuilder$Result;Ljava/lang/Throwable;)V
+    0 aload                  6
+    2 ifnonnull              ->24
+    5 aload                  5
+    7 ifnull                 ->24
+   10 aload                  5
+   12 invokeinterface        #1094 com/velocitypowered/api/proxy/ConnectionRequestBuilder$Result.isSuccessful()Z, 1, 0
+   17 ifeq                   ->24
+   20 iconst_1               
+   21 goto                   ->25
+   24 iconst_0               
+   25 dup                    
+   26 istore                 7
+   28 istore                 8
+   30 iload                  7
+   32 ifeq                   ->83
+   35 aload_0                
+   36 getfield               #49 dev/hubpilot/core/LifecycleManager.statsLdev/hubpilot/core/StatsStore;
+   39 aload_1                
+   40 invokevirtual          #99 dev/hubpilot/core/ManagedServer.id()Ljava/lang/String;
+   43 ldc_w                  #1099 'joins.success'
+   46 invokevirtual          #104 dev/hubpilot/core/StatsStore.increment(Ljava/lang/String;Ljava/lang/String;)J
+   49 pop2                   
+   50 aload_0                
+   51 getfield               #19 dev/hubpilot/core/LifecycleManager.lastActivityLjava/util/concurrent/ConcurrentHashMap;
+   54 aload_1                
+   55 invokevirtual          #99 dev/hubpilot/core/ManagedServer.id()Ljava/lang/String;
+   58 invokestatic           #235 java/lang/System.currentTimeMillis()J
+   61 invokestatic           #585 java/lang/Long.valueOf(J)Ljava/lang/Long;
+   64 invokevirtual          #791 java/util/concurrent/ConcurrentHashMap.put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+   67 pop                    
+   68 aload_0                
+   69 aload_1                
+   70 invokevirtual          #99 dev/hubpilot/core/ManagedServer.id()Ljava/lang/String;
+   73 aload_2                
+   74 invokeinterface        #222 com/velocitypowered/api/proxy/Player.getUniqueId()Ljava/util/UUID;, 1, 0
+   79 invokevirtual          #782 dev/hubpilot/core/LifecycleManager.finishPendingTransfer(Ljava/lang/String;Ljava/util/UUID;)V
+   82 return                 
+   83 aload_0                
+   84 getfield               #16 dev/hubpilot/core/LifecycleManager.transferPermitsLjava/util/concurrent/ConcurrentHashMap;
+   87 aload_2                
+   88 invokeinterface        #222 com/velocitypowered/api/proxy/Player.getUniqueId()Ljava/util/UUID;, 1, 0
+   93 invokevirtual          #1101 java/util/concurrent/ConcurrentHashMap.remove(Ljava/lang/Object;)Ljava/lang/Object;
+   96 pop                    
+   97 aload_2                
+   98 invokeinterface        #53 com/velocitypowered/api/proxy/Player.isActive()Z, 1, 0
+  103 ifne                   ->121
+  106 aload_0                
+  107 aload_1                
+  108 invokevirtual          #99 dev/hubpilot/core/ManagedServer.id()Ljava/lang/String;
+  111 aload_2                
+  112 invokeinterface        #222 com/velocitypowered/api/proxy/Player.getUniqueId()Ljava/util/UUID;, 1, 0
+  117 invokevirtual          #782 dev/hubpilot/core/LifecycleManager.finishPendingTransfer(Ljava/lang/String;Ljava/util/UUID;)V
+  120 return                 
+  121 iload_3                
+  122 aload_1                
+  123 invokevirtual          #1103 dev/hubpilot/core/ManagedServer.retryCount()I
+  126 if_icmpge              ->228
+  129 iload_3                
+  130 iconst_1               
+  131 iadd                   
+  132 istore                 9
+  134 aload_0                
+  135 aload_2                
+  136 ldc_w                  #1106 'retrying'
+  139 ldc_w                  #1108 '&eConnection failed. Retrying in {delay}s ({attempt}/{max})...'
+  142 aload_1                
+  143 ldc_w                  #1110 'delay'
+  146 aload_1                
+  147 invokevirtual          #1112 dev/hubpilot/core/ManagedServer.retryDelaySeconds()I
+  150 invokestatic           #631 java/lang/Integer.toString(I)Ljava/lang/String;
+  153 ldc_w                  #1115 'attempt'
+  156 iload                  9
+  158 invokestatic           #631 java/lang/Integer.toString(I)Ljava/lang/String;
+  161 ldc_w                  #1117 'max'
+  164 aload_1                
+  165 invokevirtual          #1103 dev/hubpilot/core/ManagedServer.retryCount()I
+  168 invokestatic           #631 java/lang/Integer.toString(I)Ljava/lang/String;
+  171 invokestatic           #1118 java/util/Map.of(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map;
+  174 invokevirtual          #95 dev/hubpilot/core/LifecycleManager.send(Lcom/velocitypowered/api/proxy/Player;Ljava/lang/String;Ljava/lang/String;Ldev/hubpilot/core/ManagedServer;Ljava/util/Map;)Z
+  177 pop                    
+  178 aload_0                
+  179 getfield               #29 dev/hubpilot/core/LifecycleManager.proxyLcom/velocitypowered/api/proxy/ProxyServer;
+  182 invokeinterface        #269 com/velocitypowered/api/proxy/ProxyServer.getScheduler()Lcom/velocitypowered/api/scheduler/Scheduler;, 1, 0
+  187 aload_0                
+  188 getfield               #25 dev/hubpilot/core/LifecycleManager.pluginLjava/lang/Object;
+  191 aload_0                
+  192 aload_2                
+  193 aload_1                
+  194 iload                  9
+  196 invokedynamic          #1121 run(Ldev/hubpilot/core/LifecycleManager;Lcom/velocitypowered/api/proxy/Player;Ldev/hubpilot/core/ManagedServer;I)Ljava/lang/Runnable;, 0, 0
+  201 invokeinterface        #277 com/velocitypowered/api/scheduler/Scheduler.buildTask(Ljava/lang/Object;Ljava/lang/Runnable;)Lcom/velocitypowered/api/scheduler/Scheduler$TaskBuilder;, 3, 0
+  206 aload_1                
+  207 invokevirtual          #1112 dev/hubpilot/core/ManagedServer.retryDelaySeconds()I
+  210 i2l                    
+  211 invokestatic           #1124 java/time/Duration.ofSeconds(J)Ljava/time/Duration;
+  214 invokeinterface        #1130 com/velocitypowered/api/scheduler/Scheduler$TaskBuilder.delay(Ljava/time/Duration;)Lcom/velocitypowered/api/scheduler/Scheduler$TaskBuilder;, 2, 0
+  219 invokeinterface        #283 com/velocitypowered/api/scheduler/Scheduler$TaskBuilder.schedule()Lcom/velocitypowered/api/scheduler/ScheduledTask;, 1, 0
+  224 pop                    
+  225 goto                   ->320
+  228 aload_0                
+  229 getfield               #49 dev/hubpilot/core/LifecycleManager.statsLdev/hubpilot/core/StatsStore;
+  232 aload_1                
+  233 invokevirtual          #99 dev/hubpilot/core/ManagedServer.id()Ljava/lang/String;
+  236 ldc_w                  #780 'joins.failed'
+  239 invokevirtual          #104 dev/hubpilot/core/StatsStore.increment(Ljava/lang/String;Ljava/lang/String;)J
+  242 pop2                   
+  243 aload_0                
+  244 aload_2                
+  245 ldc_w                  #1133 'connection-failed'
+  248 ldc_w                  #1135 '&cCould not connect to {server}&c.'
+  251 aload_1                
+  252 invokestatic           #89 java/util/Map.of()Ljava/util/Map;
+  255 invokevirtual          #95 dev/hubpilot/core/LifecycleManager.send(Lcom/velocitypowered/api/proxy/Player;Ljava/lang/String;Ljava/lang/String;Ldev/hubpilot/core/ManagedServer;Ljava/util/Map;)Z
+  258 pop                    
+  259 aload_0                
+  260 aload_1                
+  261 invokevirtual          #99 dev/hubpilot/core/ManagedServer.id()Ljava/lang/String;
+  264 aload_2                
+  265 invokeinterface        #222 com/velocitypowered/api/proxy/Player.getUniqueId()Ljava/util/UUID;, 1, 0
+  270 invokevirtual          #782 dev/hubpilot/core/LifecycleManager.finishPendingTransfer(Ljava/lang/String;Ljava/util/UUID;)V
+  273 aload_1                
+  274 invokevirtual          #825 dev/hubpilot/core/ManagedServer.stopAfterFailure()Z
+  277 ifeq                   ->320
+  280 aload_0                
+  281 aload_1                
+  282 invokevirtual          #99 dev/hubpilot/core/ManagedServer.id()Ljava/lang/String;
+  285 invokevirtual          #852 dev/hubpilot/core/LifecycleManager.hasPendingTransfers(Ljava/lang/String;)Z
+  288 ifne                   ->320
+  291 aload                  4
+  293 invokevirtual          #155 java/util/Optional.get()Ljava/lang/Object;
+  296 checkcast              #158 com/velocitypowered/api/proxy/server/RegisteredServer
+  299 invokeinterface        #848 com/velocitypowered/api/proxy/server/RegisteredServer.getPlayersConnected()Ljava/util/Collection;, 1, 0
+  304 invokeinterface        #851 java/util/Collection.isEmpty()Z, 1, 0
+  309 ifeq                   ->320
+  312 aload_0                
+  313 aload_1                
+  314 ldc_w                  #1137 'all connection attempts failed'
+  317 invokevirtual          #830 dev/hubpilot/core/LifecycleManager.stopServer(Ldev/hubpilot/core/ManagedServer;Ljava/lang/String;)V
+  320 return                 
+Exception table: []
+
+METHOD lambda$connect$9(Lcom/velocitypowered/api/proxy/Player;Ldev/hubpilot/core/ManagedServer;I)V
+    0 aload_1                
+    1 invokeinterface        #53 com/velocitypowered/api/proxy/Player.isActive()Z, 1, 0
+    6 ifeq                   ->19
+    9 aload_0                
+   10 aload_1                
+   11 aload_2                
+   12 iload_3                
+   13 invokevirtual          #136 dev/hubpilot/core/LifecycleManager.connect(Lcom/velocitypowered/api/proxy/Player;Ldev/hubpilot/core/ManagedServer;I)V
+   16 goto                   ->33
+   19 aload_0                
+   20 aload_2                
+   21 invokevirtual          #99 dev/hubpilot/core/ManagedServer.id()Ljava/lang/String;
+   24 aload_1                
+   25 invokeinterface        #222 com/velocitypowered/api/proxy/Player.getUniqueId()Ljava/util/UUID;, 1, 0
+   30 invokevirtual          #782 dev/hubpilot/core/LifecycleManager.finishPendingTransfer(Ljava/lang/String;Ljava/util/UUID;)V
+   33 return                 
+Exception table: []
+
+METHOD lambda$connect$8(Ljava/lang/String;)Ljava/util/Set;
+    0 invokestatic           #1139 java/util/concurrent/ConcurrentHashMap.newKeySet()Ljava/util/concurrent/ConcurrentHashMap$KeySetView;
+    3 areturn                
+Exception table: []
