@@ -9,3 +9,5 @@ Fix: resolve `IRON_CHAIN` by name, falling back to `CHAIN` only when the newer m
 Regression: `python3 reconstruction/chain-test.py --jdk <reference-jdk> --fixed`. Four independent JVM cases: baseline succeeds on 1.21.8 and reproduces the error on 1.21.10; fixed candidate initializes with CHAIN on 1.21.8 and IRON_CHAIN on 1.21.10. The test reads the actual menu's Link icon slot, not an independent helper implementation.
 
 Review scope: one production source file, one private static helper, same icon position/other icons. Existing historical replacement files remain untouched. Public baseline package/ABI checks that intentionally require no extra private members must not be interpreted as product-fix acceptance gates. Full live player menu behavior is a separate acceptance item.
+
+Live follow-up: the fixed candidate loaded on actual Paper 1.21.10-130-8043efd, and the disposable probe constructed the real 54-slot Bukkit telemetry inventory with all Paper-side components enabled. This is automated server-side acceptance, not a player UI sign-off.

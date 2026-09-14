@@ -1,0 +1,9 @@
+{
+  "same_pinned_environment_fresh_output_builds_identical": true,
+  "hashes": {
+    "HubPilot-Core-1.0.2-reconstructed.jar": "db7653d95c95de0496a3b2949658a9c75c38f01be52bf93b6117eb588cae9fce",
+    "HubPilot-Hub-1.0.2-reconstructed.jar": "000d16f153f0340e10020ec3176a4f58b5b85ad6df04170b8b2d46c1124277a0",
+    "HubPilot-Interact-1.0.2-reconstructed.jar": "f5ba407f3bfd175b2e40210a72dcc38897a557d9aa8073d77bd98e902eb05c96",
+    "HubPilot-Link-1.0.2-reconstructed.jar": "bc4e25c64192df4b112832bacb69f6ec569aabedd867b4ed0c7c89799b0359b9"
+  }
+}

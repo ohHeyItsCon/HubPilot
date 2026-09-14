@@ -19,3 +19,5 @@ Reconstructed source had merged reused local-variable slots: identifier with lat
 Before repair: public Core passes all seven; checkpoint-derived candidate fails the unrelated-channel case. After repair: both must pass with identical output. Live repeat must confirm actual settings application and absence of the prior ClassCastException. The test fixture uses actual channel identifiers and Java binary framing, not source-pattern assertions.
 
 The preserved `ea5f439` checkpoint remains useful provenance but is now known to contain this transport regression and must not be deployed. This correction belongs in its own reconstruction-repair commit, separate from the CHAIN compatibility fix and proposed lifecycle defects.
+
+Measured result: after repair, both binary sets pass all seven cases. A repeat actual offline-client connection through Velocity applies the Hub snapshot (`format-version=2`) and logs no prior cast error. A focused ASM scan across all four components found no remaining added CHECKCAST instructions in matched baseline methods; this is targeted evidence, not full semantic equivalence.

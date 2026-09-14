@@ -2,6 +2,10 @@
 
 This is a **source-only, four-component reconstruction candidate**, not the original build workspace and not a new approved release. It is based exclusively on the hash-pinned public 1.0.2 JARs in `development/handoff-2026-09-13/public-artifacts.json`, plus the nine surviving replacement source files. No production or pre-public workspace is an input.
 
+## Readiness follow-up
+
+See [DEPLOYMENT-READINESS.md](DEPLOYMENT-READINESS.md) for subsequent live acceptance. The preserved `ea5f439` checkpoint has a discovered settings-transport reconstruction regression; [SETTINGS-RECONSTRUCTION-REPAIR.md](SETTINGS-RECONSTRUCTION-REPAIR.md) documents its bytecode-backed correction. [CHAIN-REVIEW.md](CHAIN-REVIEW.md) is a separate compatibility fix. Neither is a deployment approval.
+
 ## Build
 
 Requirements: Python 3.10+, a JDK (not just JRE), HTTPS access for the first dependency download. Reference toolchain is **Eclipse Temurin 21.0.8+9, Linux x64**. All own classes are compiled with `--release 21 -proc:none -g -encoding UTF-8`. Other platforms/JDK builds have not been qualified for identical output.
