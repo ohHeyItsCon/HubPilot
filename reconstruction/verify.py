@@ -19,7 +19,7 @@ if args.offline:
         b.fetch({'name':asset['name'],'url':asset['browser_download_url'],'sha256':asset['sha256']},baseline,True)
 subprocess.run([sys.executable,str(ROOT/'development/handoff-2026-09-13/recover_public_release.py'),'--output',str(baseline)],check=True)
 run('build.py',*opts)
-run('verify-packages.py');run('verify-abi.py');run('verify-bytecode.py','--jdk',args.jdk);run('test.py','--jdk',args.jdk)
+run('verify-packages.py');run('verify-abi.py');run('verify-bytecode.py','--jdk',args.jdk);run('test.py','--jdk',args.jdk);run('settings-test.py','--jdk',args.jdk)
 if args.fixtures:run('fixtures.py',*opts)
 for component,folder in [('hub','hub-src'),('interact','src')]:
  for original in (ROOT/'development/1.0.2'/folder).rglob('*.java'):

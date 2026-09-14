@@ -50,17 +50,17 @@ public final class SettingsSyncHook {
          return false;
       } else {
          try {
-            Properties var7 = (Properties)invoke(var0, "getIdentifier");
-            String var8 = String.valueOf(invoke(var7, "getId"));
+            Object identifier = invoke(var0, "getIdentifier");
+            String var8 = String.valueOf(invoke(identifier, "getId"));
             if (!"hubpilot:settings".equalsIgnoreCase(var8)) {
                return false;
             } else {
                markHandled(var0);
-               Path var9 = (Path)invoke(var0, "getSource");
+               Object source = invoke(var0, "getSource");
 
                Object var6;
                try {
-                  var6 = invoke(var9, "getServerInfo");
+                  var6 = invoke(source, "getServerInfo");
                } catch (Throwable var26) {
                   return true;
                }
@@ -69,17 +69,17 @@ public final class SettingsSyncHook {
                Object var4 = invoke(config, "snapshot");
                if (invoke(var4, "trustedRequestServers") instanceof Collection var11
                   && !var11.stream().map(var0x -> String.valueOf(var0x).toLowerCase(Locale.ROOT)).noneMatch(var5::equals)) {
-                  var6 = (byte[])invoke(var0, "getData");
-                  if (var6 == null) {
+                  byte[] payload = (byte[])invoke(var0, "getData");
+                  if (payload == null) {
                      return true;
-                  } else if (((Object[])var6).length == 0) {
+                  } else if (payload.length == 0) {
                      return true;
-                  } else if (((Object[])var6).length > 65535) {
+                  } else if (payload.length > 65535) {
                      return true;
                   } else {
-                     var7 = new Properties();
+                     Properties var7 = new Properties();
 
-                     try (DataInputStream var34 = new DataInputStream(new ByteArrayInputStream((byte[])var6))) {
+                     try (DataInputStream var34 = new DataInputStream(new ByteArrayInputStream(payload))) {
                         if (!"SETTINGS_SNAPSHOT".equals(var34.readUTF())) {
                            return true;
                         }
@@ -104,7 +104,7 @@ public final class SettingsSyncHook {
                         }
                      }
 
-                     var9 = Path.of(String.valueOf(invoke(var4, "sharedDirectory")));
+                     Path var9 = Path.of(String.valueOf(invoke(var4, "sharedDirectory")));
                      Files.createDirectories(var9);
                      Path var42 = var9.resolve("hubpilot.properties");
                      Properties var31 = new Properties();
