@@ -55,6 +55,23 @@ It would discover hub candidates, let the owner select several hubs, create grou
 
 Offer starting settings for small, medium, and large networks. Ask about providers, Paper or modded backends, expected startup times, automatic shutdown, and Navigator groups. Every setting would remain editable afterward.
 
+
+### Controller ↔ HubPilot pairing and status
+
+Add a real integration layer between HubPilot Controller and the Core/Hub/Link plugins instead of treating them as separate management systems.
+
+The Controller should be able to:
+
+- Recognize when a HubPilot installation has completed `/hp setup` and show whether the hub is unclaimed, claimed, configured, or ready.
+- Pair with the HubPilot network through an explicit trust flow instead of inferring setup from files or server state.
+- Show the active owner/setup state without exposing secrets or requiring direct database edits.
+- Report transfer/startup state from Core in the Controller, including queued, starting, countdown, switching, failed, and completed states.
+- Show which backend a player was actually transferred to and avoid reporting success before the real backend switch.
+- Survive Controller, proxy, and hub restarts without requiring the network to be paired again.
+- Make stale, invalid, duplicate, or revoked pairings obvious and recoverable.
+
+Design the pairing protocol separately from the current Controller server-management APIs. The existing plugin-side `/hp setup` flow remains authoritative until this integration is implemented.
+
 ### Navigator folders
 
 Let an entry open another Navigator page. Small networks could organize servers into folders on one hub; multi-hub networks could use those folders within their profiles.
@@ -94,6 +111,19 @@ The **1.0.2 prerelease** adds editable join and queue messages, visibility contr
 Later additions could include wait estimates, queue limits, staff/VIP priority, and better handling of simultaneous requests.
 
 ## Core
+
+### Transfer reliability and provider diagnostics
+
+Harden the transfer/startup path based on validation of Core/Hub/Link 1.0.2.
+
+- Honor configured startup timeout values, including global defaults and per-server overrides, rather than falling back to a fixed timeout.
+- Convert provider failures into concise player-facing HubPilot messages while keeping detailed provider responses in server logs.
+- Make provider logging name the actual configured provider instead of assuming Crafty.
+- Keep duplicate requests idempotent, clear queues after failed or timed-out starts, and preserve fallback-to-hub behavior when a destination dies.
+- Keep transfer state truthful: countdown and joining messages should precede the actual switch, and success should only be represented after the backend change is confirmed.
+- Improve setup-after-completion messaging so an already-ready installation is shown as configured rather than as “First-Time Setup.”
+
+The existing persistent-countdown roadmap item remains the planned path for delaying transfers to destinations that are already online.
 
 ### Scheduled availability
 
