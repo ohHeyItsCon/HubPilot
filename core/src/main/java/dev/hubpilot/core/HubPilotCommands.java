@@ -2,6 +2,7 @@ package dev.hubpilot.core;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
+import com.velocitypowered.api.proxy.server.RegisteredServer;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -371,12 +372,14 @@ final class HubPilotCommands {
 
    private void provider(Object var1, String[] var2) {
       if (var2.length < 3) {
-         send(var1, "Usage: /hp provider <server> <crafty|always-online> [crafty-uuid]");
+         send(var1, "Usage: /hp provider <server> <crafty|hubpilot-controller|always-online> [server-uuid]");
       } else {
-         String var3 = var2[2].toLowerCase(Locale.ROOT);
+         String var3 = ProviderAliases.canonical(var2[2].toLowerCase(Locale.ROOT));
          String var4 = var2.length >= 4 ? var2[3].trim() : "";
-         if (!var3.equals("crafty") && !var3.equals("always-online")) {
-            send(var1, "Provider must be crafty or always-online.");
+         if (!var3.equals("crafty") && !var3.equals("always-online") && !var3.equals(ControllerProvider.TYPE)) {
+            send(var1, "Provider must be crafty, hubpilot-controller or always-online.");
+         } else if (var3.equals(ControllerProvider.TYPE) && !ControllerProvider.isUuid(var4)) {
+            send(var1, "HubPilot Controller requires the server's UUID. List them with /hp controller servers.");
          } else if (var3.equals("crafty") && !var4.matches("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}")) {
             send(var1, "Crafty requires a valid server UUID.");
          } else {
@@ -392,6 +395,94 @@ final class HubPilotCommands {
             }
          }
       }
+   }
+
+   /** /hp controller pair <https-url> | code <code> | status | servers | map | unpair */
+   private void controller(Object var1, String[] var2) {
+      String var3 = var2.length >= 2 ? var2[1].toLowerCase(Locale.ROOT) : "status";
+      ProviderRegistry var4 = ProviderRegistry.get();
+      CompletableFuture.runAsync(() -> {
+         try {
+            switch (var3) {
+               case "pair": {
+                  if (var2.length < 3) {
+                     send(var1, "Usage: /hp controller pair https://<controller-address>:9095");
+                     return;
+                  }
+                  String[] var5 = ControllerProvider.beginPairing(var2[2], 10);
+                  send(var1, "Controller certificate fingerprint (SHA-256): " + ControllerProvider.pretty(var5[1]));
+                  send(var1, "Check it matches the fingerprint in the Controller under Settings > Connections.");
+                  send(var1, "Then approve this HubPilot there with the challenge: " + var5[0]);
+                  send(var1, "Enter the one-time code it gives you with /hp controller code <code> (within 5 minutes).");
+                  return;
+               }
+               case "code": {
+                  if (var2.length < 3) {
+                     send(var1, "Usage: /hp controller code <code>");
+                     return;
+                  }
+                  String[] var6 = ControllerProvider.finishPairing(var2[2], 10);
+                  var4.saveControllerPairing(var6[0], var6[1], var6[2]);
+                  send(var1, "Paired with the HubPilot Controller at " + var6[0] + ". Credential " + (var6[3] == null ? "" : var6[3]) + " is stored in secrets.yml.");
+                  send(var1, "Next: /hp controller map, then set each delegated server's lifecycle to HubPilot in the Controller.");
+                  return;
+               }
+               case "servers": {
+                  ProviderRegistry.Definition var7 = var4.controllerDefinition();
+                  if (var7 == null || !var7.enabled()) {
+                     send(var1, "Not paired. Run /hp controller pair <url>.");
+                     return;
+                  }
+                  for (ControllerProvider.Server var8 : ControllerProvider.servers(var7, var4.controllerSecret())) {
+                     send(var1, var8.name() + " · " + var8.role() + " · port " + var8.port() + " · " + var8.state() + " · " + var8.id());
+                  }
+                  return;
+               }
+               case "map": {
+                  ProviderRegistry.Definition var9 = var4.controllerDefinition();
+                  if (var9 == null || !var9.enabled()) {
+                     send(var1, "Not paired. Run /hp controller pair <url>.");
+                     return;
+                  }
+                  List<ControllerProvider.Server> var10 = ControllerProvider.servers(var9, var4.controllerSecret());
+                  int var11 = 0;
+                  for (ManagedServer var12 : this.config.snapshot().servers().values()) {
+                     Optional<RegisteredServer> var13 = this.proxy.getServer(var12.velocityServer());
+                     if (var13.isEmpty()) continue;
+                     int var14 = var13.get().getServerInfo().getAddress().getPort();
+                     List<ControllerProvider.Server> var15 = var10.stream().filter(x -> x.port() == var14 && !"proxy".equals(x.role())).toList();
+                     if (var15.size() == 1) {
+                        this.config.setStartupProvider(var12.id(), ControllerProvider.TYPE, var15.get(0).id());
+                        send(var1, "Mapped " + var12.id() + " -> " + var15.get(0).name() + " (port " + var14 + ")");
+                        var11++;
+                     } else if (var15.size() > 1) {
+                        send(var1, "Skipped " + var12.id() + ": several Controller servers use port " + var14 + ". Use /hp provider.");
+                     }
+                  }
+                  this.config.reload();
+                  send(var1, "Mapped " + var11 + " server(s) by port. Unmatched servers keep their provider.");
+                  return;
+               }
+               case "unpair": {
+                  var4.clearControllerPairing();
+                  send(var1, "Controller pairing removed here. Revoke the credential in the Controller under Settings > Connections too.");
+                  return;
+               }
+               default: {
+                  ProviderRegistry.Definition var16 = var4.controllerDefinition();
+                  if (var16 == null || !var16.enabled()) {
+                     send(var1, "HubPilot Controller: not paired. /hp controller pair https://<address>:9095");
+                  } else {
+                     ProviderRegistry.Result var17 = ControllerProvider.test(var16, var4.controllerSecret());
+                     send(var1, "HubPilot Controller at " + var16.baseUrl() + ": " + (var17.success() ? "connected" : "error: " + var17.error()));
+                     send(var1, "Certificate pin: " + ControllerProvider.pretty(var16.values().getOrDefault("tls-pin", "")));
+                  }
+               }
+            }
+         } catch (Exception var18) {
+            send(var1, "Controller: " + var18.getMessage());
+         }
+      });
    }
 
    private void repair(Object var1) {
@@ -623,7 +714,7 @@ final class HubPilotCommands {
                String[] var3 = var1.arguments();
                if (var3.length == 0) {
                   HubPilotCommands.send(var2, "HubPilot Core 1.0.2 — /hp hub, /hp status <server>, /hp request <server>, /hp discover, /hp doctor, /hp cancel");
-                  HubPilotCommands.send(var2, "Admin/console: /hp reload, /hp repair, /hp provider <server> <crafty|always-online> [uuid]");
+                  HubPilotCommands.send(var2, "Admin/console: /hp reload, /hp repair, /hp provider <server> <crafty|hubpilot-controller|always-online> [uuid], /hp controller");
                } else {
                   String var4 = var3[0].toLowerCase(Locale.ROOT);
                   switch (var4) {
@@ -641,6 +732,11 @@ final class HubPilotCommands {
                      case "setprovider":
                         if (HubPilotCommands.this.requireAdmin(var2)) {
                            HubPilotCommands.this.provider(var2, var3);
+                        }
+                        break;
+                     case "controller":
+                        if (HubPilotCommands.this.requireAdmin(var2)) {
+                           HubPilotCommands.this.controller(var2, var3);
                         }
                         break;
                      case "doctor":
@@ -697,7 +793,7 @@ final class HubPilotCommands {
             if (var2.length <= 1) {
                ArrayList var3 = new ArrayList<>(List.of("hub", "status", "request", "doctor", "cancel"));
                if (HubPilotCommands.isAdmin(var1.source())) {
-                  var3.addAll(List.of("reload", "repair", "provider"));
+                  var3.addAll(List.of("reload", "repair", "provider", "controller"));
                }
 
                return HubPilotCommands.filter(var3, var2.length == 0 ? "" : var2[0]);
@@ -708,7 +804,7 @@ final class HubPilotCommands {
                   && !var2[0].equalsIgnoreCase("setprovider")) {
                return var2.length != 3 || !var2[0].equalsIgnoreCase("provider") && !var2[0].equalsIgnoreCase("setprovider")
                   ? List.of()
-                  : HubPilotCommands.filter(List.of("crafty", "always-online"), var2[2]);
+                  : HubPilotCommands.filter(List.of("crafty", ControllerProvider.TYPE, "always-online"), var2[2]);
             } else {
                return HubPilotCommands.filter(new ArrayList<>(HubPilotCommands.this.config.snapshot().servers().keySet()), var2[1]);
             }

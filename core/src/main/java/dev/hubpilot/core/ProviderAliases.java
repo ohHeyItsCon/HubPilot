@@ -15,6 +15,7 @@ final class ProviderAliases {
          return switch (var1) {
             case "craft" -> "crafty";
             case "always", "alwaysonline", "always_online" -> "always-online";
+            case "controller", "hpc", "hubpilot_controller", "hubpilotcontroller" -> ControllerProvider.TYPE;
             default -> var1;
          };
       }

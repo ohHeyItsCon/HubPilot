@@ -92,6 +92,8 @@ final class ProviderRegistry {
             }
 
             var2.putIfAbsent("always-online", new ProviderRegistry.Definition("always-online", "always-on", true, "", "", false, 10, Map.of()));
+            // Template for the HubPilot Controller provider; filled in by /hp controller pair.
+            var2.putIfAbsent(ControllerProvider.ID, new ProviderRegistry.Definition(ControllerProvider.ID, ControllerProvider.TYPE, false, "", ControllerProvider.SECRET, false, 10, Map.of("type", ControllerProvider.TYPE)));
             this.definitions = Map.copyOf(var2);
             Map var17 = this.load(this.dataDir.resolve("secrets.yml"));
             LinkedHashMap var18 = new LinkedHashMap();
@@ -189,6 +191,7 @@ final class ProviderRegistry {
                   case "crafty" -> this.crafty(var3, var4, var2);
                   case "pterodactyl" -> this.pterodactyl(var3, var4, var2);
                   case "generic-http" -> this.generic(var3, var4, var2);
+                  case ControllerProvider.TYPE -> ControllerProvider.power(var3, this.secret(var3), var4, var2);
                   default -> ProviderRegistry.Result.fail(0, "Unsupported provider type: " + var3.type());
                };
             }
@@ -210,6 +213,9 @@ final class ProviderRegistry {
             return this.remember(ProviderRegistry.Result.fail(0, "Provider is disabled."));
          } else if (!"always-on".equals(var2.type()) && !"always-online".equals(var2.type())) {
             String var3 = this.secret(var2);
+            if (ControllerProvider.TYPE.equals(var2.type())) {
+               return this.remember(ControllerProvider.test(var2, var3));
+            }
             if (("crafty".equals(var2.type()) || "pterodactyl".equals(var2.type())) && var3.isBlank()) {
                return this.remember(ProviderRegistry.Result.fail(0, "No API key is configured."));
             } else {
@@ -258,6 +264,7 @@ final class ProviderRegistry {
          case "crafty" -> "crafty";
          case "pterodactyl" -> "pterodactyl";
          case "generic-http" -> "generic-http";
+         case ControllerProvider.TYPE -> ControllerProvider.TYPE;
          default -> null;
       };
       if (var3 == null) {
@@ -313,6 +320,45 @@ final class ProviderRegistry {
       } else {
          return "API key cannot be empty.";
       }
+   }
+
+   ProviderRegistry.Definition controllerDefinition() {
+      this.reloadIfChanged();
+      return this.definitions.get(ControllerProvider.ID);
+   }
+
+   String controllerSecret() {
+      ProviderRegistry.Definition var1 = this.controllerDefinition();
+      return var1 == null ? "" : this.secret(var1);
+   }
+
+   /** Stores a completed Controller pairing; becomes the primary provider when none is configured. */
+   synchronized void saveControllerPairing(String var1, String var2, String var3) {
+      this.reloadIfChanged();
+      LinkedHashMap<String, ProviderRegistry.Definition> var4 = new LinkedHashMap<>(this.definitions);
+      ProviderRegistry.Definition var5 = var4.get(ControllerProvider.ID);
+      int var6 = var5 == null ? 10 : var5.timeout();
+      var4.put(ControllerProvider.ID, new ProviderRegistry.Definition(ControllerProvider.ID, ControllerProvider.TYPE, true, var1, ControllerProvider.SECRET, false, var6,
+         Map.of("type", ControllerProvider.TYPE, "enabled", "true", "base-url", var1, "tls-pin", var2, "secret", ControllerProvider.SECRET,
+            "connect-timeout-seconds", String.valueOf(var6))));
+      String var7 = "always-online".equals(this.primary) ? ControllerProvider.ID : this.primary;
+      this.writeProviders(var4, var7);
+      LinkedHashMap<String, String> var8 = new LinkedHashMap<>(this.secrets);
+      var8.put(ControllerProvider.SECRET, var3);
+      this.writeSecrets(var8);
+      this.reload();
+   }
+
+   /** Forgets the Controller pairing locally. The credential should also be revoked in the Controller. */
+   synchronized void clearControllerPairing() {
+      this.reloadIfChanged();
+      LinkedHashMap<String, ProviderRegistry.Definition> var1 = new LinkedHashMap<>(this.definitions);
+      var1.put(ControllerProvider.ID, new ProviderRegistry.Definition(ControllerProvider.ID, ControllerProvider.TYPE, false, "", ControllerProvider.SECRET, false, 10, Map.of("type", ControllerProvider.TYPE)));
+      this.writeProviders(var1, ControllerProvider.ID.equals(this.primary) ? "always-online" : this.primary);
+      LinkedHashMap<String, String> var2 = new LinkedHashMap<>(this.secrets);
+      var2.put(ControllerProvider.SECRET, "");
+      this.writeSecrets(var2);
+      this.reload();
    }
 
    private ProviderRegistry.Result crafty(ProviderRegistry.Definition var1, String var2, String var3) throws Exception {

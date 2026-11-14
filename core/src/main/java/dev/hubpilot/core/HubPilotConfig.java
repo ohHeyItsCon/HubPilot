@@ -112,11 +112,13 @@ final class HubPilotConfig {
          throw new IOException("Invalid server id: " + var1);
       } else {
          String var5 = var2 == null ? "" : var2.trim().toLowerCase(Locale.ROOT);
-         if (!var5.equals("crafty") && !var5.equals("always-online")) {
+         if (!var5.equals("crafty") && !var5.equals("always-online") && !var5.equals(ControllerProvider.TYPE)) {
             throw new IOException("Unsupported provider: " + var2);
          } else {
             String var4 = var3 == null ? "" : var3.trim();
-            if (var5.equals("crafty") && !var4.matches("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}")) {
+            if (var5.equals(ControllerProvider.TYPE) && !ControllerProvider.isUuid(var4)) {
+               throw new IOException("HubPilot Controller requires a server UUID");
+            } else if (var5.equals("crafty") && !var4.matches("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}")) {
                throw new IOException("Crafty requires a valid server UUID");
             } else {
                if (var5.equals("always-online")) {
