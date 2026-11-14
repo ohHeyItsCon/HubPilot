@@ -13,12 +13,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class HubPilotLinkBukkit extends JavaPlugin {
    private static final String CHANNEL = "hubpilot:telemetry";
    private static final int PROTOCOL = 1;
-   private static final String VERSION = "1.0.2";
+   private static final String VERSION = "1.1.0-beta.1";
 
    public void onEnable() {
       this.getServer().getMessenger().registerOutgoingPluginChannel(this, "hubpilot:telemetry");
       this.getServer().getScheduler().runTaskTimer(this, this::heartbeatSafe, 20L, 20L);
-      this.getLogger().info("HubPilot Link 1.0.2 enabled. Rich telemetry will be sent while at least one player is connected.");
+      this.getLogger().info("HubPilot Link 1.1.0-beta.1 enabled. Rich telemetry will be sent while at least one player is connected.");
       PublicLinkBootstrap.attach(this);
       PublicLinkCommand.install(this);
    }
@@ -53,7 +53,7 @@ public final class HubPilotLinkBukkit extends JavaPlugin {
          var16.writeInt(1);
          var16.writeUTF("PAPER");
          var16.writeUTF(this.minecraftVersion());
-         var16.writeUTF("1.0.2");
+         var16.writeUTF("1.1.0-beta.1");
          var16.writeDouble(var7);
          var16.writeDouble(var9);
          var16.writeLong(var3);

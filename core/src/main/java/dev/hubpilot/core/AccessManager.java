@@ -52,7 +52,7 @@ final class AccessManager {
 
       PublicDefaults.install(var1);
       this.reload(true);
-      this.recordComponent("Core", "1.0.2", "velocity");
+      this.recordComponent("Core", "1.1.0-beta.1", "velocity");
    }
 
    synchronized void setHubServer(String var1) {

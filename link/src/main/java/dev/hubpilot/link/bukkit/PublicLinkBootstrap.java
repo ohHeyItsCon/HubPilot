@@ -30,7 +30,7 @@ public final class PublicLinkBootstrap {
                var4.writeUTF("COMPONENT");
                var4.writeUTF(var2.getUniqueId().toString());
                var4.writeUTF("Link");
-               var4.writeUTF("1.0.2");
+               var4.writeUTF("1.1.0-beta.1");
             }
 
             var2.sendPluginMessage(var0, "hubpilot:auth", var3.toByteArray());

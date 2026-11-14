@@ -11,7 +11,7 @@ p=argparse.ArgumentParser();p.add_argument('--jdk',type=Path,required=True);a=p.
 lock=json.loads((ROOT/'reconstruction/dependencies.lock.json').read_text())
 deps=[str(ROOT/'build/deps'/e['name']) for e in lock]
 classes=ROOT/'build/test-classes';classes.mkdir(exist_ok=True)
-candidate=ROOT/'build/candidate/HubPilot-Core-1.0.2-reconstructed.jar'
+candidate=ROOT/'build/candidate/HubPilot-Core-1.1.0-beta.1.jar'
 cp=os.pathsep.join([str(candidate),*deps])
 sources=sorted((ROOT/'tests/src').rglob('*.java'))
 subprocess.run([str(a.jdk/'bin/javac'),'--release','21','-proc:none','-cp',cp,'-d',str(classes),*map(str,sources)],check=True)

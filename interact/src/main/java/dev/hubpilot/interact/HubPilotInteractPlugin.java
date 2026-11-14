@@ -81,7 +81,7 @@ extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents((Listener)new InteractionListener(this), (Plugin)this);
         Logger logger = this.getLogger();
         UnifiedInteractCommand.install(this);
-        logger.info("HubPilot Interact 1.0.2 enabled.");
+        logger.info("HubPilot Interact 1.1.0-beta.1 enabled.");
     }
 
     public void onDisable() {

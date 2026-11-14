@@ -463,6 +463,20 @@ final class HubPilotCommands {
                   send(var1, "Mapped " + var11 + " server(s) by port. Unmatched servers keep their provider.");
                   return;
                }
+               case "link": {
+                  if (var2.length < 3) {
+                     send(var1, "Usage: /hp controller link <hpl_ code from the Controller's Proxy > HubPilot panel>");
+                     return;
+                  }
+                  String var19 = ControllerLink.get().claim(var2[2], ControllerLink.version(), var2.length >= 4 ? var2[3] : "");
+                  send(var1, "SUCCESS".equals(var19) ? "Linked. The Controller now shows live transfers and HubPilot's state." : var19);
+                  return;
+               }
+               case "unlink": {
+                  ControllerLink.get().unlink();
+                  send(var1, "Link removed here. Also end it in the Controller (Proxy > HubPilot > Revoke).");
+                  return;
+               }
                case "unpair": {
                   var4.clearControllerPairing();
                   send(var1, "Controller pairing removed here. Revoke the credential in the Controller under Settings > Connections too.");
@@ -476,6 +490,7 @@ final class HubPilotCommands {
                      ProviderRegistry.Result var17 = ControllerProvider.test(var16, var4.controllerSecret());
                      send(var1, "HubPilot Controller at " + var16.baseUrl() + ": " + (var17.success() ? "connected" : "error: " + var17.error()));
                      send(var1, "Certificate pin: " + ControllerProvider.pretty(var16.values().getOrDefault("tls-pin", "")));
+                     send(var1, "Live link: " + (ControllerLink.get().paired() ? ControllerLink.get().state() : "not linked (/hp controller link <code>)"));
                   }
                }
             }
@@ -713,7 +728,7 @@ final class HubPilotCommands {
                Object var2 = var1.source();
                String[] var3 = var1.arguments();
                if (var3.length == 0) {
-                  HubPilotCommands.send(var2, "HubPilot Core 1.0.2 — /hp hub, /hp status <server>, /hp request <server>, /hp discover, /hp doctor, /hp cancel");
+                  HubPilotCommands.send(var2, "HubPilot Core 1.1.0-beta.1 — /hp hub, /hp status <server>, /hp request <server>, /hp discover, /hp doctor, /hp cancel");
                   HubPilotCommands.send(var2, "Admin/console: /hp reload, /hp repair, /hp provider <server> <crafty|hubpilot-controller|always-online> [uuid], /hp controller");
                } else {
                   String var4 = var3[0].toLowerCase(Locale.ROOT);

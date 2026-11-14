@@ -19,7 +19,7 @@ final class PublicLinkCommand implements CommandExecutor, TabCompleter {
    }
 
    public boolean onCommand(CommandSender var1, Command var2, String var3, String[] var4) {
-      var1.sendMessage("§bHubPilot Link §f1.0.2");
+      var1.sendMessage("§bHubPilot Link §f1.1.0-beta.1");
       var1.sendMessage("§7Hub telemetry bridge is enabled. Use §f/hp status <server> §7from the network for server status.");
       return true;
    }

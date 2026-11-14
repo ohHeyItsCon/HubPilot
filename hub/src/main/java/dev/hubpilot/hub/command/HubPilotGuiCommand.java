@@ -36,7 +36,7 @@ import org.bukkit.inventory.ItemStack;
 public final class HubPilotGuiCommand
 implements CommandExecutor,
 TabCompleter {
-    private static final String VERSION = "1.0.2";
+    private static final String VERSION = "1.1.0-beta.1";
     private final HubPilotHubPlugin plugin;
 
     public HubPilotGuiCommand(HubPilotHubPlugin hubPilotHubPlugin) {
@@ -61,7 +61,7 @@ TabCompleter {
                 break;
             }
             case "version": {
-                commandSender.sendMessage("\u00a7bHubPilot Hub \u00a7f1.0.2");
+                commandSender.sendMessage("\u00a7bHubPilot Hub \u00a7f1.1.0-beta.1");
                 break;
             }
             case "open": 
@@ -141,7 +141,7 @@ TabCompleter {
     }
 
     private void help(CommandSender commandSender) {
-        commandSender.sendMessage("\u00a7b\u00a7lHubPilot Hub \u00a7f1.0.2");
+        commandSender.sendMessage("\u00a7b\u00a7lHubPilot Hub \u00a7f1.1.0-beta.1");
         commandSender.sendMessage("\u00a7e/hp gui open \u00a77- open server selector");
         commandSender.sendMessage("\u00a7e/hp gui help \u00a77- show help");
         commandSender.sendMessage("\u00a7e/hp gui version \u00a77- show version");

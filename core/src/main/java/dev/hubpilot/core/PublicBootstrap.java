@@ -31,6 +31,7 @@ final class PublicBootstrap {
          String var3 = var2.snapshot().hubServer();
          AccessManager.get().initialize(var0, var3);
          ProviderRegistry.get().initialize(var0, var1);
+         ControllerLink.get().initialize(var1);
       } catch (Throwable var4) {
          if (var1 != null) {
             var1.warn("HubPilot public bootstrap preparation failed: {}", new Object[]{String.valueOf(var4.getMessage())});

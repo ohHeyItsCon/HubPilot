@@ -68,6 +68,7 @@ final class LifecycleManager {
                StatusStore.ServerStatus var5 = this.status.get(var4.id());
                if (var5.online()) {
                   this.send(var1, "joining", "&7Joining {server}&7...", var4, Map.of());
+                  this.link(var1, var4, "switching", "");
                   this.connect(var1, var4, 0);
                } else {
                   Optional var6 = this.proxy.getServer(var4.velocityServer());
@@ -78,6 +79,7 @@ final class LifecycleManager {
                         if (var1.isActive()) {
                            if (var4x == null) {
                               this.status.setState(var4.id(), StatusStore.State.ONLINE);
+                              this.link(var1, var4, "switching", "");
                               this.connect(var1, var4, 0);
                            } else {
                               this.queueAndStart(var1, var4);
@@ -240,6 +242,7 @@ final class LifecycleManager {
             this.send(var1, "starting", "&eStarting {server}&e...", var2, this.queueValues(var5, var3.size()));
             this.send(var1, "queue-joined", "&7You are queue position &f{position}&7 of &f{queue_size}&7.", var2, this.queueValues(var5, var3.size()));
             var3.rememberPosition(var1.getUniqueId(), var5);
+            this.link(var1, var2, "starting_destination", "");
             this.stats.increment(var2.id(), "startup.requests");
             this.startCrafty(var3);
          } else {
@@ -250,6 +253,7 @@ final class LifecycleManager {
                this.send(var1, "already-starting", "&e{server}&e is already starting.", var2, this.queueValues(var6, var4.size()));
                this.send(var1, "queue-joined", "&7You are queue position &f{position}&7 of &f{queue_size}&7.", var2, this.queueValues(var6, var4.size()));
                var4.rememberPosition(var1.getUniqueId(), var6);
+               this.link(var1, var2, "queued", "Queue position " + var6 + " of " + var4.size());
             } else {
                this.send(
                   var1,
@@ -267,7 +271,10 @@ final class LifecycleManager {
       this.crafty.start(var1.server).whenComplete((var2, var3) -> {
          if (var3 == null && var2 != null && var2.success()) {
             var1.startAccepted = true;
-            this.logger.info("Crafty accepted start request for {}", new Object[]{var1.server.id()});
+            this.logger.info("{} accepted start request for {}", new Object[]{var1.server.provider(), var1.server.id()});
+            for (UUID var5 : var1.playerIds()) {
+               this.proxy.getPlayer(var5).ifPresent(var6 -> this.link(var6, var1.server, "waiting_for_readiness", ""));
+            }
          } else {
             String var4 = var3 != null ? rootMessage(var3) : (var2 == null ? "No Crafty response" : var2.error());
             this.failStart(var1, var4);
@@ -295,6 +302,9 @@ final class LifecycleManager {
                      this.stats.increment(var1.server.id(), "startup.successes");
                      this.stats.add(var1.server.id(), "startup.total-seconds", Math.max(0L, (var2 - var1.startedAt) / 1000L));
                      this.broadcast(var1, "ready", "&a{server}&a is ready.", Map.of());
+                     for (UUID var7 : var1.playerIds()) {
+                        this.proxy.getPlayer(var7).ifPresent(var8 -> this.link(var8, var1.server, "countdown", ""));
+                     }
                      this.logger
                         .info(
                            "{} became ready in {} seconds; queued players={}; countdown={}s; sound={}; volume={}; pitch={}",
@@ -442,6 +452,7 @@ final class LifecycleManager {
          for (UUID var3 : var1.playerIds()) {
             this.proxy.getPlayer(var3).filter(InboundConnection::isActive).ifPresent(var2 -> {
                this.send(var2, "joining", "&7Joining {server}&7...", var1.server, Map.of());
+               this.link(var2, var1.server, "switching", "");
                this.connect(var2, var1.server, 0);
             });
          }
@@ -463,12 +474,15 @@ final class LifecycleManager {
                (var5, var6) -> {
                   boolean var7 = var6 == null && var5 != null && var5.isSuccessful();
                   if (var7) {
+                     // Velocity confirmed the backend switch: only now is the transfer complete.
+                     this.link(var1, var2, "completed", "");
                      this.stats.increment(var2.id(), "joins.success");
                      this.lastActivity.put(var2.id(), System.currentTimeMillis());
                      this.finishPendingTransfer(var2.id(), var1.getUniqueId());
                   } else {
                      this.transferPermits.remove(var1.getUniqueId());
                      if (!var1.isActive()) {
+                        this.link(var1, var2, "cancelled", "Player left");
                         this.finishPendingTransfer(var2.id(), var1.getUniqueId());
                      } else {
                         if (var3 < var2.retryCount()) {
@@ -497,6 +511,7 @@ final class LifecycleManager {
                         } else {
                            this.stats.increment(var2.id(), "joins.failed");
                            this.send(var1, "connection-failed", "&cCould not connect to {server}&c.", var2, Map.of());
+                           this.link(var1, var2, "failed", "Could not connect after " + (var3 + 1) + " attempt(s)");
                            this.finishPendingTransfer(var2.id(), var1.getUniqueId());
                            if (var2.stopAfterFailure()
                               && !this.hasPendingTransfers(var2.id())
@@ -517,6 +532,9 @@ final class LifecycleManager {
          this.status.setState(var1.server.id(), StatusStore.State.OFFLINE);
          this.stats.increment(var1.server.id(), "startup.failures");
          this.broadcast(var1, "start-failed", "&c{server}&c failed to start: {error}", Map.of("error", var2));
+         for (UUID var3 : var1.playerIds()) {
+            this.proxy.getPlayer(var3).ifPresent(var4 -> this.link(var4, var1.server, "failed", var2));
+         }
          this.logger.warn("HubPilot could not start {}: {}", new Object[]{var1.server.id(), var2});
          if (var1.server.stopAfterFailure()) {
             this.stopServer(var1.server, "failed startup cleanup");
@@ -630,6 +648,16 @@ final class LifecycleManager {
       }
    }
 
+   /** Reports a transfer phase to the HubPilot Controller when a link is paired; a no-op otherwise. */
+   private void link(Player var1, ManagedServer var2, String var3, String var4) {
+      try {
+         String var5 = var1.getCurrentServer().map(var0 -> var0.getServerInfo().getName()).orElse("");
+         ControllerLink.get().report(var1.getUniqueId(), var1.getUsername(), var5, var2.velocityServer(), var3, var4);
+      } catch (RuntimeException var6) {
+         this.logger.debug("Controller link report skipped: {}", var6.getMessage());
+      }
+   }
+
    private void finishPendingTransfer(String var1, UUID var2) {
       Set var3 = this.pendingTransfers.get(var1);
       if (var3 != null) {
@@ -651,6 +679,7 @@ final class LifecycleManager {
       for (LifecycleManager.StartSession var5 : new ArrayList<>(this.sessions.values())) {
          if (var5.remove(var1)) {
             var3 = true;
+            this.proxy.getPlayer(var1).ifPresent(var6 -> this.link(var6, var5.server, "cancelled", var2 ? "Cancelled by the player" : "Left the queue"));
             this.status.setQueue(var5.server.id(), var5.size());
             this.notifyQueuePositions(var5);
             if (var2 && var5.size() == 0 && var5.server.stopWhenQueueEmpty()) {

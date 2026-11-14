@@ -322,8 +322,6 @@ final class ControllerProvider {
    }
 
    private static String version() {
-      Package p = ControllerProvider.class.getPackage();
-      String v = p == null ? null : p.getImplementationVersion();
-      return v == null ? "1.1.0" : v;
+      return HubPilotCorePlugin.VERSION;
    }
 }

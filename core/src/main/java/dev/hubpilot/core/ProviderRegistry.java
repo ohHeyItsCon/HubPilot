@@ -349,6 +349,19 @@ final class ProviderRegistry {
       this.reload();
    }
 
+   String linkToken() {
+      this.reloadIfChanged();
+      return this.resolveSecretText(this.secrets.getOrDefault(ControllerLink.TOKEN, "")).trim();
+   }
+
+   synchronized void saveLinkToken(String var1) {
+      this.reloadIfChanged();
+      LinkedHashMap<String, String> var2 = new LinkedHashMap<>(this.secrets);
+      var2.put(ControllerLink.TOKEN, var1 == null ? "" : var1);
+      this.writeSecrets(var2);
+      this.reload();
+   }
+
    /** Forgets the Controller pairing locally. The credential should also be revoked in the Controller. */
    synchronized void clearControllerPairing() {
       this.reloadIfChanged();
@@ -398,7 +411,7 @@ final class ProviderRegistry {
       Builder var3 = HttpRequest.newBuilder(var2)
          .timeout(Duration.ofSeconds(var1.timeout()))
          .header("Accept", "application/json")
-         .header("User-Agent", "HubPilot/1.0.2");
+         .header("User-Agent", "HubPilot/1.1.0-beta.1");
       String var4 = this.secret(var1);
       Map<String, String> var10000 = var1.values();
       String var6 = var1.type();

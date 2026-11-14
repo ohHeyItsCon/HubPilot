@@ -27,7 +27,7 @@ public final class AdminHomeBuilder {
          }
       }
 
-      var2.setItem(34, MenuItems.named(Material.NETHER_STAR, "&b&lAbout HubPilot", List.of("&7HubPilot Hub 1.0.2", "&7Velocity lifecycle core is separate")));
+      var2.setItem(34, MenuItems.named(Material.NETHER_STAR, "&b&lAbout HubPilot", List.of("&7HubPilot Hub 1.1.0-beta.1", "&7Velocity lifecycle core is separate")));
       var2.setItem(
          45,
          MenuItems.named(Material.HOPPER, "&e&lEdit Admin Layout", List.of("&7Move submenu buttons to any available slot", "&8This control cannot be moved"))

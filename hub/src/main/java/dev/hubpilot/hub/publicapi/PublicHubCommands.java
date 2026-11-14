@@ -15,7 +15,7 @@ public final class PublicHubCommands {
          if (!PublicHubBootstrap.setupReady()) {
             var1.sendMessage("§eHubPilot first-time setup is not complete. Use §f/hp claimowner §eand then §f/hp setup§e.");
          } else {
-            var1.sendMessage("§bHubPilot §f1.0.2 §7- use §f/hp help §7for commands or §f/hp gui admin §7for the admin GUI.");
+            var1.sendMessage("§bHubPilot §f1.1.0-beta.1 §7- use §f/hp help §7for commands or §f/hp gui admin §7for the admin GUI.");
          }
 
          return true;

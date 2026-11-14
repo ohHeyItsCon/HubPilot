@@ -72,7 +72,7 @@ def main():
             snake = next(p for p in jars if p.name == 'snakeyaml-2.1.jar')
             with zipfile.ZipFile(snake) as z:
                 entries.update({n: z.read(n) for n in z.namelist() if n.startswith('org/yaml/snakeyaml/') and n.endswith('.class')})
-        artifact = out / f'HubPilot-{c.title()}-1.0.2-reconstructed.jar'
+        artifact = out / f'HubPilot-{c.title()}-1.1.0-beta.1.jar'
         temporary = artifact.with_suffix('.jar.tmp')
         with zipfile.ZipFile(temporary, 'w', compression=zipfile.ZIP_STORED) as z:
             for name, data in sorted(entries.items()):

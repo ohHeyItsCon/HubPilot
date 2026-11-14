@@ -53,7 +53,7 @@ public final class PublicHubBootstrap implements Listener, PluginMessageListener
          Bukkit.getMessenger().registerOutgoingPluginChannel(var0, "hubpilot:control");
          Bukkit.getMessenger().registerIncomingPluginChannel(var0, "hubpilot:control", var1);
          Bukkit.getScheduler().runTaskTimer(var0, var1::heartbeat, 1L, 20L);
-         var0.getLogger().info("HubPilot 1.0.2 setup/staff authorization bridge enabled.");
+         var0.getLogger().info("HubPilot 1.1.0-beta.1 setup/staff authorization bridge enabled.");
       }
    }
 
