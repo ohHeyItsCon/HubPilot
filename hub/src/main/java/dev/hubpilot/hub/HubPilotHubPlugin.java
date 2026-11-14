@@ -85,7 +85,7 @@ public final class HubPilotHubPlugin extends JavaPlugin {
       this.getServer().getScheduler().runTaskTimer(this, var3::periodicRepair, 100L, 100L);
       this.getServer().getScheduler().runTaskTimer(this, () -> this.hubPilotRequestSender.requestStatusAnyPlayer(), 20L, 20L);
       this.getLogger()
-         .info("HubPilot Hub 1.1.0-beta.1 enabled with " + this.destinationStore.all().size() + " destinations. Admin dashboard and navigator controls enabled.");
+         .info(("HubPilot Hub " + dev.hubpilot.hub.BuildVersion.VERSION + " enabled with ") + this.destinationStore.all().size() + " destinations. Admin dashboard and navigator controls enabled.");
       PublicHubBootstrap.attach(this);
       UnifiedGuiBridge.attach(this);
       ServerControlUi.attach(this);

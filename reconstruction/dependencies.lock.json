@@ -70,10 +70,10 @@
     "scope": "compile/test; provided except Core SnakeYAML"
   },
   {
-    "coordinate": "org.yaml:snakeyaml:2.1",
-    "name": "snakeyaml-2.1.jar",
-    "url": "https://repo.maven.apache.org/maven2/org/yaml/snakeyaml/2.1/snakeyaml-2.1.jar",
-    "sha256": "69a4537045ddbcaed4c68eef074462eb12d324d7953f62c5ecd35df645e8aec9",
+    "coordinate": "org.yaml:snakeyaml:2.7",
+    "name": "snakeyaml-2.7.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/yaml/snakeyaml/2.7/snakeyaml-2.7.jar",
+    "sha256": "2e194eba45a67dee19a4e272f4a04b18de8054e9f598b094382f6dae0b0e4b5e",
     "scope": "compile/test; provided except Core SnakeYAML"
   },
   {
@@ -152,5 +152,12 @@
     "url": "https://repo.maven.apache.org/maven2/org/ow2/asm/asm-tree/9.8/asm-tree-9.8.jar",
     "sha256": "14b7880cb7c85eed101e2710432fc3ffb83275532a6a894dc4c4095d49ad59f1",
     "scope": "test/bytecode inspection only; never packaged"
+  },
+  {
+    "coordinate": "org.ow2.asm:asm-commons:9.8",
+    "name": "asm-commons-9.8.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/ow2/asm/asm-commons/9.8/asm-commons-9.8.jar",
+    "sha256": "3301a1c1cb4c59fcc5292648dac1d7c5aed4c0f067dfbe88873b8cdfe77404f4",
+    "scope": "build relocation only; never packaged"
   }
 ]

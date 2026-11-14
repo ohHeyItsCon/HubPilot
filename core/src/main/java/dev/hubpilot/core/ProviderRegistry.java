@@ -411,7 +411,7 @@ final class ProviderRegistry {
       Builder var3 = HttpRequest.newBuilder(var2)
          .timeout(Duration.ofSeconds(var1.timeout()))
          .header("Accept", "application/json")
-         .header("User-Agent", "HubPilot/1.1.0-beta.1");
+         .header("User-Agent", ("HubPilot/" + dev.hubpilot.core.BuildVersion.VERSION));
       String var4 = this.secret(var1);
       Map<String, String> var10000 = var1.values();
       String var6 = var1.type();

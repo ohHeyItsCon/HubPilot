@@ -1,0 +1,33 @@
+name: Beta build and regression checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  beta:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 reconstruction/bootstrap.py
+      - run: python3 reconstruction/build.py --jdk build/toolchain/jdk-21.0.8+9
+      - run: python3 reconstruction/beta-check.py
+      - run: python3 development/handoff-2026-09-13/recover_public_release.py --output build/baseline
+      - run: python3 reconstruction/test.py --jdk build/toolchain/jdk-21.0.8+9
+      - run: python3 reconstruction/settings-test.py --jdk build/toolchain/jdk-21.0.8+9
+      - run: python3 reconstruction/build.py --jdk build/toolchain/jdk-21.0.8+9 --offline --output build/repro-beta
+      - name: Verify reproducibility
+        run: |
+          for artifact in build/candidate/*.jar; do
+            cmp "$artifact" "build/repro-beta/$(basename "$artifact")"
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hubpilot-beta
+          path: |
+            build/candidate/*.jar
+            build/candidate/build-manifest.json

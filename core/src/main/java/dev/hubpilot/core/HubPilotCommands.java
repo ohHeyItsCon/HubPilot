@@ -728,7 +728,7 @@ final class HubPilotCommands {
                Object var2 = var1.source();
                String[] var3 = var1.arguments();
                if (var3.length == 0) {
-                  HubPilotCommands.send(var2, "HubPilot Core 1.1.0-beta.1 — /hp hub, /hp status <server>, /hp request <server>, /hp discover, /hp doctor, /hp cancel");
+                  HubPilotCommands.send(var2, ("HubPilot Core " + dev.hubpilot.core.BuildVersion.VERSION + " — /hp hub, /hp status <server>, /hp request <server>, /hp discover, /hp doctor, /hp cancel"));
                   HubPilotCommands.send(var2, "Admin/console: /hp reload, /hp repair, /hp provider <server> <crafty|hubpilot-controller|always-online> [uuid], /hp controller");
                } else {
                   String var4 = var3[0].toLowerCase(Locale.ROOT);

@@ -1,0 +1,4 @@
+d713ab8aab4e4546a0d993abef05015c351783f85e8d28febf58f2749805b592  HubPilot-Core-1.1.0-beta.1.jar
+754e6dbd9f835384dfb7030d63da6a1e46e9c16ec3e07eccda028b9e3f52b835  HubPilot-Hub-1.1.0-beta.1.jar
+339910a5da33bbe51b885ba2ce2cf386e25cf80c8b29581c87c29f10f8cba35a  HubPilot-Interact-1.1.0-beta.1.jar
+99bf956a41b30a9d699022211d4a072ae2a398104d4eb5b05da46c202cbd9b23  HubPilot-Link-1.1.0-beta.1.jar

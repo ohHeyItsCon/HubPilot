@@ -3,30 +3,29 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.yaml</groupId>
     <artifactId>snakeyaml</artifactId>
-    <version>2.1</version>
+    <version>2.7</version>
     <packaging>bundle</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.scm.id>bitbucket</project.scm.id>
-        <release.repo.url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</release.repo.url>
-        <snapshot.repo.url>https://oss.sonatype.org/content/repositories/snapshots/</snapshot.repo.url>
-        <maven.compiler.source>7</maven.compiler.source>
-        <maven.compiler.target>7</maven.compiler.target>
-        <maven.compiler.release>7</maven.compiler.release>
+        <project.scm.id>codeberg</project.scm.id>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.release>8</maven.compiler.release>
         <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
         <maven-bundle-plugin.version>5.1.8</maven-bundle-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version><!-- for Github CI -->
         <maven-site-plugin.version>3.12.1</maven-site-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
         <jdk11-illegal-access-level>deny</jdk11-illegal-access-level>
+        <jmh.version>1.36</jmh.version>
     </properties>
     <name>SnakeYAML</name>
     <description>YAML 1.1 parser and emitter for Java</description>
     <inceptionYear>2008</inceptionYear>
-    <url>https://bitbucket.org/snakeyaml/snakeyaml</url>
+    <url>https://codeberg.org/snakeyaml/snakeyaml</url>
     <issueManagement>
-        <system>Bitbucket</system>
-        <url>https://bitbucket.org/snakeyaml/snakeyaml/issues</url>
+        <system>codeberg</system>
+        <url>https://codeberg.org/snakeyaml/snakeyaml/issues</url>
     </issueManagement>
     <mailingLists>
         <mailingList>
@@ -35,10 +34,10 @@
         </mailingList>
     </mailingLists>
     <scm>
-        <connection>scm:git:http://bitbucket.org/snakeyaml/snakeyaml</connection>
-        <developerConnection>scm:git:ssh://git@bitbucket.org/snakeyaml/snakeyaml</developerConnection>
-        <url>https://bitbucket.org/snakeyaml/snakeyaml/src</url>
-        <tag>snakeyaml-2.1</tag>
+        <connection>scm:git:https://codeberg.org/snakeyaml/snakeyaml</connection>
+        <developerConnection>scm:git:ssh://git@codeberg.org/snakeyaml/snakeyaml</developerConnection>
+        <url>https://codeberg.org/snakeyaml/snakeyaml/src</url>
+        <tag>snakeyaml-2.7</tag>
     </scm>
     <licenses>
         <license>
@@ -81,35 +80,34 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
+            <version>1.18.42</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>2.18.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.yaml</groupId>
+                    <artifactId>snakeyaml</artifactId>
+                </exclusion>
+            </exclusions>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-core</artifactId>
-            <version>1.36</version>
+            <version>${jmh.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-generator-annprocess</artifactId>
-            <version>1.36</version>
+            <version>${jmh.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <distributionManagement>
-        <repository>
-            <id>sonatype-nexus-staging</id>
-            <name>Nexus Release Repository</name>
-            <url>${release.repo.url}</url>
-        </repository>
-        <snapshotRepository>
-            <id>sonatype-nexus-staging</id>
-            <name>Sonatype Nexus Snapshots</name>
-            <url>${snapshot.repo.url}</url>
-            <uniqueVersion>false</uniqueVersion>
-        </snapshotRepository>
-    </distributionManagement>
     <build>
         <testResources>
             <testResource>
@@ -272,6 +270,15 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>pw.krejci</groupId>
+                <artifactId>jmh-maven-plugin</artifactId>
+                <version>0.2.2</version>
+                <configuration>
+                    <resultFormat>json</resultFormat>
+                    <resultsFile>${project.build.directory}/jmh-result.json</resultsFile>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>com.mycila.maven-license-plugin</groupId>
                 <artifactId>maven-license-plugin</artifactId>
                 <version>1.10.b1</version>
@@ -336,22 +343,17 @@
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <useReleaseProfile>false</useReleaseProfile>
                     <releaseProfiles>release</releaseProfiles>
-                    <goals>deploy nexus-staging:release</goals>
+                    <goals>deploy</goals>
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <!-- the version is compatible with Nexus, do not change -->
-                <version>1.6.8</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>sonatype-nexus-staging</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
-                    <keepStagingRepositoryOnFailure>true</keepStagingRepositoryOnFailure>
-                    <keepStagingRepositoryOnCloseRuleFailure>true</keepStagingRepositoryOnCloseRuleFailure>
-                </configuration>
+              <groupId>org.sonatype.central</groupId>
+              <artifactId>central-publishing-maven-plugin</artifactId>
+              <version>0.7.0</version>
+              <extensions>true</extensions>
+              <configuration>
+                <publishingServerId>snakeyaml-central</publishingServerId>
+              </configuration>
             </plugin>
             <plugin>
                 <groupId>net.revelc.code.formatter</groupId>
@@ -377,9 +379,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-changes-plugin</artifactId>
                 <version>2.12.1</version>
-                <configuration>
-                    <issueLinkTemplate>https://bitbucket.org/snakeyaml/snakeyaml/issues/%ISSUE%</issueLinkTemplate>
-                </configuration>
                 <reportSets>
                     <reportSet>
                         <reports>
@@ -417,6 +416,30 @@
         </plugins>
     </reporting>
     <profiles>
+        <profile>
+            <!-- -proc:full requires JDK 21+. It keeps annotation processing (JMH) enabled for
+                 the tests, which recent JDKs no longer do implicitly. -->
+            <id>jdk21-annotation-processing</id>
+            <activation>
+                <jdk>[21,)</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>default-testCompile</id>
+                                <configuration>
+                                    <proc>full</proc>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>with-java11-tests</id>
             <properties>

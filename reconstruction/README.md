@@ -1,5 +1,19 @@
 # HubPilot 1.0.2 public-source reconstruction
 
+## Current beta build (2026-11-14)
+
+The checkout now builds **1.1.0-beta.1**, with Controller integration. The historical reconstruction description below is retained as provenance, not current release instructions.
+
+```sh
+python3 reconstruction/build.py --jdk build/toolchain/jdk-21.0.8+9
+python3 reconstruction/beta-check.py
+python3 reconstruction/test.py --jdk build/toolchain/jdk-21.0.8+9
+python3 reconstruction/settings-test.py --jdk build/toolchain/jdk-21.0.8+9
+```
+
+Read `release/1.1.0-beta.1/RELEASE-NOTES.md` for checks and remaining work. Root `VERSION` is authoritative. Core bundles private, relocated SnakeYAML 2.7. ASM is build-only. `verify.py` and its historical bytecode/package gates are not the current beta gate.
+
+
 This is a **source-only, four-component reconstruction candidate**, not the original build workspace and not a new approved release. It is based exclusively on the hash-pinned public 1.0.2 JARs in `development/handoff-2026-09-13/public-artifacts.json`, plus the nine surviving replacement source files. No production or pre-public workspace is an input.
 
 ## Readiness follow-up

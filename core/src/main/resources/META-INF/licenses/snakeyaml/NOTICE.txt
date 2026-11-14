@@ -1,2 +1,2 @@
-HubPilot Core includes SnakeYAML 2.1 (org.yaml:snakeyaml), licensed under Apache License 2.0.
+HubPilot Core includes SnakeYAML 2.7 (relocated to dev.hubpilot.libs.snakeyaml) (org.yaml:snakeyaml), licensed under Apache License 2.0.
 SnakeYAML is an independent third-party project. No AutoServer classes are included in this JAR.

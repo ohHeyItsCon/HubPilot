@@ -27,7 +27,7 @@ import java.util.Locale;
 import org.slf4j.Logger;
 
 public final class HubPilotCorePlugin {
-   static final String VERSION = "1.1.0-beta.1";
+   static final String VERSION = dev.hubpilot.core.BuildVersion.VERSION;
    static final MinecraftChannelIdentifier REQUEST_CHANNEL = MinecraftChannelIdentifier.create("hubpilot", "request");
    static final MinecraftChannelIdentifier LEGACY_REQUEST_CHANNEL = MinecraftChannelIdentifier.create("hubpilot", "request");
    static final MinecraftChannelIdentifier CONTROL_CHANNEL = MinecraftChannelIdentifier.create("hubpilot", "control");
@@ -93,7 +93,7 @@ public final class HubPilotCorePlugin {
          this.initialized = true;
          this.logger
             .info(
-               "HubPilot Core {} enabled with {} managed servers. AutoServer is not required.", new Object[]{"1.1.0-beta.1", this.config.snapshot().servers().size()}
+               "HubPilot Core {} enabled with {} managed servers. AutoServer is not required.", new Object[]{dev.hubpilot.core.BuildVersion.VERSION, this.config.snapshot().servers().size()}
             );
       } catch (Exception var3) {
          this.logger.error("HubPilot Core could not initialize: {}", new Object[]{var3.getMessage()});

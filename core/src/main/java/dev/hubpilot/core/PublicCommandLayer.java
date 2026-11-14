@@ -117,7 +117,7 @@ final class PublicCommandLayer {
       AccessManager.SetupState var3 = var2.state();
       UUID var4 = AccessManager.uuidOf(var0);
       if (var3 == AccessManager.SetupState.UNCLAIMED) {
-         send(var0, "§bHubPilot Setup §f1.1.0-beta.1");
+         send(var0, ("§bHubPilot Setup §f" + dev.hubpilot.core.BuildVersion.VERSION));
          send(var0, "§e1. Claim this installation with §f/hp claimowner§e while OP on the hub.");
          send(var0, "§72. Run /hp setup again to open guided setup.");
       } else if (var4 != null && !var2.isOwner(var4)) {
@@ -283,7 +283,7 @@ final class PublicCommandLayer {
    }
 
    private static void help(Object var0) {
-      send(var0, "§b§lHubPilot Core §f1.1.0-beta.1");
+      send(var0, ("§b§lHubPilot Core §f" + dev.hubpilot.core.BuildVersion.VERSION));
       AccessManager.SetupState var1 = AccessManager.get().state();
       send(var0, "§7Setup: §f" + var1);
       if (var1 == AccessManager.SetupState.UNCLAIMED) {
