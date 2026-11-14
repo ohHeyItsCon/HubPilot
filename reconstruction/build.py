@@ -74,10 +74,11 @@ def main():
                 entries.update({n: z.read(n) for n in z.namelist() if n.startswith('org/yaml/snakeyaml/') and n.endswith('.class')})
         artifact = out / f'HubPilot-{c.title()}-1.1.0-beta.1.jar'
         temporary = artifact.with_suffix('.jar.tmp')
-        with zipfile.ZipFile(temporary, 'w', compression=zipfile.ZIP_STORED) as z:
+        with zipfile.ZipFile(temporary, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as z:
             for name, data in sorted(entries.items()):
                 info = zipfile.ZipInfo(name, (1980, 1, 1, 0, 0, 0))
                 info.external_attr = 0o100644 << 16
+                info.compress_type = zipfile.ZIP_DEFLATED
                 z.writestr(info, data)
         temporary.replace(artifact)
         reports.append({'component': c, 'artifact': artifact.name, 'sha256': digest(artifact.read_bytes()),
