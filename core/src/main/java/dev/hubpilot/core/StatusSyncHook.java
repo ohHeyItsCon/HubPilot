@@ -134,7 +134,7 @@ public final class StatusSyncHook {
       if (channel != null) {
          for (Method var5 : var0.getClass().getMethods()) {
             if (var5.getName().equals("sendPluginMessage") && var5.getParameterCount() == 2 && var5.getParameterTypes()[1].equals(byte[].class)) {
-               HubPilotReflect.invokeAccessible(var5, var0, new Object[]{channel, var1});
+               Reflect.invokeAccessible(var5, var0, new Object[]{channel, var1});
                return;
             }
          }
@@ -146,8 +146,8 @@ public final class StatusSyncHook {
    private static void markHandled(Object var0) {
       try {
          Class var1 = Class.forName("com.velocitypowered.api.event.connection.PluginMessageEvent$ForwardResult", true, var0.getClass().getClassLoader());
-         Object var2 = HubPilotReflect.invokeAccessible(var1.getMethod("handled"), null, new Object[0]);
-         HubPilotReflect.invokeAccessible(var0.getClass().getMethod("setResult", var1), var0, new Object[]{var2});
+         Object var2 = Reflect.invokeAccessible(var1.getMethod("handled"), null, new Object[0]);
+         Reflect.invokeAccessible(var0.getClass().getMethod("setResult", var1), var0, new Object[]{var2});
       } catch (Throwable var3) {
       }
    }
@@ -179,7 +179,7 @@ public final class StatusSyncHook {
          } catch (Throwable var8) {
          }
 
-         return HubPilotReflect.invokeAccessible(var3, var0, var2);
+         return Reflect.invokeAccessible(var3, var0, var2);
       }
    }
 

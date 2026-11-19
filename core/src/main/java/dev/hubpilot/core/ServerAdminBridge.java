@@ -177,7 +177,7 @@ final class ServerAdminBridge {
                return false;
             }
          } else {
-            Class var3 = box(var0[var2]);
+            Class var3 = Reflect.box(var0[var2]);
             if (!var3.isAssignableFrom(var1[var2].getClass())) {
                return false;
             }
@@ -185,28 +185,6 @@ final class ServerAdminBridge {
       }
 
       return true;
-   }
-
-   private static Class<?> box(Class<?> var0) {
-      if (!var0.isPrimitive()) {
-         return var0;
-      } else if (var0 == boolean.class) {
-         return Boolean.class;
-      } else if (var0 == byte.class) {
-         return Byte.class;
-      } else if (var0 == short.class) {
-         return Short.class;
-      } else if (var0 == int.class) {
-         return Integer.class;
-      } else if (var0 == long.class) {
-         return Long.class;
-      } else if (var0 == float.class) {
-         return Float.class;
-      } else if (var0 == double.class) {
-         return Double.class;
-      } else {
-         return var0 == char.class ? Character.class : var0;
-      }
    }
 
    private static String str(Object var0) {

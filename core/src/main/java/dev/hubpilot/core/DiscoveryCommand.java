@@ -367,7 +367,7 @@ final class DiscoveryCommand {
             try {
                for (Method var6 : var0.getClass().getMethods()) {
                   if (var6.getName().equals("sendMessage") && var6.getParameterCount() == 1 && var6.getParameterTypes()[0] == String.class) {
-                     HubPilotReflect.invokeAccessible(var6, var0, new Object[]{var1});
+                     Reflect.invokeAccessible(var6, var0, new Object[]{var1});
                      return;
                   }
                }
@@ -386,7 +386,7 @@ final class DiscoveryCommand {
             boolean var9 = true;
 
             for (int var10 = 0; var10 < var8.length; var10++) {
-               if (var2[var10] != null && !box(var8[var10]).isInstance(var2[var10])) {
+               if (var2[var10] != null && !Reflect.box(var8[var10]).isInstance(var2[var10])) {
                   var9 = false;
                   break;
                }
@@ -402,7 +402,7 @@ final class DiscoveryCommand {
       if (var3 == null) {
          throw new NoSuchMethodException(var0.getClass().getName() + "." + var1);
       } else {
-         return HubPilotReflect.invokeAccessible(var3, var0, var2);
+         return Reflect.invokeAccessible(var3, var0, var2);
       }
    }
 
@@ -414,28 +414,6 @@ final class DiscoveryCommand {
       }
 
       return false;
-   }
-
-   private static Class<?> box(Class<?> var0) {
-      if (!var0.isPrimitive()) {
-         return var0;
-      } else if (var0 == boolean.class) {
-         return Boolean.class;
-      } else if (var0 == int.class) {
-         return Integer.class;
-      } else if (var0 == long.class) {
-         return Long.class;
-      } else if (var0 == double.class) {
-         return Double.class;
-      } else if (var0 == float.class) {
-         return Float.class;
-      } else if (var0 == short.class) {
-         return Short.class;
-      } else if (var0 == byte.class) {
-         return Byte.class;
-      } else {
-         return var0 == char.class ? Character.class : var0;
-      }
    }
 
    private static Throwable unwrap(Throwable var0) {

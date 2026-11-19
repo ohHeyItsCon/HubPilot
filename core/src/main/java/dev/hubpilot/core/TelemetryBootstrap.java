@@ -40,7 +40,7 @@ public final class TelemetryBootstrap {
             Object var17 = var8.newInstance(var0, var16, var3, var4, var5, var6);
             Method var18 = var7.getDeclaredMethod("register");
             var18.setAccessible(true);
-            HubPilotReflect.invokeAccessible(var18, var17, new Object[0]);
+            Reflect.invokeAccessible(var18, var17, new Object[0]);
             telemetryBridge = var17;
             SettingsSyncHook.initialize(var4, var3);
             Object var19 = registerAuxChannel(var16, var15.getClassLoader(), "status");
@@ -61,9 +61,9 @@ public final class TelemetryBootstrap {
    }
 
    private static Object registerAuxChannel(Object var0, ClassLoader var1, String var2) throws Exception {
-      Object var3 = HubPilotReflect.invokeAccessible(var0.getClass().getMethod("getChannelRegistrar"), var0, new Object[0]);
+      Object var3 = Reflect.invokeAccessible(var0.getClass().getMethod("getChannelRegistrar"), var0, new Object[0]);
       Class var4 = Class.forName("com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier", true, var1);
-      Object var5 = HubPilotReflect.invokeAccessible(var4.getMethod("create", String.class, String.class), null, new Object[]{"hubpilot", var2});
+      Object var5 = Reflect.invokeAccessible(var4.getMethod("create", String.class, String.class), null, new Object[]{"hubpilot", var2});
       Method var6 = null;
 
       for (Method var10 : var3.getClass().getMethods()) {
@@ -79,7 +79,7 @@ public final class TelemetryBootstrap {
          Class var11 = var6.getParameterTypes()[0].getComponentType();
          Object var12 = Array.newInstance(var11, 1);
          Array.set(var12, 0, var5);
-         HubPilotReflect.invokeAccessible(var6, var3, new Object[]{var12});
+         Reflect.invokeAccessible(var6, var3, new Object[]{var12});
          return var5;
       }
    }
@@ -93,7 +93,7 @@ public final class TelemetryBootstrap {
    private static void log(Object var0, String var1, String var2) {
       if (var0 != null) {
          try {
-            HubPilotReflect.invokeAccessible(var0.getClass().getMethod(var1, String.class), var0, new Object[]{var2});
+            Reflect.invokeAccessible(var0.getClass().getMethod(var1, String.class), var0, new Object[]{var2});
          } catch (Throwable var4) {
          }
       }

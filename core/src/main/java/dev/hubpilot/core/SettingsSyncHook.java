@@ -179,8 +179,8 @@ public final class SettingsSyncHook {
       try {
          ClassLoader var1 = var0.getClass().getClassLoader();
          Class var2 = Class.forName("com.velocitypowered.api.event.connection.PluginMessageEvent$ForwardResult", true, var1);
-         Object var3 = HubPilotReflect.invokeAccessible(var2.getMethod("handled"), null, new Object[0]);
-         HubPilotReflect.invokeAccessible(var0.getClass().getMethod("setResult", var2), var0, new Object[]{var3});
+         Object var3 = Reflect.invokeAccessible(var2.getMethod("handled"), null, new Object[0]);
+         Reflect.invokeAccessible(var0.getClass().getMethod("setResult", var2), var0, new Object[]{var3});
       } catch (Throwable var4) {
       }
    }
@@ -217,7 +217,7 @@ public final class SettingsSyncHook {
          throw new NoSuchMethodException(var0.getClass().getName() + "." + var1);
       } else {
          var3.setAccessible(true);
-         return HubPilotReflect.invokeAccessible(var3, var0, var2);
+         return Reflect.invokeAccessible(var3, var0, var2);
       }
    }
 
@@ -239,7 +239,7 @@ public final class SettingsSyncHook {
       Object var2 = logger;
       if (var2 != null) {
          try {
-            HubPilotReflect.invokeAccessible(var2.getClass().getMethod(var0, String.class), var2, new Object[]{var1});
+            Reflect.invokeAccessible(var2.getClass().getMethod(var0, String.class), var2, new Object[]{var1});
          } catch (Throwable var4) {
          }
       }

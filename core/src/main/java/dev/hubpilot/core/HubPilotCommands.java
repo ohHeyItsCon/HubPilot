@@ -101,7 +101,7 @@ final class HubPilotCommands {
          for (Method var8 : var1.getClass().getMethods()) {
             Class[] var9 = var8.getParameterTypes();
             if (var8.getName().equals("register") && var9.length == 3 && var9[0] == String.class && var9[2].isArray() && var9[1].isInstance(var3)) {
-               HubPilotReflect.invokeAccessible(var8, var1, new Object[]{var2, var3, var4});
+               Reflect.invokeAccessible(var8, var1, new Object[]{var2, var3, var4});
                return;
             }
          }
@@ -110,24 +110,24 @@ final class HubPilotCommands {
          if (var16 == null) {
             throw new NoSuchMethodException("metaBuilder");
          } else {
-            Object var17 = HubPilotReflect.invokeAccessible(var16, var1, new Object[]{var2});
+            Object var17 = Reflect.invokeAccessible(var16, var1, new Object[]{var2});
             Method var18 = findArrayMethod(var17.getClass(), "aliases", String.class);
             if (var18 != null) {
-               var17 = HubPilotReflect.invokeAccessible(var18, var17, new Object[]{var4});
+               var17 = Reflect.invokeAccessible(var18, var17, new Object[]{var4});
             }
 
             Method var19 = findCompatibleMethod(var17.getClass(), "plugin", this.plugin);
             if (var19 != null) {
-               var17 = HubPilotReflect.invokeAccessible(var19, var17, new Object[]{this.plugin});
+               var17 = Reflect.invokeAccessible(var19, var17, new Object[]{this.plugin});
             }
 
-            Object var20 = HubPilotReflect.invokeAccessible(Objects.requireNonNull(findMethod(var17.getClass(), "build", 0)), var17, new Object[0]);
+            Object var20 = Reflect.invokeAccessible(Objects.requireNonNull(findMethod(var17.getClass(), "build", 0)), var17, new Object[0]);
 
             for (Method var13 : var1.getClass().getMethods()) {
                if (var13.getName().equals("register") && var13.getParameterCount() == 2) {
                   Class[] var14 = var13.getParameterTypes();
                   if (var14[0].isInstance(var20) && var14[1].isInstance(var3)) {
-                     HubPilotReflect.invokeAccessible(var13, var1, new Object[]{var20, var3});
+                     Reflect.invokeAccessible(var13, var1, new Object[]{var20, var3});
                      return;
                   }
                }
@@ -160,7 +160,7 @@ final class HubPilotCommands {
          Method var10 = findMethod(var9.getClass(), "connectWithIndication", 0);
          if (var10 != null) {
             try {
-               HubPilotReflect.invokeAccessible(var10, var9, new Object[0]);
+               Reflect.invokeAccessible(var10, var9, new Object[0]);
                return;
             } catch (ReflectiveOperationException var8) {
             }
@@ -178,7 +178,7 @@ final class HubPilotCommands {
 
       Class var2 = Class.forName("com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier", true, var1);
       Method var3 = var2.getMethod("create", String.class, String.class);
-      this.statusChannel = HubPilotReflect.invokeAccessible(var3, null, new Object[]{"hubpilot", "status"});
+      this.statusChannel = Reflect.invokeAccessible(var3, null, new Object[]{"hubpilot", "status"});
       Object var4 = invokeNoArgs(this.proxy, "getChannelRegistrar");
       Method var5 = null;
 
@@ -197,7 +197,7 @@ final class HubPilotCommands {
       } else {
          Object var17 = Array.newInstance(var5.getParameterTypes()[0].getComponentType(), 1);
          Array.set(var17, 0, this.statusChannel);
-         HubPilotReflect.invokeAccessible(var5, var4, new Object[]{var17});
+         Reflect.invokeAccessible(var5, var4, new Object[]{var17});
          Class var18 = Class.forName("com.velocitypowered.api.event.connection.PluginMessageEvent", true, var1);
          Class var19 = Class.forName("com.velocitypowered.api.event.EventHandler", true, var1);
          InvocationHandler var20 = (var1x, var2x, var3x) -> {
@@ -232,7 +232,7 @@ final class HubPilotCommands {
          if (var11 == null) {
             throw new NoSuchMethodException("EventManager.register(plugin, Class, EventHandler)");
          } else {
-            HubPilotReflect.invokeAccessible(var11, var21, new Object[]{this.plugin, var18, this.statusEventHandler});
+            Reflect.invokeAccessible(var11, var21, new Object[]{this.plugin, var18, this.statusEventHandler});
             this.warn("HubPilot live status bridge enabled on hubpilot:status");
          }
       }
@@ -337,7 +337,7 @@ final class HubPilotCommands {
          throw new IllegalStateException("Backend connection does not expose sendPluginMessage");
       } else {
          try {
-            HubPilotReflect.invokeAccessible(var3, var1, new Object[]{this.statusChannel, var2});
+            Reflect.invokeAccessible(var3, var1, new Object[]{this.statusChannel, var2});
          } catch (ReflectiveOperationException var9) {
             throw new IllegalStateException("Could not send status row", unwrap(var9));
          }
@@ -348,10 +348,10 @@ final class HubPilotCommands {
       try {
          ClassLoader var2 = this.plugin.getClass().getClassLoader();
          Class var3 = Class.forName("com.velocitypowered.api.event.connection.PluginMessageEvent$ForwardResult", true, var2);
-         Object var4 = HubPilotReflect.invokeAccessible(var3.getMethod("handled"), null, new Object[0]);
+         Object var4 = Reflect.invokeAccessible(var3.getMethod("handled"), null, new Object[0]);
          Method var5 = findCompatibleMethod(var1.getClass(), "setResult", var4);
          if (var5 != null) {
-            HubPilotReflect.invokeAccessible(var5, var1, new Object[]{var4});
+            Reflect.invokeAccessible(var5, var1, new Object[]{var4});
          }
       } catch (ReflectiveOperationException var6) {
       }
@@ -564,15 +564,15 @@ final class HubPilotCommands {
       if (var0 != null) {
          try {
             Method var8 = var0.getClass().getMethod("sendPlainMessage", String.class);
-            HubPilotReflect.invokeAccessible(var8, var0, new Object[]{var1});
+            Reflect.invokeAccessible(var8, var0, new Object[]{var1});
          } catch (ReflectiveOperationException var7) {
             try {
                ClassLoader var2 = var0.getClass().getClassLoader();
                Class var3 = Class.forName("net.kyori.adventure.text.Component", true, var2);
-               Object var4 = HubPilotReflect.invokeAccessible(var3.getMethod("text", String.class), null, new Object[]{var1});
+               Object var4 = Reflect.invokeAccessible(var3.getMethod("text", String.class), null, new Object[]{var1});
                Method var5 = findCompatibleMethod(var0.getClass(), "sendMessage", var4);
                if (var5 != null) {
-                  HubPilotReflect.invokeAccessible(var5, var0, new Object[]{var4});
+                  Reflect.invokeAccessible(var5, var0, new Object[]{var4});
                }
             } catch (ReflectiveOperationException var6) {
             }
@@ -583,7 +583,7 @@ final class HubPilotCommands {
    private void warn(String var1) {
       try {
          Method var2 = this.logger.getClass().getMethod("warn", String.class);
-         HubPilotReflect.invokeAccessible(var2, this.logger, new Object[]{var1});
+         Reflect.invokeAccessible(var2, this.logger, new Object[]{var1});
       } catch (ReflectiveOperationException var3) {
          System.err.println("[HubPilot] " + var1);
       }
@@ -606,7 +606,7 @@ final class HubPilotCommands {
             throw new IllegalStateException("Missing method " + var0.getClass().getName() + "#" + var1);
          } else {
             try {
-               return HubPilotReflect.invokeAccessible(var3, var0, var2);
+               return Reflect.invokeAccessible(var3, var0, var2);
             } catch (ReflectiveOperationException var5) {
                throw new IllegalStateException("Could not invoke " + var1 + ": " + unwrap(var5).getMessage(), unwrap(var5));
             }
@@ -626,7 +626,7 @@ final class HubPilotCommands {
 
             for (int var8 = 0; var8 < var7.length; var8++) {
                Object var9 = var2[var8];
-               if (var9 != null && !box(var7[var8]).isInstance(var9)) {
+               if (var9 != null && !Reflect.box(var7[var8]).isInstance(var9)) {
                   continue label33;
                }
             }
@@ -659,28 +659,6 @@ final class HubPilotCommands {
       }
 
       return null;
-   }
-
-   private static Class<?> box(Class<?> var0) {
-      if (!var0.isPrimitive()) {
-         return var0;
-      } else if (var0 == boolean.class) {
-         return Boolean.class;
-      } else if (var0 == byte.class) {
-         return Byte.class;
-      } else if (var0 == short.class) {
-         return Short.class;
-      } else if (var0 == int.class) {
-         return Integer.class;
-      } else if (var0 == long.class) {
-         return Long.class;
-      } else if (var0 == float.class) {
-         return Float.class;
-      } else if (var0 == double.class) {
-         return Double.class;
-      } else {
-         return var0 == char.class ? Character.class : var0;
-      }
    }
 
    private static Object defaultValue(Class<?> var0) {

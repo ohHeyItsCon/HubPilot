@@ -13,6 +13,19 @@ final class Reflect {
    private Reflect() {
    }
 
+   static Object invokeAccessible(Method var0, Object var1, Object[] var2) throws ReflectiveOperationException {
+      if (var0 == null) {
+         throw new NoSuchMethodException("HubPilot reflection method was null");
+      } else {
+         try {
+            var0.trySetAccessible();
+         } catch (RuntimeException var4) {
+         }
+
+         return var0.invoke(var1, var2);
+      }
+   }
+
    static Object call(Object var0, String var1, Object... var2) {
       if (var0 == null) {
          return null;
@@ -182,7 +195,7 @@ final class Reflect {
       return var1;
    }
 
-   private static Class<?> box(Class<?> var0) {
+   static Class<?> box(Class<?> var0) {
       if (!var0.isPrimitive()) {
          return var0;
       } else if (var0 == boolean.class) {

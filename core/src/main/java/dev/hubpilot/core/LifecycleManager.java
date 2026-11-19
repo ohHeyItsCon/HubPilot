@@ -430,7 +430,7 @@ final class LifecycleManager {
             if (var10 == null) {
                return false;
             } else {
-               Object var20 = HubPilotReflect.invokeAccessible(var10, var19, new Object[]{HubPilotCorePlugin.CONTROL_CHANNEL, var8.toByteArray()});
+               Object var20 = Reflect.invokeAccessible(var10, var19, new Object[]{HubPilotCorePlugin.CONTROL_CHANNEL, var8.toByteArray()});
                Boolean var6;
                return !(var20 instanceof Boolean) || (var6 = (Boolean)var20);
             }
@@ -737,7 +737,7 @@ final class LifecycleManager {
       LinkedHashSet<String> var4 = new LinkedHashSet<>();
 
       try {
-         Object var2 = HubPilotReflect.invokeAccessible(var3.getClass().getMethod("getVersionsSupportedBy"), var3, new Object[0]);
+         Object var2 = Reflect.invokeAccessible(var3.getClass().getMethod("getVersionsSupportedBy"), var3, new Object[0]);
          if (var2 instanceof Iterable) {
             for (Object var7 : (Iterable)var2) {
                if (var7 != null && !String.valueOf(var7).isBlank()) {
@@ -750,7 +750,7 @@ final class LifecycleManager {
 
       if (var4.isEmpty()) {
          try {
-            Object var10 = HubPilotReflect.invokeAccessible(var3.getClass().getMethod("getName"), var3, new Object[0]);
+            Object var10 = Reflect.invokeAccessible(var3.getClass().getMethod("getName"), var3, new Object[0]);
             if (var10 != null && !String.valueOf(var10).isBlank()) {
                var4.add(String.valueOf(var10));
             }
